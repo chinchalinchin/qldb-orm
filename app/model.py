@@ -1,11 +1,13 @@
 from qldb import Table
 import settings
+import uuid
 
-class Model():
+class Model(Table):
+  def __init__(self, name, id = uuid.uuid1()):
+    super.__init__(ledger=settings.LEDGER, table=name)
+    self.fields.id = id
 
-  def __init__(self, name, index):
-    self.name = name
-    self.index = index
-    self.table = Table(ledger=settings.LEDGER, table=self.name, index=self.index)
+  def save(self):
+    pass
 
-  
+  # TODO: modify __get__ and __set__ so they point to super's fields prop.

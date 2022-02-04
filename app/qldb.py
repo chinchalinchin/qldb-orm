@@ -22,7 +22,7 @@ class Driver():
     return QldbDriver(ledger_name=ledger).qldb_driver
     
   @staticmethod
-  def create_table(table):
+  def create_table(driver, table):
     """Static method for creating a table within a ledger
 
     :param table: table to be updated
@@ -30,12 +30,12 @@ class Driver():
 
     :return: iterable containing result
     """
-    return Driver.driver().execute_lambda(lambda executor: Driver.execute(
+    return driver.execute_lambda(lambda executor: Driver.execute(
       executor, 'CREATE TABLE ?', table
     ))
 
   @staticmethod
-  def create_index(table, index):
+  def create_index(driver, table, index):
     """Static method for generating an index on table
 
     :param table: table to be updated
@@ -45,12 +45,12 @@ class Driver():
 
     :return: iterable containing result
     """
-    return Driver.driver().execute_lambda(lambda executor: Driver.execute(
+    return driver.execute_lambda(lambda executor: Driver.execute(
       executor, 'CREATE INDEX ?(?)', table, index
     ))
   
   @staticmethod
-  def insert(document, table):
+  def insert(driver, document, table):
     """Static method for inserting document into table
 
     :param document: document containing fields to insert
@@ -60,12 +60,12 @@ class Driver():
 
     :return: iterable containing result
     """
-    return Driver.driver().execute_lambda(lambda executor: Driver.execute(
+    return driver.execute_lambda(lambda executor: Driver.execute(
       executor, 'INSERT INTO ? ?', table, document
     ))
   
   @staticmethod
-  def update(field, value, lookup, table, index):
+  def update(driver, field, value, lookup, table, index):
     """Static method for updating table field in document
     :param field: field to be updated
     :type field: str
@@ -80,12 +80,12 @@ class Driver():
 
     :return: iterable containing result
     """
-    return Driver.driver().execute_lambda(lambda executor: Driver.execute(
+    return driver.execute_lambda(lambda executor: Driver.execute(
       executor, 'UPDATE ? SET ? = ? WHERE ? = ?', table, field, value, index, lookup
     ))
 
   @staticmethod
-  def query_by_field(field, value, table):
+  def query_by_field(driver, field, value, table):
     """Static method for querying table by field.
 
     :param field: field to be searched
@@ -97,18 +97,25 @@ class Driver():
   
     :return: iterable containing result
     """
-    return Driver.driver().execute_lambda(lambda executor: Driver.execute(
+    return driver.execute_lambda(lambda executor: Driver.execute(
       executor, 'SELECT * FROM ? WHERE ? = ?', table, field, value
     ))
 
 class Table():
   def __init__(self, ledger, table, index='id'):
-    self.driver = Driver.driver()
-    self.ledger = ledger
-    self.table = table 
+    self.driver = Driver.driver(ledger)
+    self.table = table
     self.index = index
+    self.fields = {}
     self._init_fixtures()
 
   def _init_fixtures(self):
-    Driver.create_table(self.table)
-    Driver.create_index(self.table, self.index)
+    Driver.create_table(self.driver, self.table)
+    Driver.create_index(self.driver, self.table, self.index)
+
+  def insert(self, id):
+    result = Driver.query_by_field(self.driver, self.index, self.id, self.table)
+    if next(result, None):
+      return None
+    self.fields.id = id
+    return Driver.insert(self.driver, self.fields, self.table)
