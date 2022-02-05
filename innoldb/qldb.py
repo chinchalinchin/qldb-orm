@@ -152,6 +152,9 @@ class Table():
   def _init_fixtures(self):
     try:
       Driver.create_table(self.driver, self.table)
+    except Exception as e:
+      log.debug(e)
+    try:
       Driver.create_index(self.driver, self.table, self.index)
     except Exception as e:
       log.debug(e)
