@@ -47,7 +47,7 @@ The environment variable **LEDGER** should point to the **QLDB** ledger so the a
 Boto3 Client
 ------------
 
-The easiest way to create a ledger is through the wrapper function in `innoldb.qldb`,
+The easiest way to create a ledger is through the `boto3` wrapper function in `innoldb.qldb`,
 
 ```python
 from innoldb.qldb import create_ledger
@@ -154,6 +154,7 @@ for key, value in my_document.fields().items():
 ## References 
 - [AWS QLDB Documentation](https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html)
 - [QLDB Python Driver Documentation](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html)
+- [Boto3 QLDB Client Documentation](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/qldb.html)
 - [PartiQL Documentation](https://partiql.org/docs.html)
 
 ## TODOS
