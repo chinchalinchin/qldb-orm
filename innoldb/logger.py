@@ -14,6 +14,6 @@ def getLogger(name: str) -> logging.Logger:
     logger = logging.getLogger(name)
     consoleHandler = logging.StreamHandler()
     consoleHandler.setFormatter(logFormatter)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.NOTSET)
     logger.addHandler(consoleHandler)
     return logger

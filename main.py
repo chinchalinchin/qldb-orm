@@ -1,3 +1,4 @@
+import argparse
 import sys
 import random
 from innoldb.qldb import Document
@@ -27,39 +28,33 @@ def create():
 def load(id):
   return Document(name='innolab', id=id)
 
-def update_speciality(document):
-  document.specialty = specialities[random.randint(0, len(specialities) - 1)]
-  document.save()
-
 def update_prop(document, key, value):
   setattr(document, key, value)
   document.save()
 
 if __name__=="__main__":
-  if len(sys.argv) > 1:
-    routines = sys.argv[1:]
+  parser = argparse.ArgumentParser()
+  parser.add_argument('--load', help="id of the document to load")
+  parser.add_argument('--update', help="KEY=VALUE")
+  parser.add_argument('--display', action='store_true', help="Print document to screen")
   
-  if routines[0] == 'load':
-    document = load('0434ade7-86bb-11ec-935a-34735aabbbc4')
-    log.info("Loaded DOCUMENT: \n\t\t\t\t\t\t\t %s", document.fields())
+  args = parser.parse_args()
+  
+  if args.load:
+    document = load(args.load)
+    log.info("Loaded DOCUMENT(%s = %s)", document.index, document.fields()[document.index])
 
   else:  
     document = create()
-    log.info("Created DOCUMENT: \n\t\t\t\t\t\t\t %s", document.fields())
+    log.info("Created DOCUMENT(%s = %s)", document.index, document.fields()[document.index])
 
-  for routine in routines:
-    if routine == 'update_spec':
-      update_speciality(document)
-    elif routine == 'update_prop_1':
-      update_prop(document, 'favorite_movie', 'children of men')
-    elif routine == 'update_prop_2':
-      update_prop(document, 'favorite_movie', 'pulp fiction')
-    elif routine == 'update_prop_3':
-      update_prop(document, 'favorite_movie', 'lords of salem')
-    elif routine == 'update_prop_4':
-      update_prop(document, 'favorite_movie', 'the big lebowski')
-    elif routine == 'update_prop_5':
-      update_prop(document, 'favorite_movie', 'the evil dead')
+  if args.update:
+    key, value = args.update.split("=")
+    update_prop(document, key, value)
+
+  if args.display:
+    print(document.fields())
+
 
 # if __name__==:""
   # from qldb.qldb import Driver

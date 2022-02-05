@@ -33,6 +33,10 @@ class Driver():
     return QldbDriver(ledger_name=ledger)
     
   @staticmethod
+  def tables(ledger):
+    return QldbDriver(ledger_name=ledger).list_tables()
+
+  @staticmethod
   def create_table(driver, table):
     """Static method for creating a table within a ledger
 
@@ -159,35 +163,33 @@ class Table():
     try:
       Driver.create_table(self.driver, self.table)
     except Exception as e:
-      log.warn(e)
+      log.debug(e)
     try:
       Driver.create_index(self.driver, self.table, self.index)
     except Exception as e:
-      log.warn(e)
+      log.debug(e)
 
   def _insert(self, document):
-    log.info("Inserting DOCUMENT(%s = %s)", self.index, document[self.index])
+    log.debug("Inserting DOCUMENT(%s = %s)", self.index, document[self.index])
     return Driver.insert(self.driver, document, self.table)
   
   def _update(self, document):
-    log.info("Updating DOCUMENT(%s = %s)", self.index, document[self.index])
+    log.debug("Updating DOCUMENT(%s = %s)", self.index, document[self.index])
     return Driver.update(self.driver, document, self.table, self.index)
 
   def exists(self, id):
-    log.info("Checking existence of DOCUMENT(%s = %s)", self.index, id)
+    log.debug("Checking existence of DOCUMENT(%s = %s)", self.index, id)
     result = Driver.query_by_field(self.driver, self.index, id, self.table)
-    # for row in result:
-    #   log.debug("Query returned with row %s", row)
     if next(result, None):
       return True
     return False
 
   def get(self, id):
-    log.info("Returning DOCUMENT(%s = %s)", self.index, id)
+    log.debug("Returning DOCUMENT(%s = %s)", self.index, id)
     return loads(dumps(next(Driver.query_by_field(self.driver, self.index, id, self.table))))
   
   def save(self, document):
-    log.info("Saving DOCUMENT(%s = %s)", self.index, document[self.index])
+    log.debug("Saving DOCUMENT(%s = %s)", self.index, document[self.index])
     if self.exists(document[self.index]):
       return self._update(document)
     return self._insert(document)
@@ -213,4 +215,4 @@ class Document(Table):
   def save(self):
     result = super().save(self.fields())
     for row in result:
-      log.info('Transaction result: \n\t\t\t\t\t\t\t %s', loads(dumps(row)))
+      log.debug('Transaction result: \n\t\t\t\t\t\t\t %s', loads(dumps(row)))
