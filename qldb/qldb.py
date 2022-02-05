@@ -1,6 +1,7 @@
 from pyqldb.driver.qldb_driver import QldbDriver
+from qldb import settings
 
-from app.parser import Parser
+from qldb.parser import Parser
 
 class Driver():
   @staticmethod 
@@ -98,8 +99,7 @@ class Driver():
     update_statement = f'UPDATE ? {set_clause} WHERE ? = ?'
 
     return driver.execute_lambda(lambda executor: Driver.execute(
-      executor, update_statement, 
-      table, *parameters, index, lookup
+      executor, update_statement, table, *parameters, index, lookup
     ))
 
   @staticmethod
@@ -120,20 +120,49 @@ class Driver():
     ))
 
 class Table():
-  def __init__(self, ledger, table, index='id'):
+  def __init__(self, table, ledger=settings.LEDGER, index='id'):
     self.driver = Driver.driver(ledger)
+    # Table name
     self.table = table
+    # Name of the lookup field in the PartiQL table
     self.index = index
-    self.fields = {}
+    # Fields 'in' the table. 
     self._init_fixtures()
 
   def _init_fixtures(self):
+    # TODO: if the idea is to inherit from this class with every instance of the Model class,
+    #       then this method needs to check for the existence of the table and index before
+    #       attempting to create them again.
     Driver.create_table(self.driver, self.table)
     Driver.create_index(self.driver, self.table, self.index)
 
-  def insert(self, id):
-    result = Driver.query_by_field(self.driver, self.index, self.id, self.table)
+  def _insert(self, document):
+    return Driver.insert(self.driver, document, self.table)
+  
+  def _update(self, document):
+    return Driver.update(self.driver, document, self.table, self.index)
+
+  def exists(self, id):
+    result = Driver.query_by_field(self.driver, self.index, id, self.table)
     if next(result, None):
-      return None
-    self.fields.id = id
-    return Driver.insert(self.driver, self.fields, self.table)
+      return True
+    return False
+  
+  def save(self, document):
+    if self.exists():
+      return self._update(document)
+    return self._insert(document)
+
+
+class Field():
+  def __init__(self):
+    pass
+
+  def __get__(self, instance, owner):
+    pass
+
+  def __set__(self, instance, value):
+    pass
+
+  def __delete__(self, instance):
+    pass

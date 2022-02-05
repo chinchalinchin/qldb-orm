@@ -1,9 +1,11 @@
-# QLDB Implementation
+# QLDB Interface
+
+A simple [Object-Relation-Mapping](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) for a serverless [AWS Quantum Ledger Database](https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html) backend. The user or process using this library must have an [IAM policy that allows access to QLDB](https://docs.aws.amazon.com/qldb/latest/developerguide/security-iam.html).
 
 ## Overview
 
-1. Create ledger
-2. Configure user/role permissions
+1. Create QLDB ledger
+2. Configure IAM user/role permissions
 3. Create model
 
 ## Setup
@@ -14,9 +16,11 @@
 cp ./env/.sample.env ./env/.env
 ```
 
+The environment variable **LEDGER** should point to the **QLDB** ledger 
+
 1. Create Ledger
 
-From the *innolab-cloudformation* repository,
+A **QLDB** CloudFormation template is available in the *master* branch of *innolab-cloudformation*. From the *innolab-cloudformation* repository, execute the following script and specify the `<ledger-name>` to create a ledger on QLDB,
 
 ```shell
 ./scripts/stacks/serverless/qldb-stack --ledger <ledger-name>
