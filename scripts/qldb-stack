@@ -1,0 +1,109 @@
+#!/bin/bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+SCRIPT_NAME="qldb-stack"
+SCRIPT_DES=$''
+PROJECT_DIR=$SCRIPT_DIR/..
+source $PROJECT_DIR/env/.env
+
+# Example Usage:
+# >$     qldb-stack --environment <Dev | Prod | Test | Staging> \
+#                       --ledger (required) \
+#                       --action <create | update | delete>
+
+#      NOTE: `--action` defaults to `create` if not supplied.
+#      NOTE: `--environment` defaults to `Dev` if not supplied.
+#      NOTE: All argument flags have a short form and a long form, with single dashes and doubled dashes, e.g.
+#           all of the following arguments are equivalent,
+#               --environment, -environment, --e, -e
+
+function log(){
+  echo -e "\e[92m$(date +"%r")\e[0m: \e[4;32m$SCRIPT_NAME\e[0m : >> $1"
+}
+
+function help(){
+  echo -e "\n\e[4m$SCRIPT_NAME\e[0m\n\n\t$SCRIPT_DES" 
+}
+
+while [[ $# -gt 0 ]]; do
+  key="$1"
+  case $key in
+    --action|-action|--a|-a)
+      ACTION="$2"
+      shift
+      shift 
+      ;;
+      --ledger|-ledger|--l|-l)
+      LEDGER="$2"
+      shift
+      shift 
+      ;;
+    --environment|-environment|--env|-env|--e|-e)
+      ENVIRONMENT="$2"
+      shift
+      shift
+      ;;
+    --help|-help|--h|-h)
+      help
+      exit 0
+      ;;
+    *)
+      log "Input not understood. See \e[3m--help\e[0m for information on using this command."
+      exit 1
+      ;;
+  esac
+done
+if [ -z "$LEDGER" ]
+then
+  log "No \e[3m--ledger\e[0m specified. Re-execute with this required argument."
+  exit 1
+fi
+
+if [ -z "$ACTION" ]
+then
+    log "No \e[3m--action\e[0m specified. Defaulting to \e[1mcreate\e[0m"
+    ACTION="create"
+fi
+
+if [ -z "$ENVIRONMENT" ]
+then
+    log "No \e[3m--environment\e[0m specified. Defaulting to \e[1mDev\e[0m"
+    ENVIRONMENT="Dev"
+fi
+
+cp $PROJECT_DIR/cf/qldb.yml ./qldb.yml
+
+if [ "$ACTION" == "create" ]
+then
+  log "Creating \e[1m${APPLICATION^}-QLDBStack-${ENVIRONMENT}\e[0m"
+  aws cloudformation create-stack \
+      --stack-name "${APPLICATION^}-QLDBStack-${ENVIRONMENT}" \
+      --template-body file://qldb.yml \
+      --parameters ParameterKey=environmentName,ParameterValue=$ENVIRONMENT \
+                  ParameterKey=applicationName,ParameterValue=$APPLICATION \
+                  ParameterKey=ledgerName,ParameterValue=$LEDGER
+  rm ./qldb.yml
+  exit 0
+elif [ "$ACTION" == "update" ]
+then
+  log "Updating \e[1m${APPLICATION^}-QLDBStack-${ENVIRONMENT}\e[0m"
+  aws cloudformation update-stack \
+      --stack-name "${APPLICATION^}-QLDBStack-${ENVIRONMENT}" \
+      --template-body file://qldb.yml \
+      --parameters ParameterKey=environmentName,ParameterValue=$ENVIRONMENT \
+                  ParameterKey=applicationName,ParameterValue=$APPLICATION \
+                  ParameterKey=ledgerName,ParameterValue=$LEDGER
+  rm ./qldb.yml
+  exit 0
+elif [ "$ACTION" == "delete" ]
+then
+  log "Deleting \e[1m${APPLICATION^}-QLDBStack-${ENVIRONMENT}\e[0m"
+  aws cloudformation delete-stack \
+      --stack-name "${APPLICATION^}-QLDBStack-${ENVIRONMENT}"
+  rm ./qldb.yml
+  exit 0
+else
+  log "Action not understood"
+  rm ./qldb.yml
+  exit 1
+fi

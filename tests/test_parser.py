@@ -1,5 +1,5 @@
 import pytest
-from qldb.parser import Parser
+from innoldb.parser import Parser
 
 @pytest.mark.parametrize('n,expected_clause', [
                                                 (2, 'SET ? = ? SET ? = ? '), 

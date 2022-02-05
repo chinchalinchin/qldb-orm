@@ -1,9 +1,10 @@
+import uuid
 from pyqldb.driver.qldb_driver import QldbDriver
 from . import settings
 from .parser import Parser
 from .logger import getLogger
 
-log = getLogger('qldb.qldb')
+log = getLogger('innoldb.qldb')
 
 class Driver():
   @staticmethod 
@@ -135,7 +136,7 @@ class Driver():
     """
     statement = 'SELECT * FROM {} WHERE ? = ?'.format(table)
     return driver.execute_lambda(lambda executor: Driver.execute(
-      executor, 'SELECT * FROM ? WHERE ? = ?', table, field, value
+      executor, statement, field, value
     ))
 
 class Table():
@@ -152,8 +153,11 @@ class Table():
     # TODO: if the idea is to inherit from this class with every instance of the Model class,
     #       then this method needs to check for the existence of the table and index before
     #       attempting to create them again.
-    Driver.create_table(self.driver, self.table)
-    Driver.create_index(self.driver, self.table, self.index)
+    try:
+      Driver.create_table(self.driver, self.table)
+      Driver.create_index(self.driver, self.table, self.index)
+    except Exception as e:
+      log.debug(e)
 
   def _insert(self, document):
     return Driver.insert(self.driver, document, self.table)
@@ -171,3 +175,12 @@ class Table():
     if self.exists(document[self.index]):
       return self._update(document)
     return self._insert(document)
+
+class Document(Table):
+  def __init__(self, name, id = str(uuid.uuid1())):
+    super().__init__(table=name)
+    self.id = id
+    
+  def save(self):
+    fields = {key: value for key, value in vars(self).items() if key not in ['table', 'driver', 'index']}
+    super().save(fields)

@@ -1,9 +1,14 @@
-from qldb.model import Model
+from innoldb.qldb import Document
 
 if __name__=="__main__":
-  test = Model('test11')
-  test.test_field = 'warning, this is a not a test'
+  test = Document('innolab')
+  test.company = 'Makpar'
+  test.department = 'Innovation and Technology'
+  test.location = 'Virginia'
+  test.team = 'Innovation Lab'
+  test.specialty = 'Application Development'
   test.save()
   
+# if __name__==:""
   # from qldb.qldb import Driver
   # QldbDriver('innolab-Dev-test').execute_lambda(lambda executor: executor.execute_statement('CREATE TABLE test'))
