@@ -23,13 +23,26 @@ document.save()
 
 1. (Optional) Configure Environment
 
+This library needs to be informed of the QLDB Ledger to write against on your AWS environment. There are several ways to configure the Ledger setting. 
+
+Before you start a Python shell, export the**LEDGER** environment variable,
+
 ```shell
 export LEDGER='ledger-name'
+python
 ```
 
-The environment variable **LEDGER** should point to the **QLDB** ledger. If you do not configure the **LEDGER** environment variable, you will need to pass in the ledger name to the `Document` object. See [below](#documents) for more information.
+Alternatively, configure the variable directly in a Python script
 
-2. Create **QLDB** Ledger
+```python
+import os
+
+os.environ['LEDGER'] = 'ledger=name'
+```
+
+The environment variable **LEDGER** should point to the **QLDB** ledger so the application knows to which ledger to write. If you do not configure the **LEDGER** environment variable, you will need to pass in the ledger name to the `Document` object. See [below](#documents) for more information.
+
+2. Create a **QLDB** Ledger
 
 Boto3 Client
 ------------
@@ -71,7 +84,7 @@ pip install innoldb
 
 This library abstracts much of the QLDB implementation away from its user. All the user has to do is create a `Document`, add fields to it and then call `save()`. Under the hood, the library will translate the `Document` fields into [PartiQL queries](https://partiql.org/docs.html) and use the [pyqldb Driver](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html) to post the queries to the **QLDB** instance on AWS.
 
-All documents are indexed through the key field `id`. 
+**NOTE**: All documents are indexed through the key field `id`. 
 
 ### Saving
 
