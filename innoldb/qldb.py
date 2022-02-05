@@ -119,7 +119,6 @@ class Driver():
         saved_value = saved_document.get(key, None)
         log.debug('Comparing saved value: %s \n\t\t\t\t\t\t\t to buffer value: %s', saved_value, buffer_value)
         if saved_value != buffer_value:
-          log.debug('Not equal')
           update_statement = 'UPDATE {} SET {} = ? WHERE {} = ?'.format(table, key, index)
           results += driver.execute_lambda(lambda executor: Driver.execute(
                               executor, update_statement, buffer_value, lookup
@@ -160,45 +159,58 @@ class Table():
     try:
       Driver.create_table(self.driver, self.table)
     except Exception as e:
-      log.debug(e)
+      log.warn(e)
     try:
       Driver.create_index(self.driver, self.table, self.index)
     except Exception as e:
-      log.debug(e)
+      log.warn(e)
 
   def _insert(self, document):
-    log.debug("Inserting DOCUMENT(%s = %s)", self.index, document[self.index])
+    log.info("Inserting DOCUMENT(%s = %s)", self.index, document[self.index])
     return Driver.insert(self.driver, document, self.table)
   
   def _update(self, document):
-    log.debug("Updating DOCUMENT(%s = %s)", self.index, document[self.index])
+    log.info("Updating DOCUMENT(%s = %s)", self.index, document[self.index])
     return Driver.update(self.driver, document, self.table, self.index)
 
   def exists(self, id):
-    log.debug("Checking existence of DOCUMENT(%s = %s)", self.index, id)
+    log.info("Checking existence of DOCUMENT(%s = %s)", self.index, id)
     result = Driver.query_by_field(self.driver, self.index, id, self.table)
     # for row in result:
     #   log.debug("Query returned with row %s", row)
     if next(result, None):
       return True
     return False
+
+  def get(self, id):
+    log.info("Returning DOCUMENT(%s = %s)", self.index, id)
+    return loads(dumps(next(Driver.query_by_field(self.driver, self.index, id, self.table))))
   
   def save(self, document):
-    log.debug("Saving Document(%s = %s)", self.index, document[self.index])
+    log.info("Saving DOCUMENT(%s = %s)", self.index, document[self.index])
     if self.exists(document[self.index]):
       return self._update(document)
     return self._insert(document)
 
 
 class Document(Table):
-  def __init__(self, name, id = str(uuid.uuid1()), ledger=settings.LEDGER):
+  def __init__(self, name, id = None, ledger=settings.LEDGER):
     super().__init__(table=name, ledger=ledger)
+    if id is None:
+      id = str(uuid.uuid1())
+    else:
+      self._load(id)
     self.id = id
   
+  def _load(self, id):
+    snapshot = super().get(id)
+    for key, value in snapshot.items():
+      setattr(self, key, value)
+
   def fields(self):
     return {key: value for key, value in vars(self).items() if key not in ['table', 'driver', 'index']}
 
   def save(self):
     result = super().save(self.fields())
     for row in result:
-      log.debug('Transaction result: \n\t\t\t\t\t\t\t %s', loads(dumps(row)))
+      log.info('Transaction result: \n\t\t\t\t\t\t\t %s', loads(dumps(row)))
