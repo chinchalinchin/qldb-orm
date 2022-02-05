@@ -157,71 +157,59 @@ class Driver():
     ))
 
 
-class Table():
-  def __init__(self, table, ledger=settings.LEDGER, index=settings.DEFAULT_INDEX):
-    self.driver = Driver.driver(ledger)
-    # Table name
+class Document():
+  def __init__(self, table, id=None, ledger=settings.LEDGER, index=settings.DEFAULT_INDEX):
     self.table = table
-    # Name of the lookup field in the PartiQL table
+    self.ledger = ledger
     self.index = index
-    # Fields 'in' the table. 
-    self._init_fixtures(ledger)
+    self._init_fixtures()
+    if id is None:
+      self.id = str(uuid.uuid1())
+    else:
+      self.id = id
+      self._load()
 
-  def _init_fixtures(self, ledger):
-    if self.table not in Driver.tables(ledger):
+  def _init_fixtures(self):
+    if self.table not in Driver.tables(self.ledger):
       try:
-        Driver.create_table(self.driver, self.table)
+        Driver.create_table(Driver.driver(self.ledger), self.table)
       except Exception as e:
         log.debug(e)
     try:
-      Driver.create_index(self.driver, self.table, self.index)
+      Driver.create_index(Driver.driver(self.ledger), self.table, self.index)
     except Exception as e:
       log.debug(e)
 
+  def _load(self):
+    snapshot = self.get(self.id)
+    for key, value in snapshot.items():
+      setattr(self, key, value)
+      
   def _insert(self, document):
     log.debug("Inserting DOCUMENT(%s = %s)", self.index, document[self.index])
-    return Driver.insert(self.driver, document, self.table)
+    return Driver.insert(Driver.driver(self.ledger), document, self.table)
   
   def _update(self, document):
     log.debug("Updating DOCUMENT(%s = %s)", self.index, document[self.index])
-    return Driver.update(self.driver, document, self.table, self.index)
+    return Driver.update(Driver.driver(self.ledger), document, self.table, self.index)
 
   def exists(self, id):
     log.debug("Checking existence of DOCUMENT(%s = %s)", self.index, id)
-    result = Driver.query_by_field(self.driver, self.index, id, self.table)
+    result = Driver.query_by_field(Driver.driver(self.ledger), self.index, id, self.table)
     if next(result, None):
       return True
     return False
 
+  def fields(self):
+    return {key: value for key, value in vars(self).items() if key not in ['table', 'driver', 'index', 'ledger']}
+
   def get(self, id):
     log.debug("Returning DOCUMENT(%s = %s)", self.index, id)
-    return loads(dumps(next(Driver.query_by_field(self.driver, self.index, id, self.table))))
+    return loads(dumps(next(Driver.query_by_field(Driver.driver(self.ledger), self.index, id, self.table))))
   
-  def save(self, document):
-    log.debug("Saving DOCUMENT(%s = %s)", self.index, document[self.index])
-    if self.exists(document[self.index]):
-      return self._update(document)
-    return self._insert(document)
-
-
-class Document(Table):
-  def __init__(self, name, id = None, ledger=settings.LEDGER):
-    super().__init__(table=name, ledger=ledger)
-    if id is None:
-      id = str(uuid.uuid1())
-    else:
-      self._load(id)
-    self.id = id
-  
-  def _load(self, id):
-    snapshot = super().get(id)
-    for key, value in snapshot.items():
-      setattr(self, key, value)
-
-  def fields(self):
-    return {key: value for key, value in vars(self).items() if key not in ['table', 'driver', 'index']}
-
   def save(self):
-    result = super().save(self.fields())
-    for row in result:
-      log.debug('Transaction result: \n\t\t\t\t\t\t\t %s', loads(dumps(row)))
+    fields = self.fields()
+    log.debug("Saving DOCUMENT(%s = %s)", self.index, fields[self.index])
+    if self.exists(fields[self.index]):
+      return self._update(fields)
+    return self._insert(fields)

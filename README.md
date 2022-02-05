@@ -57,6 +57,8 @@ pip install innolqb
 
 This library abstracts much of the QLDB implementation away from its user. All the user has to do is create a `Document`, add fields to it and then call `save()`. Under the hood, the library will translate the `Document` fields into [PartiQL queries](https://partiql.org/docs.html) and use the [pyqldb Driver](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html) to post the queries to the **QLDB** instance on AWS.
 
+All documents are indexed through the key field `id`. 
+
 ### Saving
 
 If you have the **LEDGER** environment variable set, all that is required is to create a `Document` object and pass it the table name of the **QLDB** ledger. If the following lines are feed into an interactive **Python** shell or copied into a script,
@@ -83,6 +85,16 @@ my_document.save()
 
 Congratulations! You have saved a document to QLDB!
 
+### Loading
+
+To load a document that exists in the ledger table already, pass in the id of the `Document` when creating a new instance,
+
+```python
+from innoldb.qldb import Document
+
+my_document(name='table-name', id='12345')
+```
+
 ### Updating
 
 Updating and saving are different operations, in terms of the **PartiQL** queries that implement these operations, but from the `Document`'s perspective, they are the same operation; the same method is called in either case. The following script will save a value of `test 1` to `field` and then overwrite it with a value of `test 2`,
@@ -98,6 +110,19 @@ my_document.save()
 ```
 
 Behind the scenes, whenever the `save()` method is called, a query is run to check for the existence of the given `Document`. If the `Document` doesn't exist, the library will create a new one. If the `Document` does exist, the library will overwrite the existing `Document`.
+
+### Fields
+
+The document fields can be returned as a `dict` through the `fields()` method. The following script will loop through the fields on an existing document with `id=test` and print their corresponding values,
+
+```python
+from innoldb.qldb import Document
+
+my_document = Document('table-name', id='test')
+
+for key, value in my_document.fields().items():
+  print(key, '=', value)
+```
 
 ## References 
 - [AWS QLDB Documentation](https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html)

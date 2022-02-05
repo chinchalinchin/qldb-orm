@@ -1,5 +1,4 @@
 import argparse
-import sys
 import random
 from innoldb.qldb import Document
 from innoldb.logger import getLogger
@@ -26,7 +25,7 @@ def create():
   return document
 
 def load(id):
-  return Document(name='innolab', id=id)
+  return Document(table='innolab', id=id)
 
 def update_prop(document, key, value):
   setattr(document, key, value)
