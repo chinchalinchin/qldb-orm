@@ -1,7 +1,7 @@
 import uuid
+from amazon.ion.simpleion import dumps, loads
 from pyqldb.driver.qldb_driver import QldbDriver
 from . import settings
-from .parser import Parser
 from .logger import getLogger
 
 log = getLogger('innoldb.qldb')
@@ -16,7 +16,7 @@ class Driver():
     :type statement: str
     :param \*params: Arguments for parameterized query.
     """
-    log.debug("executing statement '%s' with parameters %s", statement, params)
+    log.debug("Executing statement: \n\t\t\t\t\t\t\t %s \n\t\t\t\t\t\t\t parameters: %s \n", statement, params)
     if len(params) == 0:
       return transaction_executor.execute_statement(statement)
     return transaction_executor.execute_statement(statement, *params)
@@ -100,25 +100,31 @@ class Driver():
     :return: iterable containing result set
     """
     lookup = document[index]
-    parameters = []
-    n = len(list(document.items()))
-
-    # unpack dictionary into ordered alternating list of key, values
-    # to match the `SET ? = ?` ordering in the PartiQL query.  
-    for key, value in document.items():
-      if key is not index:
-        parameters.append(key)
-        parameters.append(value)
-
-    set_clause = Parser.set_parameter_string(n)
+    buffer_document = { key: value for key, value in document.items() if key != index }
 
     ## NOTE: See notes in prior methods
     ##  TODO: check table string for malicious parameterization
-    update_statement = 'UPDATE {} {} WHERE ? = ?'.format(table, set_clause)
 
-    return driver.execute_lambda(lambda executor: Driver.execute(
-      executor, update_statement, *parameters, index, lookup
-    ))
+    ## NOTE: For some reason, you cannot parameterize more than one field update,
+    ##        i.e., `SET column1 = value1 SET column2 = value2` does not work.
+    ## TODO: will need to get a snapshot of existing document and iterate through fields 
+    ##        to see if any have changed and update 
+    result = Driver.query_by_field(driver, index, lookup, table)
+    results = []
+
+    ## ERROR HERE. Buffer document can have more keys
+    for row in result:
+      saved_document = loads(dumps(row))
+      for (key, buffer_value) in buffer_document.items():
+        saved_value = saved_document.get(key, None)
+        log.debug('Comparing saved value: %s \n\t\t\t\t\t\t\t to buffer value: %s', saved_value, buffer_value)
+        if saved_value != buffer_value:
+          log.debug('Not equal')
+          update_statement = 'UPDATE {} SET {} = ? WHERE {} = ?'.format(table, key, index)
+          results += driver.execute_lambda(lambda executor: Driver.execute(
+                              executor, update_statement, buffer_value, lookup
+                          ))
+    return results
 
   @staticmethod
   def query_by_field(driver, field, value, table):
@@ -134,10 +140,11 @@ class Driver():
     :type table: str
     :return: iterable containing result
     """
-    statement = 'SELECT * FROM {} WHERE ? = ?'.format(table)
+    statement = 'SELECT * FROM {} WHERE {} = ?'.format(table, field)
     return driver.execute_lambda(lambda executor: Driver.execute(
-      executor, statement, field, value
+      executor, statement, value
     ))
+
 
 class Table():
   def __init__(self, table, ledger=settings.LEDGER, index=settings.DEFAULT_INDEX):
@@ -160,27 +167,38 @@ class Table():
       log.debug(e)
 
   def _insert(self, document):
+    log.debug("Inserting DOCUMENT(%s = %s)", self.index, document[self.index])
     return Driver.insert(self.driver, document, self.table)
   
   def _update(self, document):
+    log.debug("Updating DOCUMENT(%s = %s)", self.index, document[self.index])
     return Driver.update(self.driver, document, self.table, self.index)
 
   def exists(self, id):
+    log.debug("Checking existence of DOCUMENT(%s = %s)", self.index, id)
     result = Driver.query_by_field(self.driver, self.index, id, self.table)
+    # for row in result:
+    #   log.debug("Query returned with row %s", row)
     if next(result, None):
       return True
     return False
   
   def save(self, document):
+    log.debug("Saving Document(%s = %s)", self.index, document[self.index])
     if self.exists(document[self.index]):
       return self._update(document)
     return self._insert(document)
+
 
 class Document(Table):
   def __init__(self, name, id = str(uuid.uuid1()), ledger=settings.LEDGER):
     super().__init__(table=name, ledger=ledger)
     self.id = id
-    
+  
+  def fields(self):
+    return {key: value for key, value in vars(self).items() if key not in ['table', 'driver', 'index']}
+
   def save(self):
-    fields = {key: value for key, value in vars(self).items() if key not in ['table', 'driver', 'index']}
-    super().save(fields)
+    result = super().save(self.fields())
+    for row in result:
+      log.debug('Query result row : \n %s', loads(dumps(row)))

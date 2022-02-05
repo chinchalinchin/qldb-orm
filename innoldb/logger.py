@@ -10,7 +10,7 @@ def getLogger(name: str) -> logging.Logger:
     :return: Instance of Logger.
     :rtype: :class:`logging.Logger`    
     """
-    logFormatter = logging.Formatter("%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
+    logFormatter = logging.Formatter("%(asctime)s [%(levelname)-5.5s] [{}] %(message)s".format(name))
     logger = logging.getLogger(name)
     consoleHandler = logging.StreamHandler()
     consoleHandler.setFormatter(logFormatter)
