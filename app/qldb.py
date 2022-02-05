@@ -1,5 +1,7 @@
 from pyqldb.driver.qldb_driver import QldbDriver
 
+from app.parser import Parser
+
 class Driver():
   @staticmethod 
   def execute(transaction_executor, statement, *params):
@@ -65,7 +67,7 @@ class Driver():
     ))
   
   @staticmethod
-  def update(driver, field, value, lookup, table, index):
+  def update(driver, document, table, index):
     """Static method for updating table field in document
     :param field: field to be updated
     :type field: str
@@ -80,8 +82,24 @@ class Driver():
 
     :return: iterable containing result
     """
+    lookup = document[index]
+    parameters = []
+    n = len(list(document.items()))
+
+    # unpack dictionary into ordered alternating list of key, values
+    # to match the `SET ? = ?` ordering in the PartiQL query.  
+    for key, value in document.items():
+      if key is not index:
+        parameters.append(key)
+        parameters.append(value)
+
+    set_clause = Parser.set_parameter_string(n)
+
+    update_statement = f'UPDATE ? {set_clause} WHERE ? = ?'
+
     return driver.execute_lambda(lambda executor: Driver.execute(
-      executor, 'UPDATE ? SET ? = ? WHERE ? = ?', table, field, value, index, lookup
+      executor, update_statement, 
+      table, *parameters, index, lookup
     ))
 
   @staticmethod
