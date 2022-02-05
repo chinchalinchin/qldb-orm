@@ -4,24 +4,14 @@ Description: "Stack for a serverless QLDB ledger"
 Parameters:
     ledgerName:
       Type: String
-    applicationName:
-      Type: String
-      Default: innolab
-    environmentName:
-      Type: String
-      Default: Dev
+      Default: laboratory
 
 Resources:
   QLDBLedger:
     Type: AWS::QLDB::Ledger
     Properties:
-      Name: !Sub ${applicationName}-${environmentName}-${ledgerName}
+      Name: !Ref ledgerName
       PermissionsMode: STANDARD
       DeletionProtection: false
-      Tags:
-        - Key: Environment
-          Value: !Ref environmentName
-        - Key: Application
-          Value: !Ref applicationName
    
 

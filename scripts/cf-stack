@@ -1,0 +1,51 @@
+#!/bin/bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+SCRIPT_NAME="qldb-stack"
+SCRIPT_DES=$'A script for posting QLDB template to CloudFormation. See comments in script for usage information.'
+PROJECT_DIR=$SCRIPT_DIR/..
+source $PROJECT_DIR/env/.env
+
+# Example Usage:
+# >$     qldb-stack> --ledger
+
+function log(){
+  echo -e "\e[92m$(date +"%r")\e[0m: \e[4;32m$SCRIPT_NAME\e[0m : >> $1"
+}
+
+function help(){
+  echo -e "\n\e[4m$SCRIPT_NAME\e[0m\n\n\t$SCRIPT_DES" 
+}
+
+while [[ $# -gt 0 ]]; do
+  key="$1"
+  case $key in
+    --ledger|-ledger|--l|-l)
+      LEDGER="$2"
+      shift
+      shift 
+      ;;
+    --help|-help|--h|-h)
+      help
+      exit 0
+      ;;
+    *)
+      log "Input not understood. See \e[3m--help\e[0m for information on using this command."
+      exit 1
+      ;;
+  esac
+done
+
+if [ -z "$LEDGER" ]
+then
+  log "No \e[3m--ledger\e[0m specified. Re-execute with this required argument."
+  exit 1
+fi
+
+cp $PROJECT_DIR/cf/qldb.yml ./qldb.yml
+log "Creating \e[1mQLDB-${LEDGER}-Stack\e[0m"
+aws cloudformation create-stack \
+    --stack-name "QLDB-${LEDGER}-Stack" \
+    --template-body file://qldb.yml \
+    --parameters ParameterKey=ledgerName,ParameterValue=$LEDGER
+rm ./qldb.yml

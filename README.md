@@ -13,34 +13,28 @@ document.save()
 ```
 
 ## Setup
-### From PyPi
-
-TODO
-
-### From Source 
-Overview
---------
-
+### Overview
 1. (Optional) Configure environment
 2. Create **QLDB** Ledger
 3. Configure IAM user/role permissions for ledger
+4. Install library
 
-Steps
------
+### Steps
+
 1. (Optional) Configure Environment
 
 ```shell
-cp ./env/.sample.env ./env/.env
+export LEDGER='ledger-name'
 ```
 
 The environment variable **LEDGER** should point to the **QLDB** ledger. If you do not configure the **LEDGER** environment variable, you will need to pass in the ledger name to the `Document` object. See [below](#documents) for more information.
 
 2. Create **QLDB** Ledger
 
-A **QLDB** CloudFormation template is available in the *cf* directory of this project. A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). From the project root, execute the following script and specify the `<ledger-name>` to create a ledger on QLDB,
+A **QLDB** CloudFormation template is available in the *cf* directory of this project's [Github](https://github.com/Makpar-Innovation-Laboratory/innolqb). A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). Clone the repository and then rrom the project root, execute the following script and specify the `<ledger-name>` to create a ledger on the QLDB service,
 
 ```shell
-./scripts/qldb-stack --ledger <ledger-name>
+./scripts/cf-stack --ledger <ledger-name>
 ```
 
 **NOTE**: The `<ledger-name>` must match the value of the **LEDGER** environment variable. The name of the ledger that is stood up on AWS is passed to the library through this environment variable.
@@ -53,6 +47,11 @@ In production, you will want to limit the permissions of the application client 
 
 If you are configuring an application role to use this library for a particular ledger and table, you will need to scope the permissions using [this reference](https://docs.aws.amazon.com/qldb/latest/developerguide/getting-started-standard-mode.html).
 
+4. Install `innolqb`
+
+```shell
+pip install innolqb
+```
 
 ## Documents
 
@@ -104,3 +103,9 @@ Behind the scenes, whenever the `save()` method is called, a query is run to che
 - [AWS QLDB Documentation](https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html)
 - [QLDB Python Driver Documentation](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html)
 - [PartiQL Documentation](https://partiql.org/docs.html)
+
+## TODOS
+
+1. Provision QLDB through Boto3 client instead of using CloudFormation template; i.e., make the provisioning of the Ledger part of the library.
+
+2. Query class to return iterable of Documents.
