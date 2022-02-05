@@ -43,9 +43,9 @@ then
 fi
 
 cp $PROJECT_DIR/cf/qldb.yml ./qldb.yml
-log "Creating \e[1mQLDB-${LEDGER}-Stack\e[0m"
+log "Creating \e[1mQLDB-${LEDGER^}-Stack\e[0m"
 aws cloudformation create-stack \
-    --stack-name "QLDB-${LEDGER}-Stack" \
+    --stack-name "QLDB-${LEDGER^}-Stack" \
     --template-body file://qldb.yml \
     --parameters ParameterKey=ledgerName,ParameterValue=$LEDGER
 rm ./qldb.yml

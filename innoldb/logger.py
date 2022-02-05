@@ -1,4 +1,5 @@
 import logging
+from innoldb import settings
 
 def getLogger(name: str) -> logging.Logger:
     """
@@ -14,6 +15,6 @@ def getLogger(name: str) -> logging.Logger:
     logger = logging.getLogger(name)
     consoleHandler = logging.StreamHandler()
     consoleHandler.setFormatter(logFormatter)
-    logger.setLevel(logging.NOTSET)
+    logger.setLevel(settings.get_log_level())
     logger.addHandler(consoleHandler)
     return logger

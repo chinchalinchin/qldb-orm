@@ -1,10 +1,19 @@
 import uuid
 from amazon.ion.simpleion import dumps, loads
+from boto3 import client
 from pyqldb.driver.qldb_driver import QldbDriver
-from . import settings
-from .logger import getLogger
+from innoldb import settings
+from innoldb.logger import getLogger
 
 log = getLogger('innoldb.qldb')
+
+def create_ledger(ledger):
+  qldb = client('qldb')
+  qldb.create_ledger(
+    Name=ledger,
+    PermissionsMode='STANDARD',
+    DeletionProtection=False,
+  )
 
 class Driver():
   @staticmethod 
@@ -157,13 +166,14 @@ class Table():
     # Name of the lookup field in the PartiQL table
     self.index = index
     # Fields 'in' the table. 
-    self._init_fixtures()
+    self._init_fixtures(ledger)
 
-  def _init_fixtures(self):
-    try:
-      Driver.create_table(self.driver, self.table)
-    except Exception as e:
-      log.debug(e)
+  def _init_fixtures(self, ledger):
+    if self.table not in Driver.tables(ledger):
+      try:
+        Driver.create_table(self.driver, self.table)
+      except Exception as e:
+        log.debug(e)
     try:
       Driver.create_index(self.driver, self.table, self.index)
     except Exception as e:

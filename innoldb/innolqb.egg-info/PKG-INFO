@@ -85,7 +85,7 @@ my_document.property_two = 'property 2'
 my_document.save()
 ```
 
-If you do not have the **LEDGER** environment variable set, you must pass in the ledger name along with the table name through named arguments,
+Then a document will be inserted into the **QLDB** ledger table. If you do not have the **LEDGER** environment variable set, you must pass in the ledger name along with the table name through named arguments,
 
 ```python
 from innoldb.qldb import Document
