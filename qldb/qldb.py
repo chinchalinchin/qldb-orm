@@ -1,7 +1,9 @@
 from pyqldb.driver.qldb_driver import QldbDriver
-from qldb import settings
+from . import settings
+from .parser import Parser
+from .logger import getLogger
 
-from qldb.parser import Parser
+log = getLogger('qldb.qldb')
 
 class Driver():
   @staticmethod 
@@ -13,7 +15,10 @@ class Driver():
     :type statement: str
     :param \*params: Arguments for parameterized query.
     """
-    transaction_executor.execute_statement(statement, params)
+    log.info("executing statement '%s' with parameters %s", statement, params)
+    if len(params) == 0:
+      return transaction_executor.execute_statement(statement)
+    return transaction_executor.execute_statement(statement, *params)
 
   @staticmethod
   def driver(ledger):
@@ -21,67 +26,77 @@ class Driver():
 
     :param ledger: Name of the ledger
     :type ledger: str
+    :return: QLDB Driver
+    :rtype: :class:`pyqldb.driver.qldb_driver.QldbDriver`
     """
-    return QldbDriver(ledger_name=ledger).qldb_driver
+    return QldbDriver(ledger_name=ledger)
     
   @staticmethod
   def create_table(driver, table):
     """Static method for creating a table within a ledger
 
+    :param driver: QLDB Driver
+    :type driver: :class:`pyqldb.driver.qldb_driver.QldbDriver`
     :param table: table to be updated
     :type table: str
-
     :return: iterable containing result
     """
-    return driver.execute_lambda(lambda executor: Driver.execute(
-      executor, 'CREATE TABLE ?', table
-    ))
+    ## NOTE: I don't like directly formatting strings with query parameters that will
+    ##      be run directly against the persistence layer (since malicious users could inject
+    ##      bad parameters), but the driver won't parameterize `Create`` queries for some reason. 
+    ##      What follows is how the official documentation does it:
+    ##      https://docs.aws.amazon.com/qldb/latest/developerguide/getting-started.python.step-3.html
+    ##  NOTE: This is going to necessitate some logic in this library to prevent malicious strings from 
+    ##        gettings injected through parameters.
+    statement = 'Create TABLE {}'.format(table)
+    return driver.execute_lambda(lambda executor: Driver.execute(executor, statement))
 
   @staticmethod
   def create_index(driver, table, index):
     """Static method for generating an index on table
 
+    :param driver: QLDB Driver
+    :type driver: :class:`pyqldb.driver.qldb_driver.QldbDriver`
     :param table: table to be updated
     :type table: str
     :param index: index to search against
     :type index: str
-
     :return: iterable containing result
     """
-    return driver.execute_lambda(lambda executor: Driver.execute(
-      executor, 'CREATE INDEX ?(?)', table, index
-    ))
+    ## NOTE: See above note.
+    statement = 'CREATE INDEX on {} ({})'.format(table, index)
+    return driver.execute_lambda(lambda executor: Driver.execute(executor, statement))
   
   @staticmethod
   def insert(driver, document, table):
     """Static method for inserting document into table
 
+    :param driver: QLDB Driver
+    :type driver: :class:`pyqldb.driver.qldb_driver.QldbDriver`
     :param document: document containing fields to insert
     :type document: dict
     :param table: table into which document is inserted
     :type table: str
-
     :return: iterable containing result
     """
-    return driver.execute_lambda(lambda executor: Driver.execute(
-      executor, 'INSERT INTO ? ?', table, document
-    ))
+    ## NOTE: See above note.
+    ##  TODO: check table string for malicious parameterization
+    statement = 'INSERT INTO {} ?'.format(table)
+    return driver.execute_lambda(lambda executor: Driver.execute(executor, statement, document))
   
   @staticmethod
   def update(driver, document, table, index):
-    """Static method for updating table field in document
-    :param field: field to be updated
-    :type field: str
-    :param value: updated value
-    :type value: str
-    :param lookup: index to be updated
-    :type lookup: str
-    :param table: table to be updated
-    :type table: str
-    :param index: index to search against
-    :type index: str
+    """Static method for updating QLDB table
 
-    :return: iterable containing result
+    :param driver: QLDB Driver
+    :type driver: :class:`pyqldb.driver.qldb_driver.QldbDriver`
+    :param document: document to be updated
+    :type document: dict
+    :param table: name of the table where the document is
+    :type table: dict
+    :param index: name of the table index
+    :type index: str
+    :return: iterable containing result set
     """
     lookup = document[index]
     parameters = []
@@ -96,25 +111,29 @@ class Driver():
 
     set_clause = Parser.set_parameter_string(n)
 
-    update_statement = f'UPDATE ? {set_clause} WHERE ? = ?'
+    ## NOTE: See notes in prior methods
+    ##  TODO: check table string for malicious parameterization
+    update_statement = 'UPDATE {} {} WHERE ? = ?'.format(table, set_clause)
 
     return driver.execute_lambda(lambda executor: Driver.execute(
-      executor, update_statement, table, *parameters, index, lookup
+      executor, update_statement, *parameters, index, lookup
     ))
 
   @staticmethod
   def query_by_field(driver, field, value, table):
     """Static method for querying table by field.
 
+    :param driver: QLDB Driver
+    :type driver: :class:`pyqldb.driver.qldb_driver.QldbDriver`
     :param field: field to be searched
     :type field: str
     :param value: search value
     :type value: str
     :param table: table to be quiered
     :type table: str
-  
     :return: iterable containing result
     """
+    statement = 'SELECT * FROM {} WHERE ? = ?'.format(table)
     return driver.execute_lambda(lambda executor: Driver.execute(
       executor, 'SELECT * FROM ? WHERE ? = ?', table, field, value
     ))
@@ -149,20 +168,6 @@ class Table():
     return False
   
   def save(self, document):
-    if self.exists():
+    if self.exists(document[self.index]):
       return self._update(document)
     return self._insert(document)
-
-
-class Field():
-  def __init__(self):
-    pass
-
-  def __get__(self, instance, owner):
-    pass
-
-  def __set__(self, instance, value):
-    pass
-
-  def __delete__(self, instance):
-    pass
