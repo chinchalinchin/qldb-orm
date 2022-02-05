@@ -4,9 +4,11 @@ A simple [Object-Relation-Mapping](https://en.wikipedia.org/wiki/Object%E2%80%93
 
 
 ```python
-from innoldb.qldb import Driver
+from innoldb.qldb import Document
 
-QldbDriver('innolab-Dev-test').execute_lambda(lambda executor: executor.execute_statement('CREATE TABLE test'))
+document = Document('my-table')
+document.field = 'my field'
+document.save()
 ```
 
 ## Overview
