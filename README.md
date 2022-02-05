@@ -1,12 +1,12 @@
-## QLDB Implementation
+# QLDB Implementation
 
-# Overview
+## Overview
 
 1. Create ledger
 2. Configure user/role permissions
 3. Create model
 
-# Setup
+## Setup
 
 0. Configure Environment
 
@@ -29,3 +29,6 @@ TODO
 
 3. Create Model
 
+
+## References 
+- [Amazon QLDB Python Driver Documentation](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html)
