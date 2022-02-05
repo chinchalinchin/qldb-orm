@@ -49,7 +49,8 @@ If you are configuring an application role to use this library for a particular 
 
 ## Documents
 
-This library abstracts much of the QLDB implementation away from its user. All the user has to do is create a `Document`, add fields to it and then call `save()`. Under the hood, the library will translate the `Document` fields into [PartiQL queries](https://partiql.org/docs.html)
+This library abstracts much of the QLDB implementation away from its user. All the user has to do is create a `Document`, add fields to it and then call `save()`. Under the hood, the library will translate the `Document` fields into [PartiQL queries](https://partiql.org/docs.html) and use the [pyqldb Driver](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html) to post the queries to the **QLDB** instance on AWS.
+
 ###
 If you have the **LEDGER** environment variable set, all that is required is to create a `Document` object and pass it the table name in the **QLDB** ledger,
 
