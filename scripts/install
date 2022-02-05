@@ -15,4 +15,8 @@ python -m build
 
 VERSION=$(cat $PROJECT_DIR/version.txt)
 
-pip install $PROJECT_DIR/dist/innolqb-${VERSION}-py3-none-any.whl
+cd $PROJECT_DIR/dist
+
+pip uninstall -y innoldb
+
+pip install innoldb-${VERSION}-py3-none-any.whl

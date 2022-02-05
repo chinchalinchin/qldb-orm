@@ -3,4 +3,4 @@
 *.pyc
 /dist/
 /dist/**
-/innoldb/innoldb.egg-info/*
+/src/innoldb/innoldb.egg-info/*

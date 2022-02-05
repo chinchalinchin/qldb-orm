@@ -1,3 +1,4 @@
 amazon.ion>=0.9.1
+boto3>=1.20.49
 pyqldb>=3.2.2
 python-dotenv>=0.19.2

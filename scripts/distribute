@@ -12,4 +12,5 @@ then
   $SCRIPT_DIR/install
 fi
 
-twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD $PROJECT_DIR/dist/*
+cd $PROJECT_DIR
+twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD dist/*

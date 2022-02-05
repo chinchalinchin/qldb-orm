@@ -8,8 +8,7 @@ from innoldb.logger import getLogger
 log = getLogger('innoldb.qldb')
 
 def create_ledger(ledger):
-  qldb = client('qldb')
-  qldb.create_ledger(
+  return client('qldb').create_ledger(
     Name=ledger,
     PermissionsMode='STANDARD',
     DeletionProtection=False,

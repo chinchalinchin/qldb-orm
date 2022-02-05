@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
-Name: innolqb
-Version: 1.0.0
+Name: innoldb
+Version: 1.0.1
 Summary: a ORM model for AWS QLDB
 Author: Makpar Innovation Lab
 Author-email: gmoore@makpar.com
