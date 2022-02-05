@@ -16,7 +16,7 @@ class Driver():
     :type statement: str
     :param \*params: Arguments for parameterized query.
     """
-    log.info("executing statement '%s' with parameters %s", statement, params)
+    log.debug("executing statement '%s' with parameters %s", statement, params)
     if len(params) == 0:
       return transaction_executor.execute_statement(statement)
     return transaction_executor.execute_statement(statement, *params)
@@ -140,7 +140,7 @@ class Driver():
     ))
 
 class Table():
-  def __init__(self, table, ledger=settings.LEDGER, index='id'):
+  def __init__(self, table, ledger=settings.LEDGER, index=settings.DEFAULT_INDEX):
     self.driver = Driver.driver(ledger)
     # Table name
     self.table = table
@@ -150,9 +150,6 @@ class Table():
     self._init_fixtures()
 
   def _init_fixtures(self):
-    # TODO: if the idea is to inherit from this class with every instance of the Model class,
-    #       then this method needs to check for the existence of the table and index before
-    #       attempting to create them again.
     try:
       Driver.create_table(self.driver, self.table)
       Driver.create_index(self.driver, self.table, self.index)

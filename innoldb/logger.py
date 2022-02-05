@@ -14,7 +14,7 @@ def getLogger(name: str) -> logging.Logger:
     logger = logging.getLogger(name)
     consoleHandler = logging.StreamHandler()
     consoleHandler.setFormatter(logFormatter)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
     logger.addHandler(consoleHandler)
 
     logger.log_dict = lambda input_dict: [ logger.info('%s : %s', key, value) for key, value in input_dict.items() ]

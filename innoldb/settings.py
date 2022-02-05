@@ -9,4 +9,5 @@ ENV_DIR = os.path.join(PROJECT_DIR,'env')
 if os.path.exists(os.path.join(ENV_DIR, '.env')):
   load_dotenv(os.path.join(ENV_DIR, '.env'))
 
-LEDGER = os.environ.setdefault('LEDGER', 'innolab')
+LEDGER = os.environ.setdefault('LEDGER', 'laboratory')
+DEFAULT_INDEX = os.environ.setdefault('DEFAULT_INDEX', 'id')

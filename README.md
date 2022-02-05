@@ -17,7 +17,7 @@ QldbDriver('innolab-Dev-test').execute_lambda(lambda executor: executor.execute_
 
 ## Setup
 
-0. Configure Environment
+1. Configure Environment
 
 ```shell
 cp ./env/.sample.env ./env/.env
@@ -25,7 +25,7 @@ cp ./env/.sample.env ./env/.env
 
 The environment variable **LEDGER** should point to the **QLDB** ledger 
 
-1. Create Ledger
+2. Create Ledger
 
 A **QLDB** CloudFormation template is available in the *cf* directory of this project. A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). From the project root, execute the following script and specify the `<ledger-name>` to create a ledger on QLDB,
 
@@ -37,12 +37,12 @@ A **QLDB** CloudFormation template is available in the *cf* directory of this pr
 
 **NOTE**: This script has other optional arguments detailed in the comments of the script itself.
 
-2. Configure User Permissions
+3. Configure User Permissions
 
 TODO
 
 
-3. Create Model
+4. Create Model
 
 
 ```python
@@ -54,8 +54,7 @@ my_document.property_two = 'property 2'
 my_document.save()
 ```
 
-You have saved a document 
-
+You have saved a document to QLDB!
 
 ## References 
 - [Amazon QLDB Python Driver Documentation](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html)
