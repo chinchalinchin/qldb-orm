@@ -31,7 +31,21 @@ The environment variable **LEDGER** should point to the **QLDB** ledger. If you 
 
 2. Create **QLDB** Ledger
 
-A **QLDB** CloudFormation template is available in the *cf* directory of this project's [Github](https://github.com/Makpar-Innovation-Laboratory/innolqb). A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). Clone the repository and then rrom the project root, execute the following script and specify the `<ledger-name>` to create a ledger on the QLDB service,
+Boto3 Client
+------------
+
+The easiest way to create a ledger is through the wrapper function in `innoldb.qldb`,
+
+```python
+from innoldb.qldb import create_ledger
+
+create_ledger('my-ledger')
+```
+
+CloudFormation
+--------------
+
+A **QLDB** CloudFormation template is also available in the *cf* directory of this project's [Github](https://github.com/Makpar-Innovation-Laboratory/innolqb). A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). Clone the repository and then rrom the project root, execute the following script and specify the `<ledger-name>` to create a ledger on the QLDB service,
 
 ```shell
 ./scripts/cf-stack --ledger <ledger-name>
@@ -47,10 +61,10 @@ In production, you will want to limit the permissions of the application client 
 
 If you are configuring an application role to use this library for a particular ledger and table, you will need to scope the permissions using [this reference](https://docs.aws.amazon.com/qldb/latest/developerguide/getting-started-standard-mode.html).
 
-4. Install `innolqb`
+4. Install `innoldb`
 
 ```shell
-pip install innolqb
+pip install innoldb
 ```
 
 ## Documents
