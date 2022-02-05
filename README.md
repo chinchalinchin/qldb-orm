@@ -13,14 +13,20 @@ document.save()
 ```
 
 ## Setup
-### Overview
+### From PyPi
+
+TODO
+
+### From Source 
+Overview
+--------
 
 1. (Optional) Configure environment
 2. Create **QLDB** Ledger
 3. Configure IAM user/role permissions for ledger
 
-### Steps
-
+Steps
+-----
 1. (Optional) Configure Environment
 
 ```shell
