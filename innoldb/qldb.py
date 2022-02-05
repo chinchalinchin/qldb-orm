@@ -177,8 +177,8 @@ class Table():
     return self._insert(document)
 
 class Document(Table):
-  def __init__(self, name, id = str(uuid.uuid1())):
-    super().__init__(table=name)
+  def __init__(self, name, id = str(uuid.uuid1()), ledger=settings.LEDGER):
+    super().__init__(table=name, ledger=ledger)
     self.id = id
     
   def save(self):

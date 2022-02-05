@@ -11,23 +11,24 @@ document.field = 'my field'
 document.save()
 ```
 
-## Overview
-
-1. Create QLDB ledger
-2. Configure IAM user/role permissions
-3. Create model
-
 ## Setup
+### Overview
 
-1. Configure Environment
+1. (Optional) Configure environment
+2. Create **QLDB** Ledger
+3. Configure IAM user/role permissions for ledger
+
+### Steps
+
+1. (Optional) Configure Environment
 
 ```shell
 cp ./env/.sample.env ./env/.env
 ```
 
-The environment variable **LEDGER** should point to the **QLDB** ledger 
+The environment variable **LEDGER** should point to the **QLDB** ledger. If you do not configure the **LEDGER** environment variable, you will need to pass in the ledger name to the `Document` object. See [below](#documents) for more information.
 
-2. Create Ledger
+2. Create **QLDB** Ledger
 
 A **QLDB** CloudFormation template is available in the *cf* directory of this project. A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). From the project root, execute the following script and specify the `<ledger-name>` to create a ledger on QLDB,
 
@@ -41,11 +42,16 @@ A **QLDB** CloudFormation template is available in the *cf* directory of this pr
 
 3. Configure User Permissions
 
-TODO
+In production, you will want to limit the permissions of the application client to the ledger and table to which it is authorized to read and write. For the purposes of using this library locally, you can add a blanket policy to your user account by [following the instructions here](https://docs.aws.amazon.com/qldb/latest/developerguide/getting-started.prereqs.html#getting-started.prereqs.permissions).
+
+If you are configuring an application role to use this library for a particular ledger and table, you will need to scope the permissions using [this reference](https://docs.aws.amazon.com/qldb/latest/developerguide/getting-started-standard-mode.html).
 
 
-4. Create Model
+## Documents
 
+This library abstracts much of the QLDB implementation away from its user. All the user has to do is create a `Document`, add fields to it and then call `save()`. Under the hood, the library will translate the `Document` fields into [PartiQL queries](https://partiql.org/docs.html)
+###
+If you have the **LEDGER** environment variable set, all that is required is to create a `Document` object and pass it the table name in the **QLDB** ledger,
 
 ```python
 from innoldb.qldb import Document
@@ -56,7 +62,20 @@ my_document.property_two = 'property 2'
 my_document.save()
 ```
 
-You have saved a document to QLDB!
+If you do not have the **LEDGER** environment variable set, you must pass in the ledger name along with the table name through named arguments,
+
+```python
+from innoldb.qldb import Document
+
+my_document = Document(name='table-name', ledger='ledger-name')
+my_document.property_one = 'property 1'
+my_document.property_two = 'property 2'
+my_document.save()
+```
+
+Congratulations! You have saved a document to QLDB!
 
 ## References 
-- [Amazon QLDB Python Driver Documentation](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html)
+- [AWS QLDB Documentation](https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html)
+- [QLDB Python Driver Documentation](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html)
+- [PartiQL Documentation](https://partiql.org/docs.html)
