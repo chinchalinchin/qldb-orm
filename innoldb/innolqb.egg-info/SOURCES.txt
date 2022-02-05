@@ -1,0 +1,11 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+setup.cfg
+version.txt
+innoldb/innolqb.egg-info/PKG-INFO
+innoldb/innolqb.egg-info/SOURCES.txt
+innoldb/innolqb.egg-info/dependency_links.txt
+innoldb/innolqb.egg-info/requires.txt
+innoldb/innolqb.egg-info/top_level.txt

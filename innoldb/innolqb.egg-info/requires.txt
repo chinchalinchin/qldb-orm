@@ -1,0 +1,3 @@
+amazon.ion>=0.9.1
+pyqldb>=3.2.2
+python-dotenv>=0.19.2

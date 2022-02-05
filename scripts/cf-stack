@@ -7,7 +7,7 @@ PROJECT_DIR=$SCRIPT_DIR/..
 source $PROJECT_DIR/env/.env
 
 # Example Usage:
-# >$     qldb-stack> --ledger
+# >$     qldb-stack --ledger <ledger-name>
 
 function log(){
   echo -e "\e[92m$(date +"%r")\e[0m: \e[4;32m$SCRIPT_NAME\e[0m : >> $1"

@@ -1,3 +1,6 @@
 *.env
 !.sample.env
 *.pyc
+/dist/
+/dist/**
+/innoldb/innoldb.egg-info/*

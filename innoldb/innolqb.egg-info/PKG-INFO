@@ -1,3 +1,18 @@
+Metadata-Version: 2.1
+Name: innolqb
+Version: 1.0.0
+Summary: a ORM model for AWS QLDB
+Author: Makpar Innovation Lab
+Author-email: gmoore@makpar.com
+License: GNU GPL v3
+Project-URL: Documentation, https://github.com/Makpar-Innovation-Laboratory/innolqb
+Project-URL: Source, https://github.com/Makpar-Innovation-Laboratory/innolqb
+Keywords: aws,qldb,quantum-ledger-database,orm
+Platform: any
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
 # Makpar Innovation Lab
 ## innolqb
 
@@ -70,7 +85,7 @@ my_document.property_two = 'property 2'
 my_document.save()
 ```
 
-Then a document will be inserted into the **QLDB** ledger table. If you do not have the **LEDGER** environment variable set, you must pass in the ledger name along with the table name through named arguments,
+If you do not have the **LEDGER** environment variable set, you must pass in the ledger name along with the table name through named arguments,
 
 ```python
 from innoldb.qldb import Document
@@ -109,3 +124,4 @@ Behind the scenes, whenever the `save()` method is called, a query is run to che
 1. Provision QLDB through Boto3 client instead of using CloudFormation template; i.e., make the provisioning of the Ledger part of the library.
 
 2. Query class to return iterable of Documents.
+
