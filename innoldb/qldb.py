@@ -201,4 +201,4 @@ class Document(Table):
   def save(self):
     result = super().save(self.fields())
     for row in result:
-      log.debug('Query result row : \n %s', loads(dumps(row)))
+      log.debug('Transaction result: \n\t\t\t\t\t\t\t %s', loads(dumps(row)))
