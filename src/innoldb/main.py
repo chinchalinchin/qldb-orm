@@ -40,8 +40,10 @@ def mock(table):
 def load(id, table):
   return Document(table=table, id=id)
 
-def insert(table, document, id=None):
-  return Document(table=table, id=id, snapshot=document).save()
+def insert(table, document):
+  document = Document(table=table, snapshot=document)
+  document.save()
+  return document.id
 
 def all(table):
   return Query(table).all()
@@ -84,9 +86,8 @@ def do_program(cli_args):
       log.warn("No Document ID specified.")
   
   elif args.insert:
-    new_id = str(uuid.uuid1())
-    insert(args.table, args.insert, new_id)
-    document = load(new_id, args.table)
+    insert_id = insert(args.table, args.insert)
+    document = load(insert_id, args.table)
     printer.pprint(document.fields())
     
 
@@ -95,7 +96,3 @@ def entrypoint():
 
 if __name__=="__main__":
   do_program(sys.argv[1:])
-
-# if __name__==:""
-  # from qldb.qldb import Driver
-  # QldbDriver('innolab-Dev-test').execute_lambda(lambda executor: executor.execute_statement('CREATE TABLE test'))
