@@ -4,15 +4,25 @@ on:
   push:
     branches: 
       - master
+      - feature/*
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ master ]
 
 jobs:
   unit_tests:
+    name: Unit Tests
+    permissions: 
+      repository-project: write
+      pull-requests: write
+      checks: write
+      id-token: write
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
       - run: |
-          VERSION=$(cat $PROJECT_DIR/version.txt)
+          VERSION=$(cat version.txt)
           NOW=$(DATE)
           pip install -r ./tests/requirements.txt
           python -m build && cd dist
