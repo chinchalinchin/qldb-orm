@@ -48,12 +48,12 @@ def update_prop(document, key, value):
 
 def do_program(cli_args):
   parser = argparse.ArgumentParser()
-  parser.add_argument('--id', help="ID of the document to load")
-  parser.add_argument('--table', help="Name of the table to query", required=True)
-  parser.add_argument('--update', nargs='*', help="Update fields with `KEY1=VALUE1 KEY2=VALUE2 ...`", action=KeyValue)
-  parser.add_argument('--insert', nargs='*', help="Create document with fields `KEY1=VALUE1 KEY2=VALUE2 ...`", action=KeyValue)
-  parser.add_argument('--mock', action='store_true', help="Create a new mock document")
-  parser.add_argument('--all', action='store_true', help='Query all documents')
+  parser.add_argument('-id', '--id', help="ID of the document to load")
+  parser.add_argument('-tb', '--table', help="Name of the table to query", required=True)
+  parser.add_argument('-up', '--update', nargs='*', help="Update fields with `KEY1=VALUE1 KEY2=VALUE2 ...`", action=KeyValue)
+  parser.add_argument('-in', '--insert', nargs='*', help="Create document with fields `KEY1=VALUE1 KEY2=VALUE2 ...`", action=KeyValue)
+  parser.add_argument('-mo', '--mock', action='store_true', help="Create a new mock document")
+  parser.add_argument('-al', '--all', action='store_true', help='Query all documents')
   
   args = parser.parse_args(cli_args)
   
@@ -72,7 +72,7 @@ def do_program(cli_args):
 
   elif args.update:
     if args.id:
-      document = load(args.id)
+      document = load(args.id, args.table)
       for key, value in args.update.items():
         update_prop(document, key, value)
       printer.pprint(document.fields())
@@ -81,7 +81,7 @@ def do_program(cli_args):
   
   elif args.insert:
     insert(args.table, args.insert, args.id)
-    document = load(args.id)
+    document = load(args.id, args.table)
     printer.pprint(document)
     
 

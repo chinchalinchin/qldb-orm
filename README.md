@@ -245,6 +245,26 @@ os.environ['LOG_LEVEL'] = 'DEBUG'
 Query('table-name').all()
 ```
 
+## Build From Source
+
+The `innoldb` library can be built from source with the following script,
+
+```shell
+git clone https://github.com/Makpar-Innovation-Laboratory/innolqb
+cd innolqb
+python -m build
+VERSION=$(cat version.txt)
+cd dist
+pip install innoldb-${VERSION}-py3-none-any.whl
+```
+
+Or use the pre-packaged helper script,
+
+```shell
+git clone https://github.com/Makpar-Innovation-Laboratory/innolqb
+./innolqb/scripts/install
+```
+
 ## References 
 - [AWS QLDB Documentation](https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html)
 - [QLDB Python Driver Documentation](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html)
