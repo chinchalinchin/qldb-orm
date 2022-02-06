@@ -21,16 +21,26 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
-      - run: |
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+          pip install -r ./tests/requirements
+      - name: Initialize Environment
+        run: |
           VERSION=$(cat version.txt)
           NOW=$(date)
-          pip install -r ./tests/requirements.txt
+      - name: Build test application
+        run: |
           python -m build && cd dist
           pip install innoldb-${VERSION}-py3-none-any.whl && cd ..
+      - name: Run unit tests
+        run: |
           coverage run --source="./src/innoldb/" -m pytest --junit-xml=coverage-execution.xml
           coverage html --dir=/tmp/docs/
+      - name: Upload coverage 
+          git add . && git stash
           git checkout gh-pages
-          cp -a /tmp/docs/. $(pwd)
-          git add .
-          git commit -m "$NOW Automated Test Coverage"
+          cp -a /tmp/docs/. ./coverage/
+          git add . && git commit -m "$NOW Automated Test Coverage"
           git push
