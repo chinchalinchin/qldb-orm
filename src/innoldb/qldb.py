@@ -2,7 +2,7 @@ import uuid
 from amazon.ion.simpleion import dumps, loads
 from boto3 import client
 from pyqldb.driver.qldb_driver import QldbDriver
-from innoldb import settings
+from innoldb import clauses, settings
 from innoldb.logger import getLogger
 
 log = getLogger('innoldb.qldb')
@@ -158,22 +158,21 @@ class Driver():
     ))
 
   @staticmethod
-  def query_by_field(driver, field, value, table):
+  def query_by_fields(driver, table, **fields):
     """Static method for querying table by field.
 
     :param driver: QLDB Driver
     :type driver: :class:`pyqldb.driver.qldb_driver.QldbDriver`
-    :param field: field to be searched
-    :type field: str
-    :param value: search value
-    :type value: str
-    :param table: table to be quiered
+    :param fields: Keyword arguments. A dictionary containing the fields used to construct `WHERE` clause in query.
+    :type fields: dict
     :type table: str
     :return: iterable containing result
     """
-    statement = 'SELECT * FROM {} WHERE {} = ?'.format(table, field)
+    columns, values = fields.keys(), fields.values()
+    where_clause = clauses.where(*columns)
+    statement = 'SELECT * FROM {} {}'.format(table, where_clause)
     return driver.execute_lambda(lambda executor: Driver.execute(
-      executor, statement, value
+      executor, statement, *values
     ))
 
 
