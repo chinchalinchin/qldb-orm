@@ -62,20 +62,24 @@ def update_prop(document, **props):
 
 def do_program(cli_args):
   parser = argparse.ArgumentParser()
-  parser.add_argument('-id', '--id', help="ID of the document to load")
   parser.add_argument('-tb', '--table', help="Name of the table to query", required=True)
-  parser.add_argument('-up', '--update', nargs='*', help="Update fields with `KEY1=VAL1 KEY2=VAL2 ...`", action=KeyValue)
+  parser.add_argument('-id', '--id', help="ID of the document")
+  parser.add_argument('-up', '--update', nargs='*', help="Requires --id.\n Update fields with `KEY1=VAL1 KEY2=VAL2 ...`", action=KeyValue)
   parser.add_argument('-in', '--insert', nargs='*', help="Create document with fields `KEY1=VAL1 KEY2=VAL2 ...`", action=KeyValue)
   parser.add_argument('-fi', '--find', nargs='*', help="Query by field equality `KEY1=VAL1 KEY2=VAL2...`", action=KeyValue)
   parser.add_argument('-lk', '--like', nargs='*', help="Query by field matching `KEY1=VAL1 KEY2=VAL2 ...`", action=KeyValue)
+  parser.add_argument('-lo', '--load', action='store_true', help="Requires --id.\n Load a document.",)
   parser.add_argument('-mo', '--mock', action='store_true', help="Create a new mock document")
   parser.add_argument('-al', '--all', action='store_true', help='Query all documents')
   
   args = parser.parse_args(cli_args)
   
-  if args.id and not args.update:
-    document = load(args.id, args.table)
-    printer.pprint(document.fields())
+  if args.load:
+    if args.id:
+      document = load(args.id, args.table)
+      printer.pprint(document.fields())
+    else:
+      log.warn("No Document ID specified.")
 
   elif args.mock:  
     document = mock(args.table)

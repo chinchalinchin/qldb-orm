@@ -1,4 +1,3 @@
-from amazon.ion.simpleion import dumps, loads
 from boto3 import client
 from pyqldb.driver.qldb_driver import QldbDriver
 from innoldb.static.logger import getLogger
@@ -177,6 +176,7 @@ class Driver():
       executor, statement, *values
     ))
 
+  # DOESN'T WORK 
   @staticmethod
   def query_like_fields(driver, table, **fields):
     columns, values = list(fields.keys()), list(fields.values())

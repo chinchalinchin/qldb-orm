@@ -5,9 +5,10 @@ IN = "IN"
 def where(operator, *columns):
   """Generates a **PartiQL** `WHERE` clause for an arbitrary number of columns with the specified argument.
 
+  :param operator: Operator to apply in the `WHERE` clause. Defaults to equality. Verbs are statically accessible through the `clauses.VERBS` dictionary.
+  :type operater: str
   :param *columns: List of columns to include in the where clause.
   :type *columns: list
-  :param operator: *Optional*. Operator to apply in the `WHERE` clause. Defaults to equality. Verbs are statically accessible through the `clauses.VERBS` dictionary.
   :return: `WHERE` clause
   :rtype: str
   """
