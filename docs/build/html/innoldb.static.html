@@ -1,0 +1,566 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="_static/javascripts/modernizr.js"></script>
+  
+  
+  
+    <title>innoldb.static package &#8212; innoldb v1.0.10 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/material.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Todos" href="TODOS.html" />
+    <link rel="prev" title="innoldb package" href="innoldb.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=blue data-md-color-accent=light-blue>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#innoldb.static" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="index.html" title="innoldb v1.0.10 documentation"
+           class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">&#xe5c3</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">Innovation Lab</span>
+          <span class="md-header-nav__topic"> innoldb.static package </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder="Search"
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+      
+  
+  <script src="_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = ""versions.json"",
+        target_loc = "../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">innoldb v1.0.10 documentation</a></li>
+          <li class="md-tabs__item"><a href="modules.html" class="md-tabs__link">innoldb</a></li>
+          <li class="md-tabs__item"><a href="innoldb.html" class="md-tabs__link">innoldb package</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="index.html" title="innoldb v1.0.10 documentation" class="md-nav__button md-logo">
+      
+        <i class="md-icon">&#xe5c3</i>
+      
+    </a>
+    <a href="index.html"
+       title="innoldb v1.0.10 documentation">Innovation Lab</a>
+  </label>
+  
+
+  
+  <ul class="md-nav__list">
+    <li class="md-nav__item">
+    
+      <span class="md-nav__link caption"><span class="caption-text">Contents:</span></span>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="INTRODUCTION.html" class="md-nav__link">Makpar Innovation Lab</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="SETUP.html" class="md-nav__link">Setup</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="CLI.html" class="md-nav__link">Command Line Usage</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="MODELS.html" class="md-nav__link">Document Object Model</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="MODELS.html#query-object-model" class="md-nav__link">Query Object Model</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="CONFIGURATION.html" class="md-nav__link">Configuration</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="REFERENCES.html" class="md-nav__link">References</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="modules.html" class="md-nav__link">innoldb</a>
+      <ul class="md-nav__list"> 
+    <li class="md-nav__item">
+    
+    
+      <a href="innoldb.html" class="md-nav__link">innoldb package</a>
+      
+    
+    </li></ul>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="TODOS.html" class="md-nav__link">Todos</a>
+      
+    
+    </li>
+  </ul>
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">Contents</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#innoldb-static--page-root" class="md-nav__link">innoldb.static package</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#submodules" class="md-nav__link">Submodules</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-innoldb.static.clauses" class="md-nav__link">innoldb.static.clauses module</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-innoldb.static.driver" class="md-nav__link">innoldb.static.driver module</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-innoldb.static.logger" class="md-nav__link">innoldb.static.logger module</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-innoldb.static" class="md-nav__link">Module contents</a>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="_sources/innoldb.static.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <section id="innoldb-static-package">
+<h1 id="innoldb-static--page-root">innoldb.static package<a class="headerlink" href="#innoldb-static--page-root" title="Permalink to this headline">¶</a></h1>
+<section id="submodules">
+<h2 id="submodules">Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-innoldb.static.clauses">
+<span id="innoldb-static-clauses-module"></span><h2 id="module-innoldb.static.clauses">innoldb.static.clauses module<a class="headerlink" href="#module-innoldb.static.clauses" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="innoldb.static.clauses.set_statement">
+<span class="sig-prename descclassname"><span class="pre">innoldb.static.clauses.</span></span><span class="sig-name descname"><span class="pre">set_statement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.clauses.set_statement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="innoldb.static.clauses.where">
+<span class="sig-prename descclassname"><span class="pre">innoldb.static.clauses.</span></span><span class="sig-name descname"><span class="pre">where</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.clauses.where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a <strong>PartiQL</strong> <cite>WHERE</cite> clause for an arbitrary number of columns with the specified argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>operator</strong> – Operator to apply in the <cite>WHERE</cite> clause. Defaults to equality. Verbs are statically accessible through the <cite>clauses.VERBS</cite> dictionary.</p></li>
+<li><p><strong>*columns</strong> – <p>List of columns to include in the where clause.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>WHERE</cite> clause</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-innoldb.static.driver">
+<span id="innoldb-static-driver-module"></span><h2 id="module-innoldb.static.driver">innoldb.static.driver module<a class="headerlink" href="#module-innoldb.static.driver" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.static.driver.</span></span><span class="sig-name descname"><span class="pre">Driver</span></span><a class="headerlink" href="#innoldb.static.driver.Driver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.create_index">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.create_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for generating an index on table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>driver</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pyqldb.driver.qldb_driver.QldbDriver</span></code>) – QLDB Driver</p></li>
+<li><p><strong>table</strong> (<em>str</em>) – table to be updated</p></li>
+<li><p><strong>index</strong> (<em>str</em>) – index to search against</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>iterable containing result</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.create_table">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.create_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for creating a table within a ledger</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>driver</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pyqldb.driver.qldb_driver.QldbDriver</span></code>) – QLDB Driver</p></li>
+<li><p><strong>table</strong> (<em>str</em>) – table to be updated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>iterable containing result</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.driver">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">driver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ledger</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.driver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for retrieving a QLDB driver</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ledger</strong> (<em>str</em>) – Name of the ledger</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>QLDB Driver</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pyqldb.driver.qldb_driver.QldbDriver</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.execute">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transaction_executor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statement</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for executing transactions with QLDB driver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>transaction_executor</strong> – Executor is injected into callback function through <cite>pyqldb.driver.qldb_driver.execute_lambda</cite> method.</p></li>
+<li><p><strong>statement</strong> (<em>str</em>) – Parameterized PartialQL query.</p></li>
+<li><p><strong>*params</strong> – Arguments for parameterized query.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.insert">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for inserting document into table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>driver</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pyqldb.driver.qldb_driver.QldbDriver</span></code>) – QLDB Driver</p></li>
+<li><p><strong>document</strong> (<em>dict</em>) – document containing fields to insert</p></li>
+<li><p><strong>table</strong> (<em>str</em>) – table into which document is inserted</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>iterable containing result</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.ledger">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ledger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ledger</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.ledger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.query_all">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.query_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for querying table by field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>driver</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pyqldb.driver.qldb_driver.QldbDriver</span></code>) – QLDB Driver</p></li>
+<li><p><strong>field</strong> (<em>str</em>) – field to be searched</p></li>
+<li><p><strong>value</strong> (<em>str</em>) – search value</p></li>
+<li><p><strong>table</strong> (<em>str</em>) – table to be quiered</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>iterable containing result</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.query_by_fields">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_by_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fields</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.query_by_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for querying table by field.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>driver</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pyqldb.driver.qldb_driver.QldbDriver</span></code>) – QLDB Driver</p></li>
+<li><p><strong>fields</strong> (<em>dict</em>) – Keyword arguments. A dictionary containing the fields used to construct <cite>WHERE</cite> clause in query.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>iterable containing result</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.query_like_fields">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_like_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fields</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.query_like_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.sanitize">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sanitize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.sanitize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.tables">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ledger</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.tables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.update">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for updating QLDB table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>driver</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pyqldb.driver.qldb_driver.QldbDriver</span></code>) – QLDB Driver</p></li>
+<li><p><strong>document</strong> (<em>dict</em>) – document to be updated</p></li>
+<li><p><strong>table</strong> (<em>dict</em>) – name of the table where the document is</p></li>
+<li><p><strong>index</strong> (<em>str</em>) – name of the table index</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>iterable containing result set</p>
+</dd>
+</dl>
+</dd></dl>
+</dd></dl>
+</section>
+<section id="module-innoldb.static.logger">
+<span id="innoldb-static-logger-module"></span><h2 id="module-innoldb.static.logger">innoldb.static.logger module<a class="headerlink" href="#module-innoldb.static.logger" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="innoldb.static.logger.getLogger">
+<span class="sig-prename descclassname"><span class="pre">innoldb.static.logger.</span></span><span class="sig-name descname"><span class="pre">getLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">logging.Logger</span></span></span><a class="headerlink" href="#innoldb.static.logger.getLogger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Logger</span></code> class configured to print events on the <cite>logging.INFO</cite> level to <cite>stdout</cite>. Add special methods for logging application environment and logging dictionaries, via the <cite>log_env</cite> and <cite>log_dict</cite> methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Name of the module instantiating the <code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Logger</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Instance of Logger.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Logger</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-innoldb.static">
+<span id="module-contents"></span><h2 id="module-innoldb.static">Module contents<a class="headerlink" href="#module-innoldb.static" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+            <a href="innoldb.html" title="innoldb package"
+               class="md-flex md-footer-nav__link md-footer-nav__link--prev"
+               rel="prev">
+              <div class="md-flex__cell md-flex__cell--shrink">
+                <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+              </div>
+              <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+                <span class="md-flex__ellipsis">
+                  <span
+                      class="md-footer-nav__direction"> Previous </span> innoldb package </span>
+              </div>
+            </a>
+          
+          
+            <a href="TODOS.html" title="Todos"
+               class="md-flex md-footer-nav__link md-footer-nav__link--next"
+               rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
+                class="md-flex__ellipsis"> <span
+                class="md-footer-nav__direction"> Next </span> Todos </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink"><i
+                class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2022, Makpar Innovation Lab.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>

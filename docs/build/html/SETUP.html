@@ -279,7 +279,14 @@
     <li class="md-nav__item">
     
     
-      <a href="modules.html" class="md-nav__link">Modules</a>
+      <a href="modules.html" class="md-nav__link">innoldb</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="TODOS.html" class="md-nav__link">Todos</a>
       
     
     </li>
@@ -367,6 +374,7 @@ python
 </pre></div>
 </div>
 <p><strong>NOTE</strong>: You must install the <code class="docutils literal notranslate"><span class="pre">innoldb</span></code> package from <a class="reference external" href="https://pypi.org/project/innoldb/">PyPi</a> before creating a ledger this way. See <em>Step 4</em> for more information.</p>
+<p><strong>NOTE</strong>: This will only create the ledger if you have the necessary permissions with QLDB. <a class="reference external" href="https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions">See here for a working example of an appropriate IAM policy</a></p>
 </section>
 <section id="cloudformation">
 <h2 id="cloudformation">CloudFormation<a class="headerlink" href="#cloudformation" title="Permalink to this headline">¶</a></h2>
@@ -374,6 +382,7 @@ python
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./scripts/cf-stack --ledger &lt;ledger-name&gt;
 </pre></div>
 </div>
+<p>This method has the advantage of provisioning an <strong>IAM</strong> policy and role scoped to the ledger being created. These resources can be used by applications and users to gain access to the <strong>QLDB</strong> ledger instance. Once they are created, log into the AWS console and add the policy to your account.</p>
 <p><strong>NOTE</strong>: The <code class="docutils literal notranslate"><span class="pre">&lt;ledger-name&gt;</span></code> must match the value of the <strong>LEDGER</strong> environment variable. The name of the ledger that is stood up on AWS is passed to the library through this environment variable.</p>
 <p><strong>NOTE</strong>: This script has other optional arguments detailed in the comments of the script itself.</p>
 <ol class="simple">
@@ -381,6 +390,7 @@ python
 </ol>
 <p>In production, you will want to limit the permissions of the application client to the ledger and table to which it is authorized to read and write. For the purposes of using this library locally, you can add a blanket policy to your user account by <a class="reference external" href="https://docs.aws.amazon.com/qldb/latest/developerguide/getting-started.prereqs.html#getting-started.prereqs.permissions">following the instructions here</a>.</p>
 <p>If you are configuring an application role to use this library for a particular ledger and table, you will need to scope the permissions using <a class="reference external" href="https://docs.aws.amazon.com/qldb/latest/developerguide/getting-started-standard-mode.html">this reference</a>.</p>
+<p>See <a class="reference external" href="https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions">here</a> for a full working example of an appropriate <strong>IAM</strong> policy.</p>
 <ol class="simple">
 <li><p>Install <code class="docutils literal notranslate"><span class="pre">innoldb</span></code></p></li>
 </ol>

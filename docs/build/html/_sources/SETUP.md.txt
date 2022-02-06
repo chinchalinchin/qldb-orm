@@ -44,6 +44,8 @@ Driver.ledger('my-ledger')
 
 **NOTE**: You must install the `innoldb` package from [PyPi](https://pypi.org/project/innoldb/) before creating a ledger this way. See *Step 4* for more information.
 
+**NOTE**: This will only create the ledger if you have the necessary permissions with QLDB. [See here for a working example of an appropriate IAM policy](https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions)
+
 CloudFormation
 --------------
 
@@ -52,6 +54,8 @@ A **QLDB** CloudFormation template is also available in the *cf* directory of th
 ```shell
 ./scripts/cf-stack --ledger <ledger-name>
 ```
+
+This method has the advantage of provisioning an **IAM** policy and role scoped to the ledger being created. These resources can be used by applications and users to gain access to the **QLDB** ledger instance. Once they are created, log into the AWS console and add the policy to your account.
 
 **NOTE**: The `<ledger-name>` must match the value of the **LEDGER** environment variable. The name of the ledger that is stood up on AWS is passed to the library through this environment variable.
 
@@ -62,6 +66,8 @@ A **QLDB** CloudFormation template is also available in the *cf* directory of th
 In production, you will want to limit the permissions of the application client to the ledger and table to which it is authorized to read and write. For the purposes of using this library locally, you can add a blanket policy to your user account by [following the instructions here](https://docs.aws.amazon.com/qldb/latest/developerguide/getting-started.prereqs.html#getting-started.prereqs.permissions).
 
 If you are configuring an application role to use this library for a particular ledger and table, you will need to scope the permissions using [this reference](https://docs.aws.amazon.com/qldb/latest/developerguide/getting-started-standard-mode.html).
+
+See [here](https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions) for a full working example of an appropriate **IAM** policy.
 
 4. Install `innoldb`
 
