@@ -12,11 +12,15 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
       - run: |
+          VERSION=$(cat $PROJECT_DIR/version.txt)
+          NOW=$(DATE)
           pip install -r ./tests/requirements.txt
+          python -m build && cd dist
+          pip install innoldb-${VERSION}-py3-none-any.whl && cd ..
           coverage run --source="./src/innoldb/" -m pytest --junit-xml=coverage-execution.xml
           coverage html --dir=/tmp/docs/
           git checkout gh-pages
           cp -a /tmp/docs/. $(pwd)
           git add .
-          git commit -m "$(date) Automated Test Coverage"
+          git commit -m "$NOW Automated Test Coverage"
           git push
