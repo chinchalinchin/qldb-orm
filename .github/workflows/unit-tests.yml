@@ -26,20 +26,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install build
           pip install -r ./tests/requirements.txt
-      - name: Initialize Environment
-        run: |
-          VERSION=$(cat version.txt)
-          NOW=$(date)
       - name: Build test application
         run: |
+          VERSION=$(cat version.txt)
           python -m build && cd dist
           pip install innoldb-${VERSION}-py3-none-any.whl && cd ..
+        shell: bash
       - name: Run unit tests
         run: |
           coverage run --source="./src/innoldb/" -m pytest --junit-xml=coverage-execution.xml
           coverage html --dir=/tmp/docs/
       - name: Upload coverage 
         run: |
+          NOW=$(date)
           git add . && git stash
           git checkout gh-pages
           cp -a /tmp/docs/. ./coverage/
