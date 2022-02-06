@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-python@v2
       - run: |
           VERSION=$(cat version.txt)
-          NOW=$(DATE)
+          NOW=$(date)
           pip install -r ./tests/requirements.txt
           python -m build && cd dist
           pip install innoldb-${VERSION}-py3-none-any.whl && cd ..
