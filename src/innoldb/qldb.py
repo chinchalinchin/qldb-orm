@@ -122,7 +122,7 @@ class Driver():
     ##        i.e., `SET column1 = value1 SET column2 = value2` does not work.
     ## TODO: will need to get a snapshot of existing document and iterate through fields 
     ##        to see if any have changed and update 
-    result = Driver.query_by_field(driver, index, lookup, table)
+    result = Driver.query_by_fields(driver, table, **{index: lookup})
     results = []
 
     ## ERROR HERE. Buffer document can have more keys
@@ -175,12 +175,15 @@ class Driver():
       executor, statement, *values
     ))
 
-
-class Document():
-  def __init__(self, table, id=None, snapshot=None, ledger=settings.LEDGER):
+class Ledger():
+  def __init__(self, table, ledger=settings.LEDGER):
     self.table = table
     self.ledger = ledger
     self.index = 'id'
+
+class Document(Ledger):
+  def __init__(self, table, id=None, snapshot=None, ledger=settings.LEDGER):
+    super().__init__(table=table, ledger=ledger)
     if id is None:
       self.id = str(uuid.uuid1())        
     else:
@@ -213,7 +216,7 @@ class Document():
 
   def exists(self, id):
     log.debug("Checking existence of DOCUMENT(%s = %s)", self.index, id)
-    result = Driver.query_by_field(Driver.driver(self.ledger), self.index, id, self.table)
+    result = Driver.query_by_fields(Driver.driver(self.ledger), self.table, **{self.index: id })
     if next(result, None):
       return True
     return False
@@ -223,7 +226,7 @@ class Document():
 
   def get(self, id):
     log.debug("Returning DOCUMENT(%s = %s)", self.index, id)
-    return loads(dumps(next(Driver.query_by_field(Driver.driver(self.ledger), self.index, id, self.table))))
+    return loads(dumps(next(Driver.query_by_fields(Driver.driver(self.ledger), self.table, **{self.index: id }))))
   
   def save(self):
     fields = self.fields()
@@ -232,14 +235,15 @@ class Document():
       return next(self._update(fields))
     return next(self._insert(fields))
 
-class Query():
+class Query(Ledger):
   def __init__(self, table, ledger=settings.LEDGER):
-    self.table = table
-    self.ledger = ledger
-    self.index = 'id'
+    super().__init__(table=table, ledger=ledger)
   
   def all(self):
     results = Driver.query_all(Driver.driver(self.ledger), self.table)
     return [ Document(table=self.table, snapshot=loads(dumps(result))) for result in results]
-    
+  
+  def find_by(self, **kwargs):
+    results = Driver.query_by_fields(Driver.driver(self.ledger), self.table, **kwargs)
+    return [ Document(table = self.table, snapshot=loads(dumps(result))) for result in results]
     

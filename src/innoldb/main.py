@@ -2,7 +2,6 @@ import argparse
 import pprint
 import random
 import sys
-import uuid
 from innoldb.qldb import Document, Query
 from innoldb.logger import getLogger
 
@@ -48,6 +47,9 @@ def insert(table, document):
 def all(table):
   return Query(table).all()
 
+def find(table, fields):
+  return Query(table).find_by(**fields)
+
 def update_prop(document, key, value):
   setattr(document, key, value)
   return document.save()
@@ -58,6 +60,7 @@ def do_program(cli_args):
   parser.add_argument('-tb', '--table', help="Name of the table to query", required=True)
   parser.add_argument('-up', '--update', nargs='*', help="Update fields with `KEY1=VALUE1 KEY2=VALUE2 ...`", action=KeyValue)
   parser.add_argument('-in', '--insert', nargs='*', help="Create document with fields `KEY1=VALUE1 KEY2=VALUE2 ...`", action=KeyValue)
+  parser.add_argument('-fi', '--find', nargs='*', help="Query by field equality `KEY1=VALUE1 KEY2=VALUE2...`", action=KeyValue)
   parser.add_argument('-mo', '--mock', action='store_true', help="Create a new mock document")
   parser.add_argument('-al', '--all', action='store_true', help='Query all documents')
   
@@ -89,6 +92,11 @@ def do_program(cli_args):
     insert_id = insert(args.table, args.insert)
     document = load(insert_id, args.table)
     printer.pprint(document.fields())
+
+  elif args.find:
+    results = find(args.table, args.find)
+    for result in results:
+      printer.pprint(result.fields())
     
 
 def entrypoint():
