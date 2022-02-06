@@ -1,0 +1,22 @@
+name: Unit Tests
+
+on: 
+  push:
+    branches: 
+      - master
+
+jobs:
+  unit_tests:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - run: |
+          pip install -r ./tests/requirements.txt
+          coverage run --source="./src/innoldb/" -m pytest --junit-xml=coverage-execution.xml
+          coverage html --dir=/tmp/docs/
+          git checkout gh-pages
+          cp -a /tmp/docs/. $(pwd)
+          git add .
+          git commit -m "$(date) Automated Test Coverage"
+          git push
