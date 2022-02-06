@@ -1,9 +1,12 @@
 import argparse
+import pprint
 import random
+import sys
 from innoldb.qldb import Document, Query
 from innoldb.logger import getLogger
 
 log = getLogger('main')
+printer = pprint.PrettyPrinter(indent=4)
 
 departments = ['Business Development', 'Research and Development', 'Innovation and Technology']
 locations = ['Virgina', 'Maryland', 'Florida', 'Minnesota', 'West Virginia']
@@ -13,8 +16,8 @@ members = [{'UI/UX': 'Phung'}, {'Solutions': 'Justin'}, { 'Capabilities': 'Peter
            {'Developer #1': 'Thomas'}, {'Developer #2': 'Aurora'}, {'DevSecOps': 'Grant'},
            {'Scrum': 'Selah'}, { 'Architect': 'Tariq' }]
 
-def create():
-  document = Document('innolab')
+def mock(table):
+  document = Document(table)
   document.company = 'Makpar'
   document.department = departments[random.randint(0, len(departments) - 1)]
   document.location = locations[random.randint(0, len(locations) - 1)]
@@ -24,43 +27,52 @@ def create():
   document.save()
   return document
 
-def load(id):
-  return Document(table='innolab', id=id)
+def load(id, table):
+  return Document(table=table, id=id)
 
 def update_prop(document, key, value):
   setattr(document, key, value)
   document.save()
 
-if __name__=="__main__":
+def do_program(cli_args):
   parser = argparse.ArgumentParser()
-  parser.add_argument('--load', help="ID of the document to load")
+  parser.add_argument('--id', help="ID of the document to load")
+  parser.add_argument('--table', help="Name of the table to query", required=True)
   parser.add_argument('--update', help="KEY=VALUE")
-  parser.add_argument('--create', action='store_true', help="Create a new document")
+  parser.add_argument('--mock', action='store_true', help="Create a new mock document")
   parser.add_argument('--all', action='store_true', help='Query all documents')
-  parser.add_argument('--display', action='store_true', help="Print document to screen")
   
-  args = parser.parse_args()
+  args = parser.parse_args(cli_args)
   
-  if args.load:
-    document = load(args.load)
-    log.info("Loaded DOCUMENT(%s = %s)", document.index, document.fields()[document.index])
+  if args.id:
+    document = load(args.id, args.table)
+    printer.pprint(document.fields())
 
-  if args.create:  
-    document = create()
-    log.info("Created DOCUMENT(%s = %s)", document.index, document.fields()[document.index])
+  elif args.mock:  
+    document = mock(args.table)
+    printer.pprint(document.fields())
 
-  if args.all:
-    results = Query('innolab').all()
+  elif args.all:
+    results = Query(args.table).all()
     for result in results:
-      print(result.fields())
+      printer.pprint(result.fields())
 
-  if args.update:
-    key, value = args.update.split("=")
-    update_prop(document, key, value)
+  elif args.update:
+    if '=' in args.update and len(args.update.split("=")) == 2:
+      if args.id:
+        document = load(args.id)
+        key, value = args.update.split("=")
+        update_prop(document, key, value)
+      else:
+        log.warn("No Document ID specified.")
+    else:
+        log.warn("Field update must be inputted '--update KEY=VALUE'")
 
-  if args.display:
-    print(document.fields())
+def entrypoint():
+  do_program(sys.argv[1:])
 
+if __name__=="__main__":
+  do_program(sys.argv[1:])
 
 # if __name__==:""
   # from qldb.qldb import Driver

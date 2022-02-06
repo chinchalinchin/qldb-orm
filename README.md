@@ -60,7 +60,7 @@ Driver.ledger('my-ledger')
 CloudFormation
 --------------
 
-A **QLDB** CloudFormation template is also available in the *cf* directory of this project's [Github](https://github.com/Makpar-Innovation-Laboratory/innolqb). A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). Clone the repository and then rrom the project root, execute the following script and specify the `<ledger-name>` to create a ledger on the QLDB service,
+A **QLDB** CloudFormation template is also available in the *cf* directory of this project's [Github](https://github.com/Makpar-Innovation-Laboratory/innolqb). A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). Clone the repository and then from the project root, execute the following script and specify the `<ledger-name>` to create a ledger on the **QLDB** service,
 
 ```shell
 ./scripts/cf-stack --ledger <ledger-name>
@@ -82,15 +82,45 @@ If you are configuring an application role to use this library for a particular 
 pip install innoldb
 ```
 
-## Documents
+## Command Line Usage
 
-This library abstracts much of the QLDB implementation away from its user. All the user has to do is create a `Document`, add fields to it and then call `save()`. Under the hood, the library will translate the `Document` fields into [PartiQL queries](https://partiql.org/docs.html) and use the [pyqldb Driver](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html) to post the queries to the **QLDB** instance on AWS.
+Installing the `innoldb` package puts a command line utility on your path. This tool allows you to query the QLDB ledger directly from the command line. 
+
+The `--table` argument is required. Queries can be constructed against this table by passing in other arguments. See below for examples of the different queries.
+
+### Find Document By ID
+
+```shell
+innoldb --table <table-name> --id <id>
+```
+
+### Find All Documents
+
+```shell
+innoldb --table <table-name> --all
+```
+
+### Generate New Mock Document
+
+```shell
+innoldb --table <table-name> --mock
+```
+
+### Update Field in Document
+
+```shell
+innoldb --table <table-name> --id <id> --update <field>=<value>
+```
+
+## Document Object Model
+
+This library abstracts much of the QLDB implementation away from its user. All the user has to do is create a `Document` object, add fields to it and then call `save()`. Under the hood, the library will translate the `Document` fields into [PartiQL queries](https://partiql.org/docs.html) and use the [pyqldb Driver](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html) to post the queries to the **QLDB** instance on AWS.
 
 **NOTE**: All documents are indexed through the key field `id`. 
 
 ### Saving
 
-If you have the **LEDGER** environment variable set, all that is required is to create a `Document` object and pass it the table name of the **QLDB** ledger. If the following lines are feed into an interactive **Python** shell or copied into a script,
+If you have the **LEDGER** environment variable set, all that is required is to create a `Document` object and pass it the table name from the **QLDB** ledger. If the following lines are feed into an interactive **Python** shell or copied into a script,
 
 ```python
 from innoldb.qldb import Document
@@ -106,7 +136,7 @@ Then a document will be inserted into the **QLDB** ledger table. If you do not h
 ```python
 from innoldb.qldb import Document
 
-my_document = Document(name='table-name', ledger='ledger-name')
+my_document = Document(table='table-name', ledger='ledger-name')
 my_document.property_one = 'property 1'
 my_document.property_two = 'property 2'
 my_document.save()
@@ -117,7 +147,7 @@ The `Document` class will auto-generate a UUID for each document inserted into t
 ```python
 from innoldb.qldb import Document
 
-my_document = Document(name='table-name', id='12345')
+my_document = Document(table='table-name', id='12345')
 my_document.property_one = 'this is a test'
 my_document.save()
 ```
@@ -131,7 +161,7 @@ To load a document that exists in the ledger table already, pass in the id of th
 ```python
 from innoldb.qldb import Document
 
-my_document(name='table-name', id='12345')
+my_document(table='table-name', id='12345')
 print(my_document.property_one)
 ```
 
@@ -158,13 +188,13 @@ The document fields can be returned as a `dict` through the `fields()` method. T
 ```python
 from innoldb.qldb import Document
 
-my_document = Document('table-name', id='test')
+my_document = Document(table='table-name', id='test')
 
 for key, value in my_document.fields().items():
   print(key, '=', value)
 ```
 
-## Queries
+## Query Object Model
 
 Queries are represented as an object, `Query`. Each `Query` must be initialized with a `table` that it will run **PartialQL** queries against. All queries return a `list` of `Document` objects. 
 
