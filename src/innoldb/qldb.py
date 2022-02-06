@@ -19,7 +19,8 @@ class Document(Ledger):
       self.id = str(uuid.uuid1())        
     else:
       self.id = id
-      snapshot = self.get(self.id)
+      if snapshot is None:
+        snapshot = self.get(self.id)
   
     self._init_fixtures()
     self._load(snapshot)
@@ -57,7 +58,7 @@ class Document(Ledger):
 
   def get(self, id):
     log.debug("Returning DOCUMENT(%s = %s)", self.index, id)
-    return loads(dumps(next(Driver.query_by_fields(Driver.driver(self.ledger), self.table, **{self.index: id }))))
+    return dict(next(Driver.query_by_fields(Driver.driver(self.ledger), self.table, **{self.index: id })))
   
   def save(self):
     fields = self.fields()
@@ -71,7 +72,7 @@ class Query(Ledger):
     super().__init__(table=table, ledger=ledger)
   
   def _to_documents(self, results):
-    return [ Document(table=self.table, snapshot=loads(dumps(result))) for result in results ]
+    return [ Document(table=self.table, snapshot=dict(result)) for result in results ]
 
   def all(self):
     return self._to_documents(Driver.query_all(Driver.driver(self.ledger), self.table))

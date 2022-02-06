@@ -1,6 +1,6 @@
-EQUALS = '='
-LIKE = 'LIKE'
-IN = 'IN'
+EQUALS = "="
+LIKE = "LIKE"
+IN = "IN"
 
 def where(operator, *columns):
   """Generates a **PartiQL** `WHERE` clause for an arbitrary number of columns with the specified argument.
@@ -14,7 +14,23 @@ def where(operator, *columns):
   clause = None
   for column in columns:
     if clause is None:
-      clause = "WHERE {} {} ? ".format(column, operator)
+      if operator == LIKE:
+        clause = "WHERE {} {} '%?%' ".format(column, operator)
+      else:
+        clause = "WHERE {} {} ? ".format(column, operator)
     else:
-      clause += "AND {} {} ? ".format(column, operator)
+      if operator == LIKE:
+        clause += "AND {} {} '%?%' ".format(column, operator)
+      else:
+        clause += "AND {} {} ? ".format(column, operator)
+
+  return clause
+
+def set_statement(*columns):
+  clause = None
+  for column in columns:
+    if clause is None:
+      clause = 'SET {} = ? '.format(column)
+    else:
+      clause += ', {} = ? '.format(column)
   return clause

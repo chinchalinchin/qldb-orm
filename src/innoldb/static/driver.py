@@ -7,6 +7,12 @@ from innoldb.static import clauses
 log = getLogger('innoldb.driver')
 
 class Driver():
+  @staticmethod
+  def sanitize(query):
+    for char in [ "\\", "\'", "\"", "\b", "\n", "\r", "\t", "\0" ]:
+      query = query.replace(char, "")
+    return query
+
   @staticmethod 
   def ledger(ledger):
     return client('qldb').create_ledger(
@@ -61,7 +67,7 @@ class Driver():
     ##      https://docs.aws.amazon.com/qldb/latest/developerguide/getting-started.python.step-3.html
     ##  NOTE: This is going to necessitate some logic in this library to prevent malicious strings from 
     ##        gettings injected through parameters.
-    statement = 'Create TABLE {}'.format(table)
+    statement = Driver.sanitize('Create TABLE {}'.format(table))
     return driver.execute_lambda(lambda executor: Driver.execute(executor, statement))
 
   @staticmethod
@@ -77,7 +83,7 @@ class Driver():
     :return: iterable containing result
     """
     ## NOTE: See above note.
-    statement = 'CREATE INDEX on {} ({})'.format(table, index)
+    statement = Driver.sanitize('CREATE INDEX on {} ({})'.format(table, index))
     return driver.execute_lambda(lambda executor: Driver.execute(executor, statement))
   
   @staticmethod
@@ -94,7 +100,7 @@ class Driver():
     """
     ## NOTE: See above note.
     ##  TODO: check table string for malicious parameterization
-    statement = 'INSERT INTO {} ?'.format(table)
+    statement = Driver.sanitize('INSERT INTO {} ?'.format(table))
     return driver.execute_lambda(lambda executor: Driver.execute(executor, statement, document))
   
   @staticmethod
@@ -112,30 +118,27 @@ class Driver():
     :return: iterable containing result set
     """
     lookup = document[index]
-    buffer_document = { key: value for key, value in document.items() if key != index }
 
     ## NOTE: See notes in prior methods
     ##  TODO: check table string for malicious parameterization
 
-    ## NOTE: For some reason, you cannot parameterize more than one field update,
-    ##        i.e., `SET column1 = value1 SET column2 = value2` does not work.
-    ## TODO: will need to get a snapshot of existing document and iterate through fields 
-    ##        to see if any have changed and update 
-    result = Driver.query_by_fields(driver, table, **{index: lookup})
-    results = []
+    query = Driver.sanitize('UPDATE {} as p SET p = ? WHERE {} = ?'.format(table, index))
 
-    ## ERROR HERE. Buffer document can have more keys
-    for row in result:
-      saved_document = loads(dumps(row))
-      for (key, buffer_value) in buffer_document.items():
-        saved_value = saved_document.get(key, None)
-        log.debug('Comparing saved value: %s \n\t\t\t\t\t\t\t to buffer value: %s', saved_value, buffer_value)
-        if saved_value != buffer_value:
-          update_statement = 'UPDATE {} SET {} = ? WHERE {} = ?'.format(table, key, index)
-          results += driver.execute_lambda(lambda executor: Driver.execute(
-                              executor, update_statement, buffer_value, lookup
-                          ))
-    return results
+    return driver.execute_lambda(lambda executor: Driver.execute(
+      executor, query, document, lookup
+    ))
+
+    # for row in result:
+    #   saved_document = loads(dumps(row))
+    #   for (key, buffer_value) in buffer_document.items():
+    #     saved_value = saved_document.get(key, None)
+    #     log.debug('Comparing saved value: %s \n\t\t\t\t\t\t\t to buffer value: %s', saved_value, buffer_value)
+    #     if saved_value != buffer_value:
+    #       update_statement = Driver.sanitize('UPDATE {} SET {} = ? WHERE {} = ?'.format(table, key, index))
+    #       results += driver.execute_lambda(lambda executor: Driver.execute(
+    #                           executor, update_statement, buffer_value, lookup
+    #                       ))
+    # return results
 
   @staticmethod
   def query_all(driver, table):
@@ -151,7 +154,7 @@ class Driver():
     :type table: str
     :return: iterable containing result
     """
-    statement = 'SELECT * FROM {}'.format(table)
+    statement = Driver.sanitize('SELECT * FROM {}'.format(table))
     return driver.execute_lambda(lambda executor: Driver.execute(
       executor, statement
     ))
@@ -169,7 +172,7 @@ class Driver():
     """
     columns, values = list(fields.keys()), list(fields.values())
     where_clause = clauses.where(clauses.EQUALS, *columns)
-    statement = 'SELECT * FROM {} {}'.format(table, where_clause)
+    statement = Driver.sanitize('SELECT * FROM {} {}'.format(table, where_clause))
     return driver.execute_lambda(lambda executor: Driver.execute(
       executor, statement, *values
     ))
@@ -178,7 +181,7 @@ class Driver():
   def query_like_fields(driver, table, **fields):
     columns, values = list(fields.keys()), list(fields.values())
     where_clause = clauses.where(clauses.LIKE, *columns)
-    statement = 'SELECT * FROM {} {}'.format(table, where_clause)
+    statement = Driver.sanitize('SELECT * FROM {} {}'.format(table, where_clause))
     return driver.execute_lambda(lambda executor: Driver.execute(
       executor, statement, *values
     ))

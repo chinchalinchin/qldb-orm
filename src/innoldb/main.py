@@ -51,11 +51,14 @@ def find(table, fields):
   return Query(table).find_by(**fields)
 
 def like(table, fields):
-  return Query.table(table).find_like(**fields)
+  return Query(table).find_like(**fields)
   
-def update_prop(document, key, value):
-  setattr(document, key, value)
-  return document.save()
+def update_prop(document, **props):
+  for key, value in props.items():
+    log.info('%s = %s', key, value)
+    setattr(document, key, value)
+  document.save()
+  return document
 
 def do_program(cli_args):
   parser = argparse.ArgumentParser()
@@ -70,7 +73,7 @@ def do_program(cli_args):
   
   args = parser.parse_args(cli_args)
   
-  if args.id:
+  if args.id and not args.update:
     document = load(args.id, args.table)
     printer.pprint(document.fields())
 
@@ -86,8 +89,7 @@ def do_program(cli_args):
   elif args.update:
     if args.id:
       document = load(args.id, args.table)
-      for key, value in args.update.items():
-        update_prop(document, key, value)
+      document = update_prop(document, **args.update)
       printer.pprint(document.fields())
     else:
       log.warn("No Document ID specified.")
