@@ -48,5 +48,6 @@ log "Creating \e[1m${LEDGER^}-QLDB-Stack\e[0m"
 aws cloudformation create-stack \
     --stack-name "${LEDGER^}-QLDB-Stack" \
     --template-body file://qldb.yml \
+    --capabilities CAPABILITY_NAMED_IAM \
     --parameters ParameterKey=ledgerName,ParameterValue=$LEDGER
 rm ./qldb.yml
