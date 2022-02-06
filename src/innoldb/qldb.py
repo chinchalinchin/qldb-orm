@@ -182,16 +182,14 @@ class Document():
     self.table = table
     self.ledger = ledger
     self.index = index
-    self._init_fixtures()
-
-    if snapshot is not None:
-      self._load(snapshot)
+    if id is None:
+      self.id = str(uuid.uuid1())        
     else:
-      if id is None:
-        self.id = str(uuid.uuid1())        
-      else:
-        self.id = id
-        self._load()
+      self.id = id
+      snapshot = self.get(self.id)
+  
+    self._init_fixtures()
+    self._load(snapshot)
 
   def _init_fixtures(self):
     if self.table not in Driver.tables(self.ledger):
@@ -202,10 +200,9 @@ class Document():
         log.error(e)
 
   def _load(self, snapshot=None):
-    if snapshot is None:
-      snapshot = self.get(self.id)
-    for key, value in snapshot.items():
-      setattr(self, key, value)
+    if snapshot is not None:
+      for key, value in snapshot.items():
+        setattr(self, key, value)
       
   def _insert(self, document):
     log.debug("Inserting DOCUMENT(%s = %s)", self.index, document[self.index])
@@ -233,8 +230,8 @@ class Document():
     fields = self.fields()
     log.debug("Saving DOCUMENT(%s = %s)", self.index, fields[self.index])
     if self.exists(fields[self.index]):
-      return self._update(fields)
-    return self._insert(fields)
+      return next(self._update(fields))
+    return next(self._insert(fields))
 
 class Query():
   def __init__(self, table, ledger=settings.LEDGER, index=settings.DEFAULT_INDEX):

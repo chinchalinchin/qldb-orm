@@ -16,6 +16,15 @@ members = [{'UI/UX': 'Phung'}, {'Solutions': 'Justin'}, { 'Capabilities': 'Peter
            {'Developer #1': 'Thomas'}, {'Developer #2': 'Aurora'}, {'DevSecOps': 'Grant'},
            {'Scrum': 'Selah'}, { 'Architect': 'Tariq' }]
 
+class KeyValue(argparse.Action):
+  # Constructor calling
+  def __call__(self, parser, namespace, values, option_string = None):
+    setattr(namespace, self.dest, dict())
+      
+    for value in values:
+      key, value = value.split('=')
+      getattr(namespace, self.dest)[key] = value
+  
 def mock(table):
   document = Document(table)
   document.company = 'Makpar'
@@ -30,15 +39,19 @@ def mock(table):
 def load(id, table):
   return Document(table=table, id=id)
 
+def insert(table, document, id=None):
+  return Document(table=table, id=id, snapshot=document).save()
+
 def update_prop(document, key, value):
   setattr(document, key, value)
-  document.save()
+  return document.save()
 
 def do_program(cli_args):
   parser = argparse.ArgumentParser()
   parser.add_argument('--id', help="ID of the document to load")
   parser.add_argument('--table', help="Name of the table to query", required=True)
-  parser.add_argument('--update', help="KEY=VALUE")
+  parser.add_argument('--update', nargs='*', help="Update fields with `KEY1=VALUE1 KEY2=VALUE2 ...`", action=KeyValue)
+  parser.add_argument('--insert', nargs='*', help="Create document with fields `KEY1=VALUE1 KEY2=VALUE2 ...`", action=KeyValue)
   parser.add_argument('--mock', action='store_true', help="Create a new mock document")
   parser.add_argument('--all', action='store_true', help='Query all documents')
   
@@ -58,15 +71,19 @@ def do_program(cli_args):
       printer.pprint(result.fields())
 
   elif args.update:
-    if '=' in args.update and len(args.update.split("=")) == 2:
-      if args.id:
-        document = load(args.id)
-        key, value = args.update.split("=")
+    if args.id:
+      document = load(args.id)
+      for key, value in args.update.items():
         update_prop(document, key, value)
-      else:
-        log.warn("No Document ID specified.")
+      printer.pprint(document.fields())
     else:
-        log.warn("Field update must be inputted '--update KEY=VALUE'")
+      log.warn("No Document ID specified.")
+  
+  elif args.insert:
+    insert(args.table, args.insert, args.id)
+    document = load(args.id)
+    printer.pprint(document)
+    
 
 def entrypoint():
   do_program(sys.argv[1:])

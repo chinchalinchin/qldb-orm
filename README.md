@@ -1,7 +1,9 @@
 # Makpar Innovation Lab
 ## innolqb
 
-A simple [Object-Relation-Mapping](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) for a serverless [AWS Quantum Ledger Database](https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html) backend. The user or process using this library must have an [IAM policy that allows access to QLDB](https://docs.aws.amazon.com/qldb/latest/developerguide/security-iam.html).
+A simple [Object-Relation-Mapping](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) for a serverless [AWS Quantum Ledger Database](https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html) backend, and a command line utility for querying tables on those ledgers.
+
+**NOTE**: The user or process using this library must have an [IAM policy that allows access to QLDB](https://docs.aws.amazon.com/qldb/latest/developerguide/security-iam.html).
 
 
 ```python
@@ -88,6 +90,12 @@ Installing the `innoldb` package puts a command line utility on your path. This 
 
 The `--table` argument is required. Queries can be constructed against this table by passing in other arguments. See below for examples of the different queries.
 
+Be sure to export the **LEDGER** environment variable before executing any of these commands,
+
+```shell
+export LEDGER='ledger-name'
+```
+
 ### Find Document By ID
 
 ```shell
@@ -109,8 +117,16 @@ innoldb --table <table-name> --mock
 ### Update Field in Document
 
 ```shell
-innoldb --table <table-name> --id <id> --update <field>=<value>
+innoldb --table <table-name> --id <id> --update <field>=<value> <field>=<value> ...
 ```
+
+### Insert Document
+
+```shell
+innoldb --table <table-name> --insert <field>=<value> <field>=<value> ...
+```
+
+You can optionally specify the `Document` ID if you wish to overwrite the auto-generated UUID.
 
 ## Document Object Model
 
@@ -209,14 +225,28 @@ all_documents = Query('table-name').all()
 for document in all_documents:
   print(document.fields())
 ```
+
+## Configuration
+
+### Log Level
+
+The log level can be set through the environment variable **LOG_LEVEL** to the values: `NOTSET`, `INFO`, `DEBUG` and `ERROR`,
+
+```shell
+export LOG_LEVEL='INFO'
+innoldb --table table-name --all
+```
+
+```python
+import os
+from innoldb.qldb import Query
+
+os.environ['LOG_LEVEL'] = 'DEBUG'
+Query('table-name').all()
+```
+
 ## References 
 - [AWS QLDB Documentation](https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html)
 - [QLDB Python Driver Documentation](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html)
 - [Boto3 QLDB Client Documentation](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/qldb.html)
 - [PartiQL Documentation](https://partiql.org/docs.html)
-
-## TODOS
-
-1. Provision QLDB through Boto3 client instead of using CloudFormation template; i.e., make the provisioning of the Ledger part of the library.
-
-2. Query class to return iterable of Documents.
