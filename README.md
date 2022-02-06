@@ -15,6 +15,10 @@ document.field = 'my field'
 document.save()
 ```
 
+```shell
+innoldb --table your-table --find column=this
+```
+
 ### Read The Docs
 
 - [innolqb documentation](https://makpar-innovation-laboratory.github.io/innoldb/)
