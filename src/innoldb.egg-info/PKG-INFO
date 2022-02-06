@@ -38,24 +38,39 @@ document.save()
 
 1. (Optional) Configure Environment
 
+This library needs to be informed of the QLDB Ledger to write against on your AWS environment. There are several ways to configure the Ledger setting. 
+
+Before you start a Python shell, export the**LEDGER** environment variable,
+
 ```shell
 export LEDGER='ledger-name'
+python
 ```
 
-The environment variable **LEDGER** should point to the **QLDB** ledger. If you do not configure the **LEDGER** environment variable, you will need to pass in the ledger name to the `Document` object. See [below](#documents) for more information.
+Alternatively, configure the variable directly in a Python script
 
-2. Create **QLDB** Ledger
+```python
+import os
+
+os.environ['LEDGER'] = 'ledger=name'
+```
+
+The environment variable **LEDGER** should point to the **QLDB** ledger so the application knows to which ledger to write. If you do not configure the **LEDGER** environment variable, you will need to pass in the ledger name to the `Document` object. See [below](#documents) for more information.
+
+2. Create a **QLDB** Ledger
 
 Boto3 Client
 ------------
 
-The easiest way to create a ledger is through the wrapper function in `innoldb.qldb`,
+The easiest way to create a ledger is through the `boto3` wrapper function in `innoldb.qldb.Driver`,
 
 ```python
-from innoldb.qldb import create_ledger
+from innoldb.qldb import Driver
 
-create_ledger('my-ledger')
+Driver.ledger('my-ledger')
 ```
+
+**NOTE**: You must install the `innoldb` package from [PyPi](https://pypi.org/project/innoldb/) before creating a ledger this way. See *Step 4* for more information.
 
 CloudFormation
 --------------
@@ -86,7 +101,7 @@ pip install innoldb
 
 This library abstracts much of the QLDB implementation away from its user. All the user has to do is create a `Document`, add fields to it and then call `save()`. Under the hood, the library will translate the `Document` fields into [PartiQL queries](https://partiql.org/docs.html) and use the [pyqldb Driver](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html) to post the queries to the **QLDB** instance on AWS.
 
-All documents are indexed through the key field `id`. 
+**NOTE**: All documents are indexed through the key field `id`. 
 
 ### Saving
 
@@ -112,6 +127,16 @@ my_document.property_two = 'property 2'
 my_document.save()
 ```
 
+The `Document` class will auto-generate a UUID for each document inserted into the ledger table. If you prefer a more memorable id, you can override the auto-generated ID through the constructor,
+
+```python
+from innoldb.qldb import Document
+
+my_document = Document(name='table-name', id='12345')
+my_document.property_one = 'this is a test'
+my_document.save()
+```
+
 Congratulations! You have saved a document to QLDB!
 
 ### Loading
@@ -122,6 +147,7 @@ To load a document that exists in the ledger table already, pass in the id of th
 from innoldb.qldb import Document
 
 my_document(name='table-name', id='12345')
+print(my_document.property_one)
 ```
 
 ### Updating
@@ -153,9 +179,25 @@ for key, value in my_document.fields().items():
   print(key, '=', value)
 ```
 
+## Queries
+
+Queries are represented as an object, `Query`. Each `Query` must be initialized with a `table` that it will run **PartialQL** queries against. All queries return a `list` of `Document` objects. 
+
+### All
+
+The following script queries the ledger table for all documents and prints a JSON representation of each document to screen,
+
+```python
+from innoldb.qldb import Document, Query
+
+all_documents = Query('table-name').all()
+for document in all_documents:
+  print(document.fields())
+```
 ## References 
 - [AWS QLDB Documentation](https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html)
 - [QLDB Python Driver Documentation](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html)
+- [Boto3 QLDB Client Documentation](https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/qldb.html)
 - [PartiQL Documentation](https://partiql.org/docs.html)
 
 ## TODOS

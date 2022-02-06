@@ -1,6 +1,6 @@
 import argparse
 import random
-from innoldb.qldb import Document
+from innoldb.qldb import Document, Query
 from innoldb.logger import getLogger
 
 log = getLogger('main')
@@ -33,8 +33,10 @@ def update_prop(document, key, value):
 
 if __name__=="__main__":
   parser = argparse.ArgumentParser()
-  parser.add_argument('--load', help="id of the document to load")
+  parser.add_argument('--load', help="ID of the document to load")
   parser.add_argument('--update', help="KEY=VALUE")
+  parser.add_argument('--create', action='store_true', help="Create a new document")
+  parser.add_argument('--all', action='store_true', help='Query all documents')
   parser.add_argument('--display', action='store_true', help="Print document to screen")
   
   args = parser.parse_args()
@@ -43,9 +45,14 @@ if __name__=="__main__":
     document = load(args.load)
     log.info("Loaded DOCUMENT(%s = %s)", document.index, document.fields()[document.index])
 
-  else:  
+  if args.create:  
     document = create()
     log.info("Created DOCUMENT(%s = %s)", document.index, document.fields()[document.index])
+
+  if args.all:
+    results = Query('innolab').all()
+    for result in results:
+      print(result.fields())
 
   if args.update:
     key, value = args.update.split("=")

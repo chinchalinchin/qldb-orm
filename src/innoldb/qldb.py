@@ -7,14 +7,15 @@ from innoldb.logger import getLogger
 
 log = getLogger('innoldb.qldb')
 
-def create_ledger(ledger):
-  return client('qldb').create_ledger(
-    Name=ledger,
-    PermissionsMode='STANDARD',
-    DeletionProtection=False,
-  )
-
 class Driver():
+  @staticmethod 
+  def ledger(ledger):
+    return client('qldb').create_ledger(
+      Name=ledger,
+      PermissionsMode='STANDARD',
+      DeletionProtection=False,
+    )
+
   @staticmethod 
   def execute(transaction_executor, statement, *params):
     r"""Static method for executing transactions with QLDB driver. 
@@ -138,6 +139,25 @@ class Driver():
     return results
 
   @staticmethod
+  def query_all(driver, table):
+    """Static method for querying table by field.
+
+    :param driver: QLDB Driver
+    :type driver: :class:`pyqldb.driver.qldb_driver.QldbDriver`
+    :param field: field to be searched
+    :type field: str
+    :param value: search value
+    :type value: str
+    :param table: table to be quiered
+    :type table: str
+    :return: iterable containing result
+    """
+    statement = 'SELECT * FROM {}'.format(table)
+    return driver.execute_lambda(lambda executor: Driver.execute(
+      executor, statement
+    ))
+
+  @staticmethod
   def query_by_field(driver, field, value, table):
     """Static method for querying table by field.
 
@@ -158,30 +178,32 @@ class Driver():
 
 
 class Document():
-  def __init__(self, table, id=None, ledger=settings.LEDGER, index=settings.DEFAULT_INDEX):
+  def __init__(self, table, id=None, ledger=settings.LEDGER, index=settings.DEFAULT_INDEX, snapshot=None):
     self.table = table
     self.ledger = ledger
     self.index = index
     self._init_fixtures()
-    if id is None:
-      self.id = str(uuid.uuid1())
+
+    if snapshot is not None:
+      self._load(snapshot)
     else:
-      self.id = id
-      self._load()
+      if id is None:
+        self.id = str(uuid.uuid1())        
+      else:
+        self.id = id
+        self._load()
 
   def _init_fixtures(self):
     if self.table not in Driver.tables(self.ledger):
       try:
         Driver.create_table(Driver.driver(self.ledger), self.table)
+        Driver.create_index(Driver.driver(self.ledger), self.table, self.index)
       except Exception as e:
-        log.debug(e)
-    try:
-      Driver.create_index(Driver.driver(self.ledger), self.table, self.index)
-    except Exception as e:
-      log.debug(e)
+        log.error(e)
 
-  def _load(self):
-    snapshot = self.get(self.id)
+  def _load(self, snapshot=None):
+    if snapshot is None:
+      snapshot = self.get(self.id)
     for key, value in snapshot.items():
       setattr(self, key, value)
       
@@ -213,3 +235,15 @@ class Document():
     if self.exists(fields[self.index]):
       return self._update(fields)
     return self._insert(fields)
+
+class Query():
+  def __init__(self, table, ledger=settings.LEDGER, index=settings.DEFAULT_INDEX):
+    self.table = table
+    self.ledger = ledger
+    self.index = index
+  
+  def all(self):
+    results = Driver.query_all(Driver.driver(self.ledger), self.table)
+    return [ Document(table=self.table, snapshot=loads(dumps(result))) for result in results]
+    
+    

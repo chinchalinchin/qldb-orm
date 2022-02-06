@@ -47,13 +47,15 @@ The environment variable **LEDGER** should point to the **QLDB** ledger so the a
 Boto3 Client
 ------------
 
-The easiest way to create a ledger is through the `boto3` wrapper function in `innoldb.qldb`,
+The easiest way to create a ledger is through the `boto3` wrapper function in `innoldb.qldb.Driver`,
 
 ```python
-from innoldb.qldb import create_ledger
+from innoldb.qldb import Driver
 
-create_ledger('my-ledger')
+Driver.ledger('my-ledger')
 ```
+
+**NOTE**: You must install the `innoldb` package from [PyPi](https://pypi.org/project/innoldb/) before creating a ledger this way. See *Step 4* for more information.
 
 CloudFormation
 --------------
@@ -110,6 +112,16 @@ my_document.property_two = 'property 2'
 my_document.save()
 ```
 
+The `Document` class will auto-generate a UUID for each document inserted into the ledger table. If you prefer a more memorable id, you can override the auto-generated ID through the constructor,
+
+```python
+from innoldb.qldb import Document
+
+my_document = Document(name='table-name', id='12345')
+my_document.property_one = 'this is a test'
+my_document.save()
+```
+
 Congratulations! You have saved a document to QLDB!
 
 ### Loading
@@ -120,6 +132,7 @@ To load a document that exists in the ledger table already, pass in the id of th
 from innoldb.qldb import Document
 
 my_document(name='table-name', id='12345')
+print(my_document.property_one)
 ```
 
 ### Updating
@@ -151,6 +164,21 @@ for key, value in my_document.fields().items():
   print(key, '=', value)
 ```
 
+## Queries
+
+Queries are represented as an object, `Query`. Each `Query` must be initialized with a `table` that it will run **PartialQL** queries against. All queries return a `list` of `Document` objects. 
+
+### All
+
+The following script queries the ledger table for all documents and prints a JSON representation of each document to screen,
+
+```python
+from innoldb.qldb import Document, Query
+
+all_documents = Query('table-name').all()
+for document in all_documents:
+  print(document.fields())
+```
 ## References 
 - [AWS QLDB Documentation](https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html)
 - [QLDB Python Driver Documentation](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html)
