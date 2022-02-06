@@ -2,6 +2,7 @@ import argparse
 import pprint
 import random
 import sys
+import uuid
 from innoldb.qldb import Document, Query
 from innoldb.logger import getLogger
 
@@ -42,6 +43,9 @@ def load(id, table):
 def insert(table, document, id=None):
   return Document(table=table, id=id, snapshot=document).save()
 
+def all(table):
+  return Query(table).all()
+
 def update_prop(document, key, value):
   setattr(document, key, value)
   return document.save()
@@ -66,7 +70,7 @@ def do_program(cli_args):
     printer.pprint(document.fields())
 
   elif args.all:
-    results = Query(args.table).all()
+    results = all(args.table)
     for result in results:
       printer.pprint(result.fields())
 
@@ -80,9 +84,10 @@ def do_program(cli_args):
       log.warn("No Document ID specified.")
   
   elif args.insert:
-    insert(args.table, args.insert, args.id)
-    document = load(args.id, args.table)
-    printer.pprint(document)
+    new_id = str(uuid.uuid1())
+    insert(args.table, args.insert, new_id)
+    document = load(new_id, args.table)
+    printer.pprint(document.fields())
     
 
 def entrypoint():
