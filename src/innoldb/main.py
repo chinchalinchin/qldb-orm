@@ -50,6 +50,9 @@ def all(table):
 def find(table, fields):
   return Query(table).find_by(**fields)
 
+def like(table, fields):
+  return Query.table(table).find_like(**fields)
+  
 def update_prop(document, key, value):
   setattr(document, key, value)
   return document.save()
@@ -58,9 +61,10 @@ def do_program(cli_args):
   parser = argparse.ArgumentParser()
   parser.add_argument('-id', '--id', help="ID of the document to load")
   parser.add_argument('-tb', '--table', help="Name of the table to query", required=True)
-  parser.add_argument('-up', '--update', nargs='*', help="Update fields with `KEY1=VALUE1 KEY2=VALUE2 ...`", action=KeyValue)
-  parser.add_argument('-in', '--insert', nargs='*', help="Create document with fields `KEY1=VALUE1 KEY2=VALUE2 ...`", action=KeyValue)
-  parser.add_argument('-fi', '--find', nargs='*', help="Query by field equality `KEY1=VALUE1 KEY2=VALUE2...`", action=KeyValue)
+  parser.add_argument('-up', '--update', nargs='*', help="Update fields with `KEY1=VAL1 KEY2=VAL2 ...`", action=KeyValue)
+  parser.add_argument('-in', '--insert', nargs='*', help="Create document with fields `KEY1=VAL1 KEY2=VAL2 ...`", action=KeyValue)
+  parser.add_argument('-fi', '--find', nargs='*', help="Query by field equality `KEY1=VAL1 KEY2=VAL2...`", action=KeyValue)
+  parser.add_argument('-lk', '--like', nargs='*', help="Query by field matching `KEY1=VAL1 KEY2=VAL2 ...`", action=KeyValue)
   parser.add_argument('-mo', '--mock', action='store_true', help="Create a new mock document")
   parser.add_argument('-al', '--all', action='store_true', help='Query all documents')
   
@@ -95,6 +99,11 @@ def do_program(cli_args):
 
   elif args.find:
     results = find(args.table, args.find)
+    for result in results:
+      printer.pprint(result.fields())
+
+  elif args.like:
+    results = like(args.table, args.like)
     for result in results:
       printer.pprint(result.fields())
     

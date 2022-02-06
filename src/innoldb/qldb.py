@@ -177,7 +177,13 @@ class Driver():
 
   @staticmethod
   def query_like_fields(driver, table, **fields):
-    pass
+    columns, values = fields.keys(), fields.values()
+    where_clause = clauses.where(operator=clauses.OPERATORS.LIKE, *columns)
+    statement = 'SELECT * FROM {} {}'.format(table, where_clause)
+    return driver.execute_lambda(lambda executor: Driver.execute(
+      executor, statement, *values
+    ))
+
 
 class Ledger():
   def __init__(self, table, ledger=settings.LEDGER):
@@ -243,11 +249,14 @@ class Query(Ledger):
   def __init__(self, table, ledger=settings.LEDGER):
     super().__init__(table=table, ledger=ledger)
   
+  def _to_documents(self, results):
+    return [ Document(table=self.table, snapshot=loads(dumps(result))) for result in results ]
+
   def all(self):
-    results = Driver.query_all(Driver.driver(self.ledger), self.table)
-    return [ Document(table=self.table, snapshot=loads(dumps(result))) for result in results]
+    return self._to_documents(Driver.query_all(Driver.driver(self.ledger), self.table))
   
   def find_by(self, **kwargs):
-    results = Driver.query_by_fields(Driver.driver(self.ledger), self.table, **kwargs)
-    return [ Document(table = self.table, snapshot=loads(dumps(result))) for result in results]
-    
+    return self._to_documents(Driver.query_by_fields(Driver.driver(self.ledger), self.table, **kwargs))
+  
+  def find_like(self, **kwargs):
+    return self._to_documents(Driver.query_like_fields(Driver.driver(self.ledger), self.table, **kwargs))

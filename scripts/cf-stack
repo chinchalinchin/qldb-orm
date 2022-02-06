@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 SCRIPT_NAME="qldb-stack"
-SCRIPT_DES=$'A script for posting QLDB template to CloudFormation. See comments in script for usage information.'
+SCRIPT_DES=$'A script for posting a template of QLDB service to CloudFormation. See comments in script for usage information.'
 PROJECT_DIR=$SCRIPT_DIR/..
 source $PROJECT_DIR/env/.env
 
@@ -21,6 +21,7 @@ while [[ $# -gt 0 ]]; do
   key="$1"
   case $key in
     --ledger|-ledger|--l|-l)
+      # Name of the ledger that will be stood up on AWS
       LEDGER="$2"
       shift
       shift 
@@ -43,9 +44,9 @@ then
 fi
 
 cp $PROJECT_DIR/cf/qldb.yml ./qldb.yml
-log "Creating \e[1mQLDB-${LEDGER^}-Stack\e[0m"
+log "Creating \e[1m${LEDGER^}-QLDB-Stack\e[0m"
 aws cloudformation create-stack \
-    --stack-name "QLDB-${LEDGER^}-Stack" \
+    --stack-name "${LEDGER^}-QLDB-Stack" \
     --template-body file://qldb.yml \
     --parameters ParameterKey=ledgerName,ParameterValue=$LEDGER
 rm ./qldb.yml

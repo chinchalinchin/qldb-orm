@@ -5,6 +5,7 @@ Parameters:
     ledgerName:
       Type: String
       Default: laboratory
+      Description: Name of the Ledger within QLDB where tables and documents will be stored.
 
 Resources:
   QLDBLedger:
@@ -13,5 +14,47 @@ Resources:
       Name: !Ref ledgerName
       PermissionsMode: STANDARD
       DeletionProtection: false
-   
 
+  QLDBPolicy:
+    Type: 'AWS::IAM::Policy'
+    Properties:
+      PolicyName: CFNUsers
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: QLDBPermissions
+            Effect: Allow
+            Action:
+              - 'qldb:SendCommand'
+            Resource: !Sub 'arn:aws:qldb:${AWS::Region}:${AWS::AccountId}:ledger/${ledgerName}'
+          - Sid: PartiQLPermissions
+            Effect: Allow
+            Action:
+              - 'qldb:PartiQLCreateTable'
+              - 'qldb:PartiQLDropTable'
+              - 'qldb:PartiQLUndropTable'
+              - 'qldb:PartiQLCreateIndex'
+              - 'qldb:PartiQLDropIndex'
+              - 'qldb:PartiQLDelete'
+              - 'qldb:PartiQLInsert'
+              - 'qldb:PartiQLUpdate'
+              - 'qldb:PartiQLSelect'
+              - 'qldb:PartiQLHistoryFunction'
+            Resource: !Sub 'arn:aws:qldb:${AWS::Region}:${AWS::AccountId}:ledger/${ledgerName}/table/*'
+   
+  QLDBServieRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - !Ref QLDBPolicy
+
+  # TODO: Kinesis Stream and Resources for transaction monitoring
