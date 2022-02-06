@@ -1,5 +1,6 @@
 # Makpar Innovation Lab
-## innolqb
+
+## innoldb
 
 A simple [Object-Relation-Mapping](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) for a serverless [AWS Quantum Ledger Database](https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html) backend, and a command line utility for querying tables on those ledgers.
 
@@ -62,7 +63,7 @@ Driver.ledger('my-ledger')
 CloudFormation
 --------------
 
-A **QLDB** CloudFormation template is also available in the *cf* directory of this project's [Github](https://github.com/Makpar-Innovation-Laboratory/innolqb). A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). Clone the repository and then from the project root, execute the following script and specify the `<ledger-name>` to create a ledger on the **QLDB** service,
+A **QLDB** CloudFormation template is also available in the *cf* directory of this project's [Github](https://github.com/Makpar-Innovation-Laboratory/innoldb). A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). Clone the repository and then from the project root, execute the following script and specify the `<ledger-name>` to create a ledger on the **QLDB** service,
 
 ```shell
 ./scripts/cf-stack --ledger <ledger-name>
@@ -250,8 +251,8 @@ Query('table-name').all()
 The `innoldb` library can be built from source with the following script,
 
 ```shell
-git clone https://github.com/Makpar-Innovation-Laboratory/innolqb
-cd innolqb
+git clone https://github.com/Makpar-Innovation-Laboratory/innoldb
+cd innoldb
 python -m build
 VERSION=$(cat version.txt)
 cd dist
@@ -261,8 +262,8 @@ pip install innoldb-${VERSION}-py3-none-any.whl
 Or use the pre-packaged helper script,
 
 ```shell
-git clone https://github.com/Makpar-Innovation-Laboratory/innolqb
-./innolqb/scripts/install
+git clone https://github.com/Makpar-Innovation-Laboratory/innoldb
+./innoldb/scripts/install
 ```
 
 ## References 
