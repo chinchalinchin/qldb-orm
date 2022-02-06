@@ -13,7 +13,7 @@ jobs:
   unit_tests:
     name: Unit Tests
     permissions: 
-      repository-project: write
+      repository-projects: write
       pull-requests: write
       checks: write
       id-token: write
