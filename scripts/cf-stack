@@ -22,7 +22,7 @@ while [[ $# -gt 0 ]]; do
   case $key in
     --ledger|-ledger|--l|-l)
       # Name of the ledger that will be stood up on AWS
-      LEDGER="$2"
+      LEDGER_INPUT="$2"
       shift
       shift 
       ;;
@@ -37,17 +37,23 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [ -z "$LEDGER" ]
+if [ -z "$LEDGER_INPUT" ]
 then
-  log "No \e[3m--ledger\e[0m specified. Re-execute with this required argument."
-  exit 1
+  log "No \e[3m--ledger\e[0m specified. Default to \e[2mLEDGER\e[0m environment variable."
+  if [ -z "$LEDGER"]
+  then
+    log "No ledger found. Re-execute this script with an argument or configure your environment."
+    exit 1
+  else
+    LEDGER_INPUT=$LEDGER
+  fi
 fi
 
 cp $PROJECT_DIR/cf/qldb.yml ./qldb.yml
-log "Creating \e[1m${LEDGER^}-QLDB-Stack\e[0m"
+log "Creating \e[1m${LEDGER_INPUT^}-QLDB-Stack\e[0m"
 aws cloudformation create-stack \
-    --stack-name "${LEDGER^}-QLDB-Stack" \
+    --stack-name "${LEDGER_INPUT^}-QLDB-Stack" \
     --template-body file://qldb.yml \
     --capabilities CAPABILITY_NAMED_IAM \
-    --parameters ParameterKey=ledgerName,ParameterValue=$LEDGER
+    --parameters ParameterKey=ledgerName,ParameterValue="${LEDGER_INPUT}"
 rm ./qldb.yml
