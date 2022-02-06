@@ -14,7 +14,7 @@ Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
 
-# Makpar Innovation Lab
+# makpar-innolab
 
 ## innoldb
 
@@ -29,6 +29,10 @@ from innoldb.qldb import Document
 document = Document('my-table')
 document.field = 'my field'
 document.save()
+```
+
+```shell
+innoldb --table your-table --find column=this
 ```
 
 ### Read The Docs

@@ -1,12 +1,6 @@
-class Word(object):
-  def __init__(self, **attributes):
-    for key, value in attributes.items():
-      setattr(self, key, value)
-
-
-OPERATORS = Word(EQUALS='=', LIKE='LIKE', IN='IN')
-"""Object with attributes equal to PartiQL operators
-"""
+EQUALS = '='
+LIKE = 'LIKE'
+IN = 'IN'
 
 def where(operator, *columns):
   """Generates a **PartiQL** `WHERE` clause for an arbitrary number of columns with the specified argument.

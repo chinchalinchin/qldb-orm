@@ -1,4 +1,4 @@
-# Makpar Innovation Lab
+# makpar-innolab
 
 ## innoldb
 

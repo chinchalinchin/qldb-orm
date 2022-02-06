@@ -5,8 +5,6 @@ pyproject.toml
 setup.cfg
 version.txt
 src/innoldb/__init__.py
-src/innoldb/clauses.py
-src/innoldb/logger.py
 src/innoldb/main.py
 src/innoldb/qldb.py
 src/innoldb/settings.py
@@ -16,3 +14,7 @@ src/innoldb.egg-info/dependency_links.txt
 src/innoldb.egg-info/entry_points.txt
 src/innoldb.egg-info/requires.txt
 src/innoldb.egg-info/top_level.txt
+src/innoldb/static/__init__.py
+src/innoldb/static/clauses.py
+src/innoldb/static/driver.py
+src/innoldb/static/logger.py

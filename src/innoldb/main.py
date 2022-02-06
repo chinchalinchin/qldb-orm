@@ -3,7 +3,7 @@ import pprint
 import random
 import sys
 from innoldb.qldb import Document, Query
-from innoldb.logger import getLogger
+from innoldb.static.logger import getLogger
 
 log = getLogger('main')
 printer = pprint.PrettyPrinter(indent=4)
