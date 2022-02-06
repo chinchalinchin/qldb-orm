@@ -39,8 +39,15 @@ jobs:
       - name: Upload coverage 
         run: |
           NOW=$(date)
-          git add . && git stash
+          git config user.email "gmoore@makpar.com"
+          git config user.name "InnoLab bot"
+          git remote set-url origin https://x-access-token:${GIT_TOKEN}@github.com/innoldb.git
+          git add . 
+          git stash
+          git pull
           git checkout gh-pages
           cp -a /tmp/docs/. ./coverage/
           git add . && git commit -m "$NOW Automated Test Coverage"
-          git push
+          git push origin gh-pages
+        with:
+          GIT_TOKEN:  ${{ secrets.GIT_TOKEN }}
