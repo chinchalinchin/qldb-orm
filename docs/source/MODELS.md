@@ -55,6 +55,8 @@ my_document.field = 'test 1'
 my_document.save()
 my_document.field = 'test 2'
 my_document.save()
+print(my_document.id)
+print(my_document.field)
 ```
 
 Behind the scenes, whenever the `save()` method is called, a query is run to check for the existence of the given `Document`. If the `Document` doesn't exist, the library will create a new one. If the `Document` does exist, the library will overwrite the existing `Document`.
@@ -81,9 +83,20 @@ Queries are represented as an object, `Query`. Each `Query` must be initialized 
 The following script queries the ledger table for all documents and prints a JSON representation of each document to screen,
 
 ```python
-from innoldb.qldb import Document, Query
+from innoldb.qldb import Query
 
 all_documents = Query('table-name').all()
 for document in all_documents:
   print(document.fields())
+```
+
+## Find By
+
+The `find_by()` method accepts `**kwarg` aruments for any of the fields you want to query by; Note, the query is filtering on equality, i.e. it searches for all documents where the fields exactly equal their specified values.
+
+```python
+from innoldb.qldb import Query
+
+search_documents = Query('table-name').find_by(company='Makpar')
+search_documents_kwargs = Query('table-name').find_by(**{ 'company' : 'Makpar', 'department': 'Innovation' })
 ```

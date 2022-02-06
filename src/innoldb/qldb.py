@@ -169,11 +169,15 @@ class Driver():
     :return: iterable containing result
     """
     columns, values = fields.keys(), fields.values()
-    where_clause = clauses.where(*columns)
+    where_clause = clauses.where(operator=clauses.OPERATORS.EQUALS, *columns)
     statement = 'SELECT * FROM {} {}'.format(table, where_clause)
     return driver.execute_lambda(lambda executor: Driver.execute(
       executor, statement, *values
     ))
+
+  @staticmethod
+  def query_like_fields(driver, table, **fields):
+    pass
 
 class Ledger():
   def __init__(self, table, ledger=settings.LEDGER):

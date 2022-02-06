@@ -22,7 +22,7 @@ copyright = '2022, Makpar Innovation Lab'
 author = 'Makpar Innovation Lab'
 
 # The full version, including alpha/beta/rc tags
-release = 'v1.0.7'
+release = 'v1.0.10'
 
 
 # -- General configuration ---------------------------------------------------
