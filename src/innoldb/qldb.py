@@ -9,7 +9,7 @@ log = getLogger('innoldb.qldb')
 
 class Driver():
   @staticmethod 
-  def ledger(ledger):
+  def ledger(ledger=settings.LEDGER):
     return client('qldb').create_ledger(
       Name=ledger,
       PermissionsMode='STANDARD',
@@ -31,7 +31,7 @@ class Driver():
     return transaction_executor.execute_statement(statement, *params)
 
   @staticmethod
-  def driver(ledger):
+  def driver(ledger=settings.LEDGER):
     """Static method for retrieving a QLDB driver
 
     :param ledger: Name of the ledger
@@ -42,7 +42,7 @@ class Driver():
     return QldbDriver(ledger_name=ledger)
     
   @staticmethod
-  def tables(ledger):
+  def tables(ledger=settings.LEDGER):
     return QldbDriver(ledger_name=ledger).list_tables()
 
   @staticmethod
@@ -178,10 +178,10 @@ class Driver():
 
 
 class Document():
-  def __init__(self, table, id=None, ledger=settings.LEDGER, index=settings.DEFAULT_INDEX, snapshot=None):
+  def __init__(self, table, id=None, snapshot=None, ledger=settings.LEDGER):
     self.table = table
     self.ledger = ledger
-    self.index = index
+    self.index = 'id'
     if id is None:
       self.id = str(uuid.uuid1())        
     else:
@@ -234,10 +234,10 @@ class Document():
     return next(self._insert(fields))
 
 class Query():
-  def __init__(self, table, ledger=settings.LEDGER, index=settings.DEFAULT_INDEX):
+  def __init__(self, table, ledger=settings.LEDGER):
     self.table = table
     self.ledger = ledger
-    self.index = index
+    self.index = 'id'
   
   def all(self):
     results = Driver.query_all(Driver.driver(self.ledger), self.table)

@@ -11,7 +11,6 @@ if os.path.exists(os.path.join(ENV_DIR, '.env')):
   load_dotenv(os.path.join(ENV_DIR, '.env'))
 
 LEDGER = os.environ.setdefault('LEDGER', 'laboratory')
-DEFAULT_INDEX = os.environ.setdefault('DEFAULT_INDEX', 'id')
 
 LOG_LEVEL = os.environ.setdefault('LOG_LEVEL', 'NOTSET')
 
