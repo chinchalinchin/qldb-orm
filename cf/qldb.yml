@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "Stack for a serverless QLDB ledger"
+Description: "Stack for a serverless QLDB ledger. Includes a Ledger database service and the associated IAM resources necessary to interact with the service. Note: all authentication with service is handled through IAM, so be careful with the policy and it's access."
 
 Parameters:
     ledgerName:
@@ -15,6 +15,7 @@ Resources:
       PermissionsMode: STANDARD
       DeletionProtection: false
 
+  # The service role to grant access for AWS services to act on the user/client's behalf. Currently configured for **Lambda** functions. Adjust accordingly; Add services that need access to QLDB to `Properties.AssumeRolePolicyDocument.Statement[].Principal.Service`
   QLDBServiceRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -24,11 +25,11 @@ Resources:
           - Effect: Allow
             Principal:
               Service:
-                # Add services that need access to QLDB here.
                 - lambda.amazonaws.com
             Action:
               - 'sts:AssumeRole'
 
+  # Scope access to tables and ledgers with `Properties.PolicyDocument.Statement[].Resource`
   QLDBPolicy:
     Type: 'AWS::IAM::Policy'
     Properties:
