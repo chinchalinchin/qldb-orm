@@ -15,10 +15,24 @@ Resources:
       PermissionsMode: STANDARD
       DeletionProtection: false
 
+  QLDBServiceRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                # Add services that need access to QLDB here.
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+
   QLDBPolicy:
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: CFNUsers
+      PolicyName: QLDBAccess
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -41,20 +55,7 @@ Resources:
               - 'qldb:PartiQLSelect'
               - 'qldb:PartiQLHistoryFunction'
             Resource: !Sub 'arn:aws:qldb:${AWS::Region}:${AWS::AccountId}:ledger/${ledgerName}/table/*'
-   
-  QLDBServieRole:
-    Type: 'AWS::IAM::Role'
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service:
-                - lambda.amazonaws.com
-            Action:
-              - 'sts:AssumeRole'
-      Policies:
-        - !Ref QLDBPolicy
+      Roles:
+        - !Ref QLDBServiceRole
 
   # TODO: Kinesis Stream and Resources for transaction monitoring
