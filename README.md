@@ -17,4 +17,4 @@ document.save()
 
 ### Read The Docs
 
-[innolab](https://makpar-innovation-laboratory.github.io/innoldb/)
+- [innolqb documentation](https://makpar-innovation-laboratory.github.io/innoldb/)
