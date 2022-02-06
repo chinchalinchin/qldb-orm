@@ -49,5 +49,5 @@ jobs:
           cp -a /tmp/docs/. ./coverage/
           git add . && git commit -m "$NOW Automated Test Coverage"
           git push origin gh-pages
-        with:
+        env:
           GIT_TOKEN:  ${{ secrets.GIT_TOKEN }}
