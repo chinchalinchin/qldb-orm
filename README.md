@@ -127,8 +127,6 @@ innoldb --table <table-name> --id <id> --update <field>=<value> <field>=<value> 
 innoldb --table <table-name> --insert <field>=<value> <field>=<value> ...
 ```
 
-You can optionally specify the `Document` ID if you wish to overwrite the auto-generated UUID.
-
 ## Document Object Model
 
 This library abstracts much of the QLDB implementation away from its user. All the user has to do is create a `Document` object, add fields to it and then call `save()`. Under the hood, the library will translate the `Document` fields into [PartiQL queries](https://partiql.org/docs.html) and use the [pyqldb Driver](https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html) to post the queries to the **QLDB** instance on AWS.
@@ -159,15 +157,7 @@ my_document.property_two = 'property 2'
 my_document.save()
 ```
 
-The `Document` class will auto-generate a UUID for each document inserted into the ledger table. If you prefer a more memorable id, you can override the auto-generated ID through the constructor,
-
-```python
-from innoldb.qldb import Document
-
-my_document = Document(table='table-name', id='12345')
-my_document.property_one = 'this is a test'
-my_document.save()
-```
+**NOTE**: The `Document` class will auto-generate a UUID for each document inserted into the ledger table. 
 
 Congratulations! You have saved a document to QLDB!
 
