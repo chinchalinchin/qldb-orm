@@ -36,14 +36,6 @@ innoldb.settings module
    :undoc-members:
    :show-inheritance:
 
-innoldb.version module
-----------------------
-
-.. automodule:: innoldb.version
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

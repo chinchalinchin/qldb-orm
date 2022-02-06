@@ -47,7 +47,7 @@
   
   
   
-    <title>Document Object Model &#8212; innoldb v1.0.7 documentation</title>
+    <title>Document Object Model &#8212; innoldb v1.0.10 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/material.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="index.html" title="innoldb v1.0.7 documentation"
+        <a href="index.html" title="innoldb v1.0.10 documentation"
            class="md-header-nav__button md-logo">
           
             <i class="md-icon">&#xe5c3</i>
@@ -150,7 +150,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">innoldb v1.0.7 documentation</a></li>
+          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">innoldb v1.0.10 documentation</a></li>
       </ul>
     </div>
   </nav>
@@ -162,13 +162,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="index.html" title="innoldb v1.0.7 documentation" class="md-nav__button md-logo">
+    <a href="index.html" title="innoldb v1.0.10 documentation" class="md-nav__button md-logo">
       
         <i class="md-icon">&#xe5c3</i>
       
     </a>
     <a href="index.html"
-       title="innoldb v1.0.7 documentation">Innovation Lab</a>
+       title="innoldb v1.0.10 documentation">Innovation Lab</a>
   </label>
   
 
@@ -227,6 +227,8 @@
         <li class="md-nav__item"><a href="#query-object-model" class="md-nav__link">Query Object Model</a><nav class="md-nav">
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#all" class="md-nav__link">All</a>
+        </li>
+        <li class="md-nav__item"><a href="#find-by" class="md-nav__link">Find By</a>
         </li></ul>
             </nav>
         </li>
@@ -277,6 +279,13 @@
       <a href="#all" class="md-nav__link">All</a>
       
     
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#find-by" class="md-nav__link">Find By</a>
+      
+    
     </li></ul>
     
     </li>
@@ -297,7 +306,7 @@
     <li class="md-nav__item">
     
     
-      <a href="modules.html" class="md-nav__link">innoldb</a>
+      <a href="modules.html" class="md-nav__link">Modules</a>
       
     
     </li>
@@ -330,6 +339,8 @@
         <li class="md-nav__item"><a href="#query-object-model" class="md-nav__link">Query Object Model</a><nav class="md-nav">
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#all" class="md-nav__link">All</a>
+        </li>
+        <li class="md-nav__item"><a href="#find-by" class="md-nav__link">Find By</a>
         </li></ul>
             </nav>
         </li>
@@ -394,6 +405,8 @@
 <span class="n">my_document</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 <span class="n">my_document</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="s1">'test 2'</span>
 <span class="n">my_document</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_document</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">my_document</span><span class="o">.</span><span class="n">field</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Behind the scenes, whenever the <code class="docutils literal notranslate"><span class="pre">save()</span></code> method is called, a query is run to check for the existence of the given <code class="docutils literal notranslate"><span class="pre">Document</span></code>. If the <code class="docutils literal notranslate"><span class="pre">Document</span></code> doesn’t exist, the library will create a new one. If the <code class="docutils literal notranslate"><span class="pre">Document</span></code> does exist, the library will overwrite the existing <code class="docutils literal notranslate"><span class="pre">Document</span></code>.</p>
@@ -417,11 +430,21 @@
 <section id="all">
 <h2 id="all">All<a class="headerlink" href="#all" title="Permalink to this headline">¶</a></h2>
 <p>The following script queries the ledger table for all documents and prints a JSON representation of each document to screen,</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Document</span><span class="p">,</span> <span class="n">Query</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Query</span>
 
 <span class="n">all_documents</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table-name'</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">all_documents</span><span class="p">:</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">document</span><span class="o">.</span><span class="n">fields</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="find-by">
+<h2 id="find-by">Find By<a class="headerlink" href="#find-by" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">find_by()</span></code> method accepts <code class="docutils literal notranslate"><span class="pre">**kwarg</span></code> aruments for any of the fields you want to query by; Note, the query is filtering on equality, i.e. it searches for all documents where the fields exactly equal their specified values.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Query</span>
+
+<span class="n">search_documents</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table-name'</span><span class="p">)</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="n">company</span><span class="o">=</span><span class="s1">'Makpar'</span><span class="p">)</span>
+<span class="n">search_documents_kwargs</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table-name'</span><span class="p">)</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="o">**</span><span class="p">{</span> <span class="s1">'company'</span> <span class="p">:</span> <span class="s1">'Makpar'</span><span class="p">,</span> <span class="s1">'department'</span><span class="p">:</span> <span class="s1">'Innovation'</span> <span class="p">})</span>
 </pre></div>
 </div>
 </section>

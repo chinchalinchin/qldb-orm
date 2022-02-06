@@ -1,4 +1,4 @@
-innoldb
+Modules
 =======
 
 .. toctree::

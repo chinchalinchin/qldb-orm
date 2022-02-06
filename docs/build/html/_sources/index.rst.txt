@@ -17,11 +17,10 @@ Welcome to innoldb's documentation!
   CONFIGURATION.md
   REFERENCES.md
   modules.rst
+  TODOS.md
 
 
-Indices and tables
-==================
+Browse
+======
 
-* :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`
