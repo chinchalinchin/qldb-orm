@@ -43,9 +43,10 @@ class Document(Ledger):
     :type ledger: [type], optional
     """
     super().__init__(table=table, ledger=ledger)
-    if id is None and snapshot is not None:
+    if id is None:
       self.id = str(uuid.uuid1()) 
-      self._load(snapshot)
+      if snapshot is not None:
+        self._load(snapshot)
     elif id is not None:
       self.id = id
       if snapshot is None:
@@ -136,15 +137,12 @@ class Document(Ledger):
 
   def save(self):
     """Save the current value of the `innoldb.qldb.Document` fields to the **QLDB** ledger table.
-
-    :return: [description]
-    :rtype: [type]
     """
     fields = self.fields()
     log.debug("Saving DOCUMENT(%s = %s)", self.index, fields[self.index])
     if self._exists(fields[self.index]):
-      return self._update(fields)
-    return self._insert(fields)
+      self._update(fields)
+    self._insert(fields)
 
 class Query(Ledger):
   def __init__(self, table, ledger=settings.LEDGER):
