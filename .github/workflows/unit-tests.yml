@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Innoldb Test Coverage
 
 on: 
   push:
@@ -39,6 +39,7 @@ jobs:
           coverage run --source="./src/innoldb/" -m pytest --junit-xml=coverage-execution.xml
           coverage html --dir=/tmp/docs/
       - name: Upload coverage 
+        run: |
           git add . && git stash
           git checkout gh-pages
           cp -a /tmp/docs/. ./coverage/
