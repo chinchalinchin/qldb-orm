@@ -8,26 +8,24 @@ sys.path.append(APP_DIR)
 
 from static import clauses
 
-@pytest.mark.parametrize('columns,operator,expected_clause', [
-    ([], clauses.EQUALS, None),
-    (['1'], clauses.EQUALS, "WHERE 1 = ? "),
-    (['a', 'b', 'c'], clauses.EQUALS, "WHERE a = ? AND b = ? AND c = ? "),
-    (['moe', 'curly', 'larry'], clauses.EQUALS,
-     "WHERE moe = ? AND curly = ? AND larry = ? "),
-    (['Simon', 'Garfunkel'], clauses.EQUALS,
-     "WHERE Simon = ? AND Garfunkel = ? "),
-    ([], clauses.LIKE, None),
-    (['1'], clauses.LIKE, "WHERE 1 LIKE '%?%' "),
-    (['a', 'b', 'c'], clauses.LIKE,
-     "WHERE a LIKE '%?%' AND b LIKE '%?%' AND c LIKE '%?%' "),
-    (['moe', 'curly', 'larry'], clauses.LIKE,
-     "WHERE moe LIKE '%?%' AND curly LIKE '%?%' AND larry LIKE '%?%' "),
-    (['Simon', 'Garfunkel'], clauses.LIKE,
-        "WHERE Simon LIKE '%?%' AND Garfunkel LIKE '%?%' ")
+@pytest.mark.parametrize('columns,expected_clause', [
+    ([], None),
+    (['1'], "WHERE 1 = ? "),
+    (['a', 'b', 'c'], "WHERE a = ? AND b = ? AND c = ? "),
+    (['moe', 'curly', 'larry'], "WHERE moe = ? AND curly = ? AND larry = ? "),
+    (['Simon', 'Garfunkel'], "WHERE Simon = ? AND Garfunkel = ? ")
 ])
-def test_where(columns, operator, expected_clause):
-    assert clauses.where(operator, *columns) == expected_clause
+def test_where_equals(columns,expected_clause):
+    assert clauses.where_equals(*columns) == expected_clause
 
+@pytest.mark.parametrize('columns,ns,expected_clause', [
+    (['a', 'b', 'c'], [1, 2, 3], "WHERE a IN (?) AND b IN (?,?) AND c IN (?,?,?) "),
+    (['d', 'e'], [3, 2], "WHERE d IN (?,?,?) AND e IN (?,?) "),
+    (['g'], [5], "WHERE g IN (?,?,?,?,?) ")
+])
+def test_where_in(columns,ns,expected_clause):
+    column_numbers = { key: value for key, value in zip(columns, ns)}
+    assert clauses.where_in(**column_numbers) == expected_clause
 
 @pytest.mark.parametrize('columns,expected_clause', [
     ([], None),
