@@ -6,7 +6,8 @@ APP_DIR = os.path.dirname(TEST_DIR)
 sys.path.append(APP_DIR)
 
 import pytest
-from qldb import Strut, Ledger
+from unittest.mock import patch
+from qldb import Document, Strut, Ledger
 
 @pytest.mark.parametrize('kwargs,keys,values',[
   ({'a':'b'},['a'], ['b']),
@@ -24,13 +25,13 @@ def test_strut(kwargs,keys,values):
 def test_ledger(table, ledger):
   assert Ledger(table, ledger).table == table and Ledger(table, ledger).ledger == ledger
 
-# def test_document_driver(mocker):
-#   driver_stub = mocker.stub(name='Driver.drive')
-#   tables_stub = mocker.stub(name='Driver.tables')
-#   table_stub = mocker.stub(name='Driver.create_table')
-#   index_stub = mocker.stub(name='Driver.create_index')
-#   Document(table='table', ledger='ledger')
-#   assert driver_stub.call_count == 3
-#   assert tables_stub.call_count == 1
-#   assert table_stub.call_count == 1
-#   assert index_stub.call_count == 1
+@patch('qldb.Driver.driver')
+@patch('qldb.Driver.tables')
+@patch('qldb.Driver.create_table')
+@patch('qldb.Driver.create_index')
+def test_document_driver(mock_create_index, mock_create_table, mock_tables, mock_driver):
+  Document(table='table', ledger='ledger')
+  assert mock_driver.called
+  assert mock_tables.called
+  assert mock_create_table.called
+  assert mock_create_index.called
