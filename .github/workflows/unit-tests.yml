@@ -42,14 +42,16 @@ jobs:
           pip install innoldb-${VERSION}-py3-none-any.whl
           cd ..
         shell: bash
-      - name: Run Unit Tests and Upload coverage
+      - name: Run unit tests and upload coverage
         run: |
-          coverage run --source="./src/innoldb/" -m pytest --junit-xml=/tmp/cov/coverage-execution.xml
+          coverage run --source="./src/innoldb/" \
+                        --omit="**/test_*.py","**/__init__.py" \
+                        --module pytest \
+                        --junit-xml=/tmp/cov/coverage-execution.xml
           coverage html --dir=/tmp/cov/
           cp .coverage /tmp/cov/.coverage
           git config user.email "gmoore@makpar.com"
           git config user.name "InnoLab bot"
-          git remote set-url origin https://x-access-token:${GIT_TOKEN}@github.com/Makpar-Innovation-Laboratory/innoldb.git
           git add . 
           git stash
           git pull
@@ -63,5 +65,3 @@ jobs:
           git add . && git commit -m "$NOW Automated Test Coverage"
           git push origin gh-pages
         shell: bash
-        env:
-          GIT_TOKEN:  ${{ secrets.GIT_TOKEN }}
