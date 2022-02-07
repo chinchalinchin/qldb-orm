@@ -37,15 +37,16 @@ jobs:
       - name: Build test application
         run: |
           VERSION=$(cat version.txt)
-          python -m build && cd dist
-          pip install innoldb-${VERSION}-py3-none-any.whl && cd ..
+          python -m build
+          cd dist
+          pip install innoldb-${VERSION}-py3-none-any.whl
+          cd ..
         shell: bash
       - name: Run unit tests
         run: |
           coverage run --source="./src/innoldb/" -m pytest --junit-xml=/tmp/cov/coverage-execution.xml
           coverage html --dir=/tmp/cov/
           cp .coverage /tmp/cov/.coverage
-          cp ./docs/coverage/coverage.xml /tmp/cov/coverage.xml
           cp ./docs/coverage/coverage-execution.xml /tmp/cov/coverage-execution.xml
       - name: Upload coverage
         run: |
