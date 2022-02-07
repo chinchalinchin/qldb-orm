@@ -5,7 +5,8 @@ MAJOR = 0
 MINOR = 1
 MICRO = 2
 
-project_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+project_dir = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.realpath(__file__))))
 version_file = os.path.join(project_dir, 'version.txt')
 
 
