@@ -175,7 +175,7 @@ class Query(Ledger):
         return self._to_documents(Driver.query_all(Driver.driver(self.ledger), self.table))
 
     def find_by(self, **kwargs):
-        """Filter `innoldab.qldb.Document` objects by the provided fields. This method accepts `**kwargs` arguments for the field name and values. The document fields must exactly match the fields provided in 
+        """Filter `innoldb.qldb.Document` objects by the provided fields. This method accepts `**kwargs` arguments for the field name and values. The document fields must exactly match the fields provided in the query.
 
         :param kwargs: Fields by which to filter the query.
         :return: List of `innoldb.qldb.Document`
@@ -183,7 +183,18 @@ class Query(Ledger):
         """
         return self._to_documents(Driver.query_by_fields(Driver.driver(self.ledger), self.table, **kwargs))
 
-    # DOESN'T WORK. The PartiQL driver won't parameterize LIKE queries the same way it will = queries.
-    #   which is frustrating.
-    def find_like(self, **kwargs):
-        return self._to_documents(Driver.query_like_fields(Driver.driver(self.ledger), self.table, **kwargs))
+    def find_in(self, **kwargs):
+        """Filter `innoldb.qldb.Document` objects by the provided fields. This method accepts `**kwargs` arguments for the field name and values, but the values must be an array. The document fields must belong to the array associated with the field in the `**kwargs`. See below for example 
+
+        :param kwargs: Fields by which to filter the query.
+        :return: List of `innoldb.qldb.Document`
+        :rtype: list
+
+        Example
+        -------
+            ```python
+            Query('table').find_in(**{'field': [12, 13, 14], 'field2': ['cat', 'dog' ]})
+            ```
+            will find all documents with a `field` whose value is in the set `(12, 13, 14)` *and* a `field2` whose value is in the set `('cat', 'dog')`
+        """
+        return self._to_documents(Driver.query_in_fields(Driver.driver(self.ledger), self.table, **kwargs))

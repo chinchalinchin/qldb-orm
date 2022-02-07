@@ -162,3 +162,26 @@ class Driver():
         return driver.execute_lambda(lambda executor: Driver.execute(
             executor, statement, *values
         ))
+
+    @staticmethod
+    def query_in_fields(driver, table, **fields):
+      """Static method for querying table where fields match a value in a collection
+
+      :param driver: [description]
+      :type driver: [type]
+      :param table: [description]
+      :type table: [type]
+
+      ..note::
+        ```python
+        Driver().query_in_fields(driver, table, **{ 'a': ['b', 'c' , 'd'], '1': [ 2, 3, 4] })
+        ```
+        will search all documents where a field `a` has a value belonging to the set `('b', 'c', 'd')` *and* a field `1` whose value belongs to the set `(2, 3, 4)`.
+      """
+      column_numbers = { key: len(value) for key, value in fields.items() }
+      where_clause = clauses.where_in(**column_numbers)
+      statement = 'SELECT * FROM {} {}'.format(table, where_clause)
+      return driver.execute_lambda(lambda executor: Driver.execute(
+            executor, statement, *list(fields.values())
+        ))
+        
