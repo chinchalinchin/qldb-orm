@@ -8,7 +8,7 @@ TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 APP_DIR = os.path.dirname(TEST_DIR)
 sys.path.append(APP_DIR)
 
-from qldb import Document, Strut, Ledger
+from qldb import Document, Strut, Ledger, Query
 
 @pytest.mark.parametrize('kwargs,keys,values', [
     ({'a': 'b'}, ['a'], ['b']),
@@ -47,6 +47,7 @@ def test_document_driver_init(mock_create_index, mock_create_table, mock_tables,
     assert mock_create_index.call_count == 1
     assert document.table == 'table'
     assert document.ledger == 'ledger'
+    assert document.index == 'id'
     assert document.id is not None
 
 
@@ -110,3 +111,14 @@ def test_document_fields(mock_create_index, mock_create_table, mock_tables, mock
   assert 'test2' in list(document.fields().keys())
   assert 'prop' in list(document.fields().values())
   assert 'prop2' in list(document.fields().values())
+
+@patch('qldb.Driver.driver')
+@patch('qldb.Driver.tables')
+@patch('qldb.Driver.create_table')
+@patch('qldb.Driver.create_index')
+def test_query_init(mock_create_index, mock_create_table, mock_tables, mock_driver):
+  query = Query('table', 'ledger')
+  assert query.table == 'table'
+  assert query.ledger == 'ledger'
+  assert query.index == 'id'
+  

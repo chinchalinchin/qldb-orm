@@ -1,6 +1,5 @@
 import logging
 import os
-import pytest
 import sys
 
 TEST_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -8,10 +7,6 @@ APP_DIR = os.path.dirname(TEST_DIR)
 sys.path.append(APP_DIR)
 
 import settings
-
-@pytest.fixture(scope='session', autouse=True)
-def fixtures():
-  yield
   
 def test_info():
   settings.LOG_LEVEL = 'INFO'
