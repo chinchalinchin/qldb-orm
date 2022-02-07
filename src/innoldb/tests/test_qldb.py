@@ -6,7 +6,7 @@ APP_DIR = os.path.dirname(TEST_DIR)
 sys.path.append(APP_DIR)
 
 import pytest
-from qldb import Strut, Ledger, Document, Driver
+from qldb import Strut, Ledger
 
 @pytest.mark.parametrize('kwargs,keys,values',[
   ({'a':'b'},['a'], ['b']),
