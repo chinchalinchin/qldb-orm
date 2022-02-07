@@ -49,15 +49,15 @@ Driver.ledger('my-ledger')
 CloudFormation
 --------------
 
-A **QLDB** CloudFormation template is also available in the *cf* directory of this project's [Github](https://github.com/Makpar-Innovation-Laboratory/innoldb). A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). Clone the repository and then from the project root, execute the following script and specify the `<ledger-name>` to create a ledger on the **QLDB** service,
+A **QLDB** CloudFormation template is also available in the */scripts/cf/* directory of this project's [Github](https://github.com/Makpar-Innovation-Laboratory/innoldb). A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). Clone the repository and then from the project root, execute the following script and specify the `<ledger-name>` to create a ledger on the **QLDB** service,
 
 ```shell
-./scripts/cf-stack --ledger <ledger-name>
+./scripts/cf/stack --ledger <ledger-name>
 ```
 
 This method has the advantage of provisioning an **IAM** policy and role scoped to the ledger being created. These resources can be used by applications and users to gain access to the **QLDB** ledger instance. Once they are created, log into the AWS console and add the policy to your account.
 
-**NOTE**: The `<ledger-name>` must match the value of the **LEDGER** environment variable. The name of the ledger that is stood up on AWS is passed to the library through this environment variable.
+**NOTE**: The `<ledger-name>` must match the value of the **LEDGER** environment variable. The name of the ledger that is stood up on AWS is passed to the library through this environment variable. If the two do not match, then you will need to construct documents with the ledger name passed in to match the actual ledger name, i.e. `doc = Document(table='table', ledger='ledger')`.
 
 **NOTE**: This script has other optional arguments detailed in the comments of the script itself.
 
