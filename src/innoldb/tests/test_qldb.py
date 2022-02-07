@@ -49,6 +49,17 @@ def test_document_driver_init(mock_create_index, mock_create_table, mock_tables,
 @patch('qldb.Driver.tables')
 @patch('qldb.Driver.create_table')
 @patch('qldb.Driver.create_index')
+def test_document_snapshot(mock_create_index, mock_create_table, mock_tables, mock_driver):
+  document = Document(table='table', ledger='ledger', snapshot= {'test': 'prop', 'test2': 'prop2'})
+  assert mock_driver.call_count == 2
+  assert document.test == 'prop'
+  assert document.test2 == 'prop2'
+
+
+@patch('qldb.Driver.driver')
+@patch('qldb.Driver.tables')
+@patch('qldb.Driver.create_table')
+@patch('qldb.Driver.create_index')
 @patch('qldb.Driver.query_by_fields', 
         return_value=itertools.cycle([{'property': 'value'}]))
 @patch('qldb.Driver.insert', 
