@@ -1,6 +1,7 @@
 version = 1
 
 test_patterns = ["**/test_*.py"]
+exclude_patterns = ["**/test_*.py", "**/__init__.py"]
 
 [[analyzers]]
 name = "test-coverage"

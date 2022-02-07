@@ -1,4 +1,3 @@
-from qldb import Document, Strut, Ledger
 from unittest.mock import patch
 import pytest
 import itertools
@@ -9,6 +8,7 @@ TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 APP_DIR = os.path.dirname(TEST_DIR)
 sys.path.append(APP_DIR)
 
+from qldb import Document, Strut, Ledger
 
 @pytest.mark.parametrize('kwargs,keys,values', [
     ({'a': 'b'}, ['a'], ['b']),
@@ -96,3 +96,16 @@ def test_document_driver_load(mock_update, mock_query, mock_create_index, mock_c
     assert mock_query.call_count == 2
     assert mock_update.called
     assert mock_update.call_count == 1
+
+@patch('qldb.Driver.driver')
+@patch('qldb.Driver.tables')
+@patch('qldb.Driver.create_table')
+@patch('qldb.Driver.create_index')
+def test_document_fields(mock_create_index, mock_create_table, mock_tables, mock_driver):
+  document = Document(table='table', ledger='ledger', snapshot= {'test': 'prop', 'test2': 'prop2'})
+  assert 'index' not in list(document.fields().keys())
+  assert 'table' not in list(document.fields().keys())
+  assert 'test' in list(document.fields().keys())
+  assert 'test2' in list(document.fields().keys())
+  assert 'prop' in list(document.fields().values())
+  assert 'prop2' in list(document.fields().values())
