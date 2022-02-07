@@ -53,4 +53,4 @@ jobs:
           ./bin/deepsource report --analyzer test-coverage --key python --value-file coverage.xml 
         shell: bash
         env:
-          DEEPSOURCE_DSN: ${{secret:DEEPSOURCE_DSN}}
+          DEEPSOURCE_DSN: ${{secrets.DEEPSOURCE_DSN}}

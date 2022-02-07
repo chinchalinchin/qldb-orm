@@ -22,3 +22,8 @@ innoldb --table your-table --find column=this
 ### Read The Docs
 
 - [innolqb documentation](https://makpar-innovation-laboratory.github.io/innoldb/)
+
+### Code Quality
+
+[![DeepSource](https://deepsource.io/gh/Makpar-Innovation-Laboratory/innoldb.svg/?label=active+issues&show_trend=true&token=0yUpU0SKBmqEg7qNHU2C65C6)](https://deepsource.io/gh/Makpar-Innovation-Laboratory/innoldb/?ref=repository-badge)
+[![DeepSource](https://deepsource.io/gh/Makpar-Innovation-Laboratory/innoldb.svg/?label=resolved+issues&show_trend=true&token=0yUpU0SKBmqEg7qNHU2C65C6)](https://deepsource.io/gh/Makpar-Innovation-Laboratory/innoldb/?ref=repository-badge)
