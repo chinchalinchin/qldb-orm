@@ -19,6 +19,7 @@ def where_equals(*columns):
             clause += "AND {} {} ? ".format(column, EQUALS)
     return clause
 
+
 def where_in(**columns):
     clause = None
     for column, n in columns.items():
@@ -27,10 +28,11 @@ def where_in(**columns):
         else:
             clause += "AND {} IN (".format(column)
         if n == 1:
-          clause += "?) "
+            clause += "?) "
         else:
-          clause += "?,"*(n-1) + "?) "
+            clause += "?,"*(n-1) + "?) "
     return clause
+
 
 def set_statement(*columns):
     clause = None
