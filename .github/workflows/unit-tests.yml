@@ -41,7 +41,7 @@ jobs:
           NOW=$(date)
           git config user.email "gmoore@makpar.com"
           git config user.name "InnoLab bot"
-          git remote set-url origin https://x-access-token:${GIT_TOKEN}@github.com/innoldb.git
+          git remote set-url origin https://x-access-token:${GIT_TOKEN}@github.com/Makpar-Innovation-Laboratory/innoldb.git
           git add . 
           git stash
           git pull
