@@ -14,7 +14,7 @@ from qldb import Strut, Ledger, Document, Driver
 ])
 def test_strut(kwargs,keys,values):
   keywords = vars(Strut(**kwargs))
-  assert all([ keywords[act_key] == exp_val for act_key, exp_key, exp_val in zip(keywords.keys(), keys, values)])
+  assert all(keywords[act_key] == exp_val for act_key, exp_key, exp_val in zip(keywords.keys(), keys, values))
 
 @pytest.mark.parametrize('table,ledger',[
   ('howdy','ho'),

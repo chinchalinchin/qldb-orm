@@ -17,7 +17,4 @@ def test_keyvalue_parsing(args, expected_keys, expected_props):
   parser = argparse.ArgumentParser()
   parser.add_argument('--test', nargs='*', help="test", action=KeyValue)
   parsed_args = parser.parse_args(args.split(' '))
-  print(parsed_args.test)
-  for (key, value) in list(zip(expected_keys, expected_props)):
-    print(key)
-  assert all([ parsed_args.test.get(key) == value for key, value in zip(expected_keys, expected_props) ])
+  assert all(parsed_args.test.get(key) == value for key, value in zip(expected_keys, expected_props))
