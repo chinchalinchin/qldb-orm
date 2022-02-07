@@ -34,6 +34,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install build
           pip install -r ./src/innoldb/tests/requirements.txt
+          curl https://deepsource.io/cli | sh
       - name: Build test application
         run: |
           VERSION=$(cat version.txt)
@@ -47,21 +48,9 @@ jobs:
           coverage run --source="./src/innoldb/" \
                         --omit="**/test_*.py","**/__init__.py" \
                         --module pytest \
-                        --junit-xml=/tmp/cov/coverage-execution.xml
-          coverage html --dir=/tmp/cov/
-          cp .coverage /tmp/cov/.coverage
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add . 
-          git stash
-          git pull
-          git checkout gh-pages
-          mkdir coverage
-          cp -a /tmp/cov/. ./coverage/
-          NOW=$(date)
-          git remote set-url origin https://github-actions[bot]:$REPO_KEY@github.com/Makpar-Innovation-Laboratory/innoldb.git
-          git add . && git commit -m "$NOW Automated Test Coverage"
-          git push --set-upstream origin gh-pages
+                        --junit-xml=coverage-execution.xml
+          coverage xml
+          ./bin/deepsource report --analyzer test-coverage --key python --value-file coverage.xml 
         shell: bash
         env:
-          PUSH_TOKEN: ${{secrets.PUSH_TOKEN}}
+          DEEPSOURCE_DSN: ${{secret:DEEPSOURCE_DSN}}
