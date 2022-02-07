@@ -19,6 +19,10 @@ class Ledger():
     self.ledger = ledger
     self.index = 'id'
 
+class Strut(object):
+  def __init__(self, **kwargs):
+    self.__dict__.update( kwargs )
+    
 class Document(Ledger):
   """A `innoldab.qldb.Document` object, representing an entry in an QLDB Ledger Table. 
 
