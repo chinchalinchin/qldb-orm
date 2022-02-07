@@ -72,7 +72,7 @@ html_theme_options = {
 
     # Set the repo location to get a badge with stats
     # 'repo_url': 'https://github.com/project/project/',
-    
+
     # 'repo_name': 'Project',
 
     # Visible levels of the global TOC; -1 means unlimited
