@@ -3,11 +3,9 @@ LIKE = "LIKE"
 IN = "IN"
 
 
-def where(operator, *columns):
-    """Generates a **PartiQL** `WHERE` clause for an arbitrary number of columns with the specified argument.
+def where_equals(*columns):
+    """Generates a **PartiQL** `WHERE` clause for an arbitrary number of columns.
 
-    :param operator: Operator to apply in the `WHERE` clause. Defaults to equality. Verbs are statically accessible through the `clauses.VERBS` dictionary.
-    :type operater: str
     :param *columns: List of columns to include in the where clause.
     :type *columns: list
     :return: `WHERE` clause
@@ -16,18 +14,23 @@ def where(operator, *columns):
     clause = None
     for column in columns:
         if clause is None:
-            if operator == LIKE:
-                clause = "WHERE {} {} '%?%' ".format(column, operator)
-            else:
-                clause = "WHERE {} {} ? ".format(column, operator)
+            clause = "WHERE {} {} ? ".format(column, EQUALS)
         else:
-            if operator == LIKE:
-                clause += "AND {} {} '%?%' ".format(column, operator)
-            else:
-                clause += "AND {} {} ? ".format(column, operator)
-
+            clause += "AND {} {} ? ".format(column, EQUALS)
     return clause
 
+def where_in(**columns):
+    clause = None
+    for column, n in columns.items():
+        if clause is None:
+            clause = "WHERE {} IN (".format(column)
+        else:
+            clause += "AND {} IN (".format(column)
+        if n == 1:
+          clause += "?) "
+        else:
+          clause += "?,"*(n-1) + "?) "
+    return clause
 
 def set_statement(*columns):
     clause = None

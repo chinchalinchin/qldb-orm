@@ -157,7 +157,7 @@ class Driver():
         :return: iterable containing result
         """
         columns, values = list(fields.keys()), list(fields.values())
-        where_clause = clauses.where(clauses.EQUALS, *columns)
+        where_clause = clauses.where_equals(*columns)
         statement = 'SELECT * FROM {} {}'.format(table, where_clause)
         return driver.execute_lambda(lambda executor: Driver.execute(
             executor, statement, *values
