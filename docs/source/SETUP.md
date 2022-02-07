@@ -34,17 +34,16 @@ The environment variable **LEDGER** should point to the **QLDB** ledger so the a
 Boto3 Client
 ------------
 
-The easiest way to create a ledger is through the `boto3` wrapper function in `innoldb.qldb.Driver`,
+The easiest way to create a ledger is through a `boto3` client,
 
 ```python
-from innoldb.qldb import Driver
+from boto3 import client
 
-Driver.ledger('my-ledger')
+qldb = client('qldb')
+qldb.create_ledger(Name='ledger', PermissionsMode='STANDARD', DeletionProtection=False)
 ```
 
-**NOTE**: You must install the `innoldb` package from [PyPi](https://pypi.org/project/innoldb/) before creating a ledger this way. See *Step 4* for more information.
-
-**NOTE**: This will only create the ledger if you have the necessary permissions with QLDB. [See here for a working example of an appropriate IAM policy](https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions)
+**NOTE**: This will only create the ledger if you have your AWS credentials configured and the necessary permissions with QLDB. [See here for a working example of an appropriate IAM policy](https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions)
 
 CloudFormation
 --------------
