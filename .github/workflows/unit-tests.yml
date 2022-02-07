@@ -20,8 +20,16 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@
+      - uses: actions/cache@v2
+        with:
+          id: cache
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
       - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: |
           python -m pip install --upgrade pip
           pip install build
@@ -34,11 +42,13 @@ jobs:
         shell: bash
       - name: Run unit tests
         run: |
-          coverage run --source="./src/innoldb/" -m pytest --junit-xml=coverage-execution.xml
-          coverage html --dir=/tmp/docs/
-      - name: Upload coverage 
+          coverage run --source="./src/innoldb/" -m pytest --junit-xml=/tmp/cov/coverage-execution.xml
+          coverage html --dir=/tmp/cov/
+          cp .coverage /tmp/cov/.coverage
+          cp ./docs/coverage/coverage.xml /tmp/cov/coverage.xml
+          cp ./docs/coverage/coverage-execution.xml /tmp/cov/coverage-execution.xml
+      - name: Upload coverage
         run: |
-          NOW=$(date)
           git config user.email "gmoore@makpar.com"
           git config user.name "InnoLab bot"
           git remote set-url origin https://x-access-token:${GIT_TOKEN}@github.com/Makpar-Innovation-Laboratory/innoldb.git
@@ -46,7 +56,12 @@ jobs:
           git stash
           git pull
           git checkout gh-pages
+          mkdir coverage
           cp -a /tmp/docs/. ./coverage/
+          git status
+          ls
+          ls coverage
+          NOW=$(date)
           git add . && git commit -m "$NOW Automated Test Coverage"
           git push origin gh-pages
         env:

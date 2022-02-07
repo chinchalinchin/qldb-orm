@@ -1,0 +1,13 @@
+#!/bin/bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+SCRIPT_NAME="install"
+SCRIPT_DES=$'Build and install the \e[3minnoldb\e[om from source.'
+PROJECT_DIR=$SCRIPT_DIR/..
+source $PROJECT_DIR/env/.env
+
+cd $PROJECT_DIR
+
+coverage run --source="." -m pytest --junit-xml=./docs/coverage/coverage-execution.xml
+coverage xml -o ./docs/coverage/coverage.xml
+coverage html --dir=./docs/coverage
