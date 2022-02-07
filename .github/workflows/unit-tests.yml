@@ -50,8 +50,8 @@ jobs:
                         --junit-xml=/tmp/cov/coverage-execution.xml
           coverage html --dir=/tmp/cov/
           cp .coverage /tmp/cov/.coverage
-          git config user.email "gmoore@makpar.com"
-          git config user.name "InnoLab bot"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add . 
           git stash
           git pull
