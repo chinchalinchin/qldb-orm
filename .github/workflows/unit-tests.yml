@@ -58,10 +58,7 @@ jobs:
           git checkout gh-pages
           mkdir coverage
           cp -a /tmp/cov/. ./coverage/
-          git status
-          ls
-          ls coverage
           NOW=$(date)
           git add . && git commit -m "$NOW Automated Test Coverage"
-          git push origin gh-pages
+          git push --set-upstream origin gh-pages
         shell: bash
