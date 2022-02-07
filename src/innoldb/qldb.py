@@ -59,6 +59,9 @@ class Document(Ledger):
         self._load(snapshot)
     self._init_fixtures()
 
+  def __getattr__(self, attr):
+    return self.fields().get(attr)
+    
   def _init_fixtures(self):
     """Create the table and index on the **QLDB** ledger, if they do not already exist.
     """

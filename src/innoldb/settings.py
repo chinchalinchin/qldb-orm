@@ -10,7 +10,11 @@ ENV_DIR = os.path.join(PROJECT_DIR,'env')
 if os.path.exists(os.path.join(ENV_DIR, '.env')):
   load_dotenv(os.path.join(ENV_DIR, '.env'))
 
-LEDGER = os.environ.setdefault('LEDGER', 'laboratory')
+try:
+  LEDGER = os.getenv('LEDGER')
+  
+except Exception as e:
+  print(e)
 
 LOG_LEVEL = os.environ.setdefault('LOG_LEVEL', 'NOTSET')
 
