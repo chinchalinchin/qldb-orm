@@ -3,11 +3,11 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 SCRIPT_NAME="qldb-stack"
 SCRIPT_DES=$'A script for posting a template of QLDB service to CloudFormation. See comments in script for usage information.'
-PROJECT_DIR=$SCRIPT_DIR/..
+PROJECT_DIR=$SCRIPT_DIR/../..
 source $PROJECT_DIR/env/.env
 
 # Example Usage:
-# >$     qldb-stack --ledger <ledger-name>
+# >$     qldb-stack --ledger <ledger-name> --help 
 
 function log(){
   echo -e "\e[92m$(date +"%r")\e[0m: \e[4;32m$SCRIPT_NAME\e[0m : >> $1"
@@ -49,11 +49,9 @@ then
   fi
 fi
 
-cp $PROJECT_DIR/cf/qldb.yml ./qldb.yml
 log "Creating \e[1m${LEDGER_INPUT^}-QLDB-Stack\e[0m"
 aws cloudformation create-stack \
     --stack-name "${LEDGER_INPUT^}-QLDB-Stack" \
     --template-body file://qldb.yml \
     --capabilities CAPABILITY_NAMED_IAM \
     --parameters ParameterKey=ledgerName,ParameterValue="${LEDGER_INPUT}"
-rm ./qldb.yml
