@@ -55,9 +55,8 @@ def like(table, fields):
   
 def update_prop(document, **props):
   for key, value in props.items():
-    log.info('%s = %s', key, value)
     setattr(document, key, value)
-  document.save()
+    document.save()
   return document
 
 def do_program(cli_args):

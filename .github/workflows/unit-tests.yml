@@ -59,6 +59,9 @@ jobs:
           mkdir coverage
           cp -a /tmp/cov/. ./coverage/
           NOW=$(date)
+          git remote set-url origin https://github-actions[bot]:$REPO_KEY@github.com/Makpar-Innovation-Lab/innoldb.get
           git add . && git commit -m "$NOW Automated Test Coverage"
           git push --set-upstream origin gh-pages
         shell: bash
+        env:
+          PUSH_TOKEN: ${{secrets.PUSH_TOKEN}}
