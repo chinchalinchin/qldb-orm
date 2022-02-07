@@ -8,6 +8,9 @@ source $PROJECT_DIR/env/.env
 
 cd $PROJECT_DIR
 
-coverage run --source="." -m pytest --junit-xml=./docs/coverage/coverage-execution.xml
+coverage run --source="." \
+              --omit="**/test_*.py","**/__init__.py" \
+              --module pytest \
+                        --junit-xml=./docs/coverage/coverage-execution.xml
 coverage xml -o ./docs/coverage/coverage.xml
 coverage html --dir=./docs/coverage

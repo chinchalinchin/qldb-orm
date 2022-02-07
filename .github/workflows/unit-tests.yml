@@ -55,7 +55,7 @@ jobs:
           git pull
           git checkout gh-pages
           mkdir coverage
-          cp -a /tmp/docs/. ./coverage/
+          cp -a /tmp/cov/. ./coverage/
           git status
           ls
           ls coverage
