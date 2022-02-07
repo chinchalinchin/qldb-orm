@@ -1,5 +1,12 @@
+import os
+import sys
+
+TEST_DIR = os.path.dirname(os.path.abspath(__file__))
+APP_DIR = os.path.dirname(TEST_DIR)
+sys.path.append(APP_DIR)
+
 import pytest
-import innoldb.static.clauses as clauses
+from static import clauses
 
 @pytest.mark.parametrize('columns,operator,expected_clause', [
   ([], clauses.EQUALS, None),
