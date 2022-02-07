@@ -82,8 +82,6 @@ def do_program(cli_args):
                         help="Create document with fields `KEY1=VAL1 KEY2=VAL2 ...`", action=KeyValue)
     parser.add_argument('-fi', '--find', nargs='*',
                         help="Query by field equality `KEY1=VAL1 KEY2=VAL2...`", action=KeyValue)
-    parser.add_argument('-lk', '--like', nargs='*',
-                        help="Query by field matching `KEY1=VAL1 KEY2=VAL2 ...`", action=KeyValue)
     parser.add_argument('-lo', '--load', action='store_true',
                         help="Requires --id.\n Load a document.",)
     parser.add_argument('-mo', '--mock', action='store_true',
@@ -98,7 +96,7 @@ def do_program(cli_args):
             document = load(args.id, args.table)
             printer.pprint(document.fields())
         else:
-            log.warn("No Document ID specified.")
+            log.warning("No Document ID specified.")
 
     elif args.mock:
         document = mock(args.table)
@@ -115,7 +113,7 @@ def do_program(cli_args):
             document = update_prop(document, **args.update)
             printer.pprint(document.fields())
         else:
-            log.warn("No Document ID specified.")
+            log.warning("No Document ID specified.")
 
     elif args.insert:
         insert_id = insert(args.table, args.insert)
