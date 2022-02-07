@@ -16,3 +16,10 @@ def test_strut(kwargs,keys,values):
   keywords = vars(Strut(**kwargs))
   assert all([ keywords[act_key] == exp_val for act_key, exp_key, exp_val in zip(keywords.keys(), keys, values)])
 
+@pytest.mark.parametrize('table,ledger',[
+  ('howdy','ho'),
+  ('alas', 'poor yorick'),
+  ('say what', 'again')
+])
+def test_ledger(table, ledger):
+  assert Ledger(table, ledger).table == table and Ledger(table, ledger).ledger == ledger
