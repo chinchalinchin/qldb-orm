@@ -1,6 +1,10 @@
 
 #!/bin/bash
 
+# NOTE: To use this script, you must configure your PyPi credentials in the /env/.env file.
+#       Leave the username set to '__token__' and set password to the value of your PyPi API
+#       token. See here for instructions on generating a PyPi token: https://pypi.org/help/#apitoken
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 SCRIPT_NAME="install"
 SCRIPT_DES=$'Build and install the \e[3minnoldb\e[om from source.'

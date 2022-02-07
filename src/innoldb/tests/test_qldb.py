@@ -1,3 +1,4 @@
+import itertools
 import os
 import sys
 
@@ -33,9 +34,13 @@ def test_ledger(table, ledger):
 def test_document_driver_init(mock_create_index, mock_create_table, mock_tables, mock_driver):
   document = Document(table='table', ledger='ledger')
   assert mock_driver.called
+  assert mock_driver.call_count == 2
   assert mock_tables.called
+  assert mock_tables.call_count == 1
   assert mock_create_table.called
+  assert mock_create_table.call_count == 1
   assert mock_create_index.called
+  assert mock_create_index.call_count == 1
   assert document.table == 'table'
   assert document.ledger == 'ledger'
   assert document.id is not None
@@ -45,17 +50,32 @@ def test_document_driver_init(mock_create_index, mock_create_table, mock_tables,
 @patch('qldb.Driver.create_table')
 @patch('qldb.Driver.create_index')
 @patch('qldb.Driver.query_by_fields', 
-        return_value=iter([{'lefty': 'loosey', 'righty': 'tighty'}]))
+        return_value=itertools.cycle([{'property': 'value'}]))
 @patch('qldb.Driver.insert', 
-        return_value=iter([{'lefty': 'loosey', 'righty': 'tighty'}]))
+        return_value=itertools.cycle([{'property': 'value'}]))
 def test_document_driver_save(mock_insert, mock_query, mock_create_index, mock_create_table, mock_tables, mock_driver):
   document = Document(table='table', ledger='ledger')
-  document.lefty = 'loosey'
-  document.righty = 'tighty'
+  document.test_field = 'test value'
   document.save()
-  assert mock_driver.called
-  assert mock_tables.called
-  assert mock_create_table.called
-  assert mock_create_index.called
+  assert mock_driver.call_count == 5
   assert mock_query.called
+  assert mock_query.call_count == 1
   assert mock_insert.called
+  assert mock_insert.call_count == 1
+
+@patch('qldb.Driver.driver')
+@patch('qldb.Driver.tables')
+@patch('qldb.Driver.create_table')
+@patch('qldb.Driver.create_index')
+@patch('qldb.Driver.query_by_fields', 
+        return_value=itertools.cycle([{'property': 'value'}]))
+@patch('qldb.Driver.update', 
+        return_value=itertools.cycle([{'property': 'value'}]))
+def test_document_driver_load(mock_update, mock_query, mock_create_index, mock_create_table, mock_tables, mock_driver):
+  document = Document(table='table', ledger='ledger', id="test")
+  document.save()
+  assert mock_driver.call_count == 6
+  assert mock_query.called
+  assert mock_query.call_count == 2
+  assert mock_update.called
+  assert mock_update.call_count == 1
