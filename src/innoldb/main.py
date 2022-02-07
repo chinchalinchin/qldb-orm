@@ -19,7 +19,7 @@ members = [{'UI/UX': 'Phung'}, {'Solutions': 'Justin'}, { 'Capabilities': 'Peter
 class KeyValue(argparse.Action):
   # Constructor calling
   def __call__(self, parser, namespace, values, option_string = None):
-    setattr(namespace, self.dest, dict())
+    setattr(namespace, self.dest, {})
       
     for value in values:
       key, value = value.split('=')
