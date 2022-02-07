@@ -1,3 +1,4 @@
+import json
 from pyqldb.driver.qldb_driver import QldbDriver
 from innoldb.static.logger import getLogger
 from innoldb.static import clauses
@@ -16,7 +17,23 @@ class Driver():
         :rtype: str
         """
         for char in ["\\", "\'", "\"", "\b", "\n", "\r", "\t", "\0"]:
-            query = query.replace(char, "")
+            list_flag, dict_flag = False, False
+
+            if isinstance(query, dict):
+                dict_flag = True
+                query = json.dumps(query)
+            elif isinstance(query, list):
+                list_flag = True
+                query = "__".join(str(param) for param in query)
+
+            if not isinstance(query, int) and not isinstance(query, float):
+                query = query.replace(char, "")
+
+            if dict_flag:
+                query = json.loads(query)
+            elif list_flag:
+                query = query.split("__")
+                
         return query
 
     @staticmethod
