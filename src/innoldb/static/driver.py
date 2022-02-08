@@ -30,7 +30,7 @@ class Driver():
             list_flag = True
             obj = "~~".join(str(param) for param in obj)
 
-        for char in ["\\", "\'", "\"", "\b", "\n", "\r", "\t", "\0"]:            
+        for char in ["\\", "\'", "\"", "\b", "\n", "\r", "\t", "\0"]:
             if not dict_flag or not char == "\"":
                 obj = obj.replace(char, "")
 
@@ -41,7 +41,6 @@ class Driver():
             obj = obj.split("~~")
 
         return obj
-
 
     @staticmethod
     def execute(transaction_executor, statement, *params):
@@ -55,7 +54,7 @@ class Driver():
         sanitized_statement = Driver().sanitize(statement)
         if len(params) == 0:
             log.debug(
-            "Executing statement: \n\t\t\t\t\t\t\t %s \n", sanitized_statement)
+                "Executing statement: \n\t\t\t\t\t\t\t %s \n", sanitized_statement)
             return transaction_executor.execute_statement(sanitized_statement)
 
         sanitized_params = tuple(Driver().sanitize(param) for param in params)

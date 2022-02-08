@@ -30,13 +30,16 @@ class Field():
     """
     pass
 
+
 class Strut(object):
     """Simple object to parse `**kwargs` into object attributes
     """
+
     def __init__(self, **kwargs):
         """Pass in `**kwargs` to assign attributes to the object
         """
         self.__dict__.update(kwargs)
+
 
 class Document(Ledger):
     """A `innoldab.qldb.Document` object, representing an entry in an QLDB Ledger Table. 
@@ -88,7 +91,7 @@ class Document(Ledger):
             except ClientError as e:
                 log.error(e)
 
-    def _load(self, snapshot=None, nest = None, nester = None):
+    def _load(self, snapshot=None, nest=None, nester=None):
         """Parse the `snapshot` into `innoldab.qldb.Document` attributes.
 
         :param snapshot: Dictionary of attributes to append to self, defaults to None
@@ -100,23 +103,23 @@ class Document(Ledger):
                 print('insert key', key)
                 print('insert value', value)
                 if nest is not None:
-                  print('nest key', nest)
+                    print('nest key', nest)
 
                 if isinstance(value, dict):
                     nested_field = Strut()
                     if nest is None:
-                      setattr(self, key, nested_field)
+                        setattr(self, key, nested_field)
                     else:
-                      nested_attribute = getattr(self, nest)
-                      setattr(nested_attribute, key, nested_field)
-                    self._load(snapshot = value, nest=key, nester=nested_field)
+                        nested_attribute = getattr(self, nest)
+                        setattr(nested_attribute, key, nested_field)
+                    self._load(snapshot=value, nest=key, nester=nested_field)
 
                 else:
                     if nest is None:
                         setattr(self, key, value)
                     else:
                         setattr(nester, key, value)
-                
+
                 print('self after loop', self.fields())
 
     def _insert(self, document):
