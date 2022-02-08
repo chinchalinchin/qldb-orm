@@ -52,34 +52,45 @@ class Strut:
 
 
 class Document(Ledger):
-    """A `innoldab.qldb.Document` object, representing an entry in an QLDB Ledger Table. Creates an instance of `innoldab.qldb.Document`. This call can be initialized in several states, depending on the parameters passed into the constructor. 
+    """A `innoldab.qldb.Document` object, representing an entry in an QLDB Ledger Table. Creates an instance of `innoldb.qldb.Document`. This object can be initialized in several states, depending on the parameters passed into the constructor. 
+    
     1. **Constructor Arguments**: `table`
     2. **Constructor Arguments**: `table, id`
     3. **Constructor Arguments**: `table, snapshot`
+    4. **Constructor Arguments**: `table, no_index`
+    5. **Constructor Arguments**: `table, no_index, snapshot`
 
     :param table: Name of the **QLDB**table
     :type table: str
-    :param id: Id of the document to load, defaults to None
+    :param id: Id of the document to load, defaults to `None`
     :type id: str, optional
-    :param snapshot: `dict` containing values to map to attributes, defaults to None
+    :param snapshot: `dict` containing values to map to attributes, defaults to `None`
     :type snapshot: dict, optional
     :param ledger: Name of the **QLDB** ledger, defaults to `innoldb.settings.LEDGER`
     :type ledger: str, optional
+    :param no_index: flag to signal document has no index, defaults to `False`
+    :param no_index: bool, optional
     """
 
-    def __init__(self, table, id=None, snapshot=None, ledger=settings.LEDGER):
+    def __init__(self, table, id=None, snapshot=None, ledger=settings.LEDGER, no_index = False):
         super().__init__(table=table, ledger=ledger)
-        if id is None:
+        if no_index:
+            if snapshot is not None:
+                self._load(snapshot)
+    
+        elif id is None:
             # PartiQL doesn't like dashes.
             self.id = str(uuid.uuid1()).replace('-','')
             if snapshot is not None:
                 self._load(snapshot)
+    
         elif id is not None:
             self.id = id
             if snapshot is None:
                 self._exists(self.id, snapshot=True)
             else:
                 self._load(snapshot)
+    
         self._init_fixtures()
 
     def __getattr__(self, attr):
@@ -219,7 +230,7 @@ class Query(Ledger):
         return [Document(table=self.table, snapshot=dict(result)) for result in results]
 
     def raw(self, query):
-        return Driver.query(Driver.driver(self.ledger), query)
+        return self._to_documents(Driver.query(Driver.driver(self.ledger), query))
 
     def history(self, id):
         records = [ Driver.down_convert(record) for record in Driver.history(Driver.driver(self.ledger), self.table) ]

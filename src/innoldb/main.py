@@ -115,11 +115,8 @@ def do_program(cli_args):
             log.warning("No Document ID specified.")
     
     elif args.history:
-        if args.id:
-            results = history(args.table, args.id)
-            printer.pprint(results.fields())
-        else:
-            log.warning("No Document ID specified.")
+        results = history(args.table, args.id)
+        printer.pprint(results.fields())
 
     elif args.insert:
         insert_id = insert(args.table, args.insert)

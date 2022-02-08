@@ -221,12 +221,16 @@
         <li class="md-nav__item"><a href="#updating" class="md-nav__link">Updating</a>
         </li>
         <li class="md-nav__item"><a href="#fields" class="md-nav__link">Fields</a>
+        </li>
+        <li class="md-nav__item"><a href="#native-object-attribute-nesting" class="md-nav__link">Native Object Attribute Nesting</a>
         </li></ul>
             </nav>
         </li>
         <li class="md-nav__item"><a href="#query-object-model" class="md-nav__link">Query Object Model</a><nav class="md-nav">
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#all" class="md-nav__link">All</a>
+        </li>
+        <li class="md-nav__item"><a href="#history" class="md-nav__link">History</a>
         </li>
         <li class="md-nav__item"><a href="#find-by" class="md-nav__link">Find By</a>
         </li>
@@ -267,6 +271,13 @@
       <a href="#fields" class="md-nav__link">Fields</a>
       
     
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#native-object-attribute-nesting" class="md-nav__link">Native Object Attribute Nesting</a>
+      
+    
     </li></ul>
     
     </li>
@@ -279,6 +290,13 @@
     
     
       <a href="#all" class="md-nav__link">All</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#history" class="md-nav__link">History</a>
       
     
     </li>
@@ -349,12 +367,16 @@
         <li class="md-nav__item"><a href="#updating" class="md-nav__link">Updating</a>
         </li>
         <li class="md-nav__item"><a href="#fields" class="md-nav__link">Fields</a>
+        </li>
+        <li class="md-nav__item"><a href="#native-object-attribute-nesting" class="md-nav__link">Native Object Attribute Nesting</a>
         </li></ul>
             </nav>
         </li>
         <li class="md-nav__item"><a href="#query-object-model" class="md-nav__link">Query Object Model</a><nav class="md-nav">
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#all" class="md-nav__link">All</a>
+        </li>
+        <li class="md-nav__item"><a href="#history" class="md-nav__link">History</a>
         </li>
         <li class="md-nav__item"><a href="#find-by" class="md-nav__link">Find By</a>
         </li>
@@ -441,6 +463,25 @@
 </pre></div>
 </div>
 </section>
+<section id="native-object-attribute-nesting">
+<h2 id="native-object-attribute-nesting">Native Object Attribute Nesting<a class="headerlink" href="#native-object-attribute-nesting" title="Permalink to this headline">¶</a></h2>
+<p>A document returned in nested format,</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="nt">"prop_1"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">"prop_2"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">"prop_3"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">"prop_4"</span> <span class="p">:</span> <span class="mi">5</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>is deserialized into nestable attributes on the <code class="docutils literal notranslate"><span class="pre">Document</span></code> object, i.e.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">document</span><span class="o">.</span><span class="n">prop_1</span><span class="o">.</span><span class="n">prop_2</span><span class="o">.</span><span class="n">prop_3</span><span class="o">.</span><span class="n">prop_4</span> <span class="o">==</span> <span class="mi">5</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="query-object-model">
 <h1 id="query-object-model">Query Object Model<a class="headerlink" href="#query-object-model" title="Permalink to this headline">¶</a></h1>
@@ -450,9 +491,22 @@
 <p>The following script queries the ledger table for all documents and prints a JSON representation of each document to screen,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Query</span>
 
-<span class="n">all_documents</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="n">all_documents</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">)</span><span class="o">.</span><span class="n">get_all</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">all_documents</span><span class="p">:</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">document</span><span class="o">.</span><span class="n">fields</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="history">
+<h2 id="history">History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
+<p>One of the unique features of <strong>QLDB</strong> is its <em>immutability</em>; as a result of its implementation, <strong>QLDB</strong> keeps a log of all transactions that have occured on a table. This features is accessible in <strong>PartiQL</strong> through the <code class="docutils literal notranslate"><span class="pre">history()</span></code> function in the query <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">*</span> <span class="pre">FROM</span> <span class="pre">history(table)</span></code>. The <code class="docutils literal notranslate"><span class="pre">Query</span></code> class provides a wrapper around this query that parses it into a collection of <code class="docutils literal notranslate"><span class="pre">Documents</span></code>, i.e. the transaction history is traversible in the same way a document model is,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Query</span>
+
+<span class="n">transaction</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">)</span><span class="o">.</span><span class="n">history</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

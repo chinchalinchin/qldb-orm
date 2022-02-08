@@ -74,6 +74,28 @@ for key, value in my_document.fields().items():
   print(key, '=', value)
 ```
 
+## Native Object Attribute Nesting
+
+A document returned in nested format,
+
+```json
+{
+  "prop_1": {
+    "prop_2": {
+      "prop_3": {
+        "prop_4" : 5
+      }
+    }
+  }
+}
+```
+
+is deserialized into nestable attributes on the `Document` object, i.e.
+
+```python 
+assert document.prop_1.prop_2.prop_3.prop_4 == 5
+```
+
 # Query Object Model
 
 Queries are represented as an object, `Query`. Each `Query` must be initialized with a `table` that it will run **PartialQL** queries against. All queries return a `list` of `Document` objects. 
@@ -88,6 +110,20 @@ from innoldb.qldb import Query
 all_documents = Query('table_name').get_all()
 for document in all_documents:
   print(document.fields())
+```
+
+## History
+
+One of the unique features of **QLDB** is its *immutability*; as a result of its implementation, **QLDB** keeps a log of all transactions that have occured on a table. This features is accessible in **PartiQL** through the `history()` function in the query `SELECT * FROM history(table)`. The `Query` class provides a wrapper around this query that parses it into a collection of `Documents`, i.e. the transaction history is traversible in the same way a document model is,
+
+```python
+from innoldb.qldb import Query
+
+transaction = Query('table_name').history()
+
+for result in results:
+  print(result.data)
+  print(result.metadata)
 ```
 
 ## Find By
