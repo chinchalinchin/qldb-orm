@@ -22,7 +22,7 @@ class Driver():
         if isinstance(obj, (int, float)):
             return obj
 
-        elif isinstance(obj, (dict, IonPyDict)):
+        if isinstance(obj, (dict, IonPyDict)):
             dict_flag = True
             obj = dumps(obj, cls=IonToJSONEncoder)
 
