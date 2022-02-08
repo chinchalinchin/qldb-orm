@@ -72,25 +72,25 @@ class Document(Ledger):
     :param no_index: bool, optional
     """
 
-    def __init__(self, table, id=None, snapshot=None, ledger=settings.LEDGER, no_index = False):
+    def __init__(self, table, id=None, snapshot=None, ledger=settings.LEDGER, no_index=False):
         super().__init__(table=table, ledger=ledger)
         if no_index:
             if snapshot is not None:
                 self._load(snapshot)
-    
+
         elif id is None:
             # PartiQL doesn't like dashes.
             self.id = str(uuid.uuid1()).replace('-', '')
             if snapshot is not None:
                 self._load(snapshot)
-    
+
         elif id is not None:
             self.id = id
             if snapshot is None:
                 self._exists(self.id, snapshot=True)
             else:
                 self._load(snapshot)
-    
+
         self._init_fixtures()
 
     def __getattr__(self, attr):
@@ -242,7 +242,7 @@ class Query(Ledger):
         """
         return self._to_documents(Driver.query(Driver.driver(self.ledger), query, unsafe=True))
 
-    def history(self, id = None):
+    def history(self, id=None):
         """Returns the revision history. 
 
         :param id: meta id, defaults to None
@@ -253,11 +253,11 @@ class Query(Ledger):
           `id` is *not* the index of the document. It is the `metadata.id` associated with the document across revisions. Query entire history to find a particular `metadata.id`
         """
         if id is None:
-            records = [ Driver.down_convert(record) 
-                          for record in Driver.history_full(Driver.driver(self.ledger), self.table)]
+            records = [Driver.down_convert(record)
+                       for record in Driver.history_full(Driver.driver(self.ledger), self.table)]
         else:
-            records = [ Driver.down_convert(record) 
-                          for record in Driver.history(Driver.driver(self.ledger), self.table, id) ]
+            records = [Driver.down_convert(record)
+                       for record in Driver.history(Driver.driver(self.ledger), self.table, id)]
         return self._to_documents(records)
 
     def get_all(self):
