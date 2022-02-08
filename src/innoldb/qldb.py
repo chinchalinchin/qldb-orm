@@ -46,7 +46,7 @@ class Strut(object):
         """Pass in `**kwargs` to assign attributes to the object
         """
         for key, value in kwargs:
-          setattr(self, key, value)
+            setattr(self, key, value)
         self.__dict__.update(kwargs)
 
 

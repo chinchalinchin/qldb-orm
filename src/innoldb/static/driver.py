@@ -210,8 +210,8 @@ class Driver():
         unpacked_fields = []
         for value in fields.values():
             if isinstance(value, list):
-              for subval in value:
-                unpacked_fields.append(subval)
+                for subval in value:
+                    unpacked_fields.append(subval)
             elif isinstance(value, (int, float, str)):
                 unpacked_fields.append(value)
 
