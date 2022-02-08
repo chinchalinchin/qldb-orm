@@ -8,7 +8,7 @@ TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 APP_DIR = os.path.dirname(TEST_DIR)
 sys.path.append(APP_DIR)
 
-from qldb import Document, Strut, Ledger, Query, Field
+from qldb import Document, Strut, Ledger, Query
 
 @pytest.mark.parametrize('kwargs,keys,values', [
     ({'a': 'b'}, ['a'], ['b']),
