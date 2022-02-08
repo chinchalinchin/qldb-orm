@@ -53,7 +53,7 @@ class Strut:
 
 class Document(Ledger):
     """A `innoldab.qldb.Document` object, representing an entry in an QLDB Ledger Table. Creates an instance of `innoldb.qldb.Document`. This object can be initialized in several states, depending on the parameters passed into the constructor. 
-    
+
     1. **Constructor Arguments**: `table`
     2. **Constructor Arguments**: `table, id`
     3. **Constructor Arguments**: `table, snapshot`
@@ -230,10 +230,15 @@ class Query(Ledger):
         return [Document(table=self.table, snapshot=dict(result)) for result in results]
 
     def raw(self, query):
-        return self._to_documents(Driver.query(Driver.driver(self.ledger), query))
+        return self._to_documents(Driver.query(Driver.driver(self.ledger), query, unsafe=True))
 
-    def history(self, id):
-        records = [ Driver.down_convert(record) for record in Driver.history(Driver.driver(self.ledger), self.table) ]
+    def history(self, id = None):
+        if id is None:
+            records = [ Driver.down_convert(record) 
+                          for record in Driver.history_full(Driver.driver(self.ledger), self.table)]
+        else:
+            records = [ Driver.down_convert(record) 
+                          for record in Driver.history(Driver.driver(self.ledger), self.table, self.index, id) ]
         return self._to_documents(records)
 
     def get_all(self):
