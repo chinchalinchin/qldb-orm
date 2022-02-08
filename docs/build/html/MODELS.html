@@ -229,6 +229,8 @@
         <li class="md-nav__item"><a href="#all" class="md-nav__link">All</a>
         </li>
         <li class="md-nav__item"><a href="#find-by" class="md-nav__link">Find By</a>
+        </li>
+        <li class="md-nav__item"><a href="#find-in" class="md-nav__link">Find In</a>
         </li></ul>
             </nav>
         </li>
@@ -284,6 +286,13 @@
     
     
       <a href="#find-by" class="md-nav__link">Find By</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="#find-in" class="md-nav__link">Find In</a>
       
     
     </li></ul>
@@ -348,6 +357,8 @@
         <li class="md-nav__item"><a href="#all" class="md-nav__link">All</a>
         </li>
         <li class="md-nav__item"><a href="#find-by" class="md-nav__link">Find By</a>
+        </li>
+        <li class="md-nav__item"><a href="#find-in" class="md-nav__link">Find In</a>
         </li></ul>
             </nav>
         </li>
@@ -374,7 +385,7 @@
 <p>If you have the <strong>LEDGER</strong> environment variable set, all that is required is to create a <code class="docutils literal notranslate"><span class="pre">Document</span></code> object and pass it the table name from the <strong>QLDB</strong> ledger. If the following lines are feed into an interactive <strong>Python</strong> shell or copied into a script,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Document</span>
 
-<span class="n">my_document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s1">'table-name'</span><span class="p">)</span>
+<span class="n">my_document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">)</span>
 <span class="n">my_document</span><span class="o">.</span><span class="n">property_one</span> <span class="o">=</span> <span class="s1">'property 1'</span>
 <span class="n">my_document</span><span class="o">.</span><span class="n">property_two</span> <span class="o">=</span> <span class="s1">'property 2'</span>
 <span class="n">my_document</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
@@ -383,7 +394,7 @@
 <p>Then a document will be inserted into the <strong>QLDB</strong> ledger table. If you do not have the <strong>LEDGER</strong> environment variable set, you must pass in the ledger name along with the table name through named arguments,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Document</span>
 
-<span class="n">my_document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="n">table</span><span class="o">=</span><span class="s1">'table-name'</span><span class="p">,</span> <span class="n">ledger</span><span class="o">=</span><span class="s1">'ledger-name'</span><span class="p">)</span>
+<span class="n">my_document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="n">table</span><span class="o">=</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="n">ledger</span><span class="o">=</span><span class="s1">'ledger_name'</span><span class="p">)</span>
 <span class="n">my_document</span><span class="o">.</span><span class="n">property_one</span> <span class="o">=</span> <span class="s1">'property 1'</span>
 <span class="n">my_document</span><span class="o">.</span><span class="n">property_two</span> <span class="o">=</span> <span class="s1">'property 2'</span>
 <span class="n">my_document</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
@@ -397,7 +408,7 @@
 <p>To load a document that exists in the ledger table already, pass in the id of the <code class="docutils literal notranslate"><span class="pre">Document</span></code> when creating a new instance,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Document</span>
 
-<span class="n">my_document</span><span class="p">(</span><span class="n">table</span><span class="o">=</span><span class="s1">'table-name'</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">'12345'</span><span class="p">)</span>
+<span class="n">my_document</span><span class="p">(</span><span class="n">table</span><span class="o">=</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">'12345'</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">my_document</span><span class="o">.</span><span class="n">property_one</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -407,7 +418,7 @@
 <p>Updating and saving are different operations, in terms of the <strong>PartiQL</strong> queries that implement these operations, but from the <code class="docutils literal notranslate"><span class="pre">Document</span></code>’s perspective, they are the same operation; the same method is called in either case. The following script will save a value of <code class="docutils literal notranslate"><span class="pre">test</span> <span class="pre">1</span></code> to <code class="docutils literal notranslate"><span class="pre">field</span></code> and then overwrite it with a value of <code class="docutils literal notranslate"><span class="pre">test</span> <span class="pre">2</span></code>,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Document</span>
 
-<span class="n">my_document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s1">'table-name'</span><span class="p">)</span>
+<span class="n">my_document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">)</span>
 <span class="n">my_document</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="s1">'test 1'</span>
 <span class="n">my_document</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 <span class="n">my_document</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="s1">'test 2'</span>
@@ -423,7 +434,7 @@
 <p>The document fields can be returned as a <code class="docutils literal notranslate"><span class="pre">dict</span></code> through the <code class="docutils literal notranslate"><span class="pre">fields()</span></code> method. The following script will loop through the fields on an existing document with <code class="docutils literal notranslate"><span class="pre">id=test</span></code> and print their corresponding values,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Document</span>
 
-<span class="n">my_document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="n">table</span><span class="o">=</span><span class="s1">'table-name'</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">'test'</span><span class="p">)</span>
+<span class="n">my_document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="n">table</span><span class="o">=</span><span class="s1">'table_name'</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s1">'test'</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">my_document</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s1">'='</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -439,7 +450,7 @@
 <p>The following script queries the ledger table for all documents and prints a JSON representation of each document to screen,</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Query</span>
 
-<span class="n">all_documents</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table-name'</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="n">all_documents</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">all_documents</span><span class="p">:</span>
   <span class="nb">print</span><span class="p">(</span><span class="n">document</span><span class="o">.</span><span class="n">fields</span><span class="p">())</span>
 </pre></div>
@@ -450,8 +461,21 @@
 <p>The <code class="docutils literal notranslate"><span class="pre">find_by()</span></code> method accepts <code class="docutils literal notranslate"><span class="pre">**kwarg</span></code> aruments for any of the fields you want to query by; Note, the query is filtering on equality, i.e. it searches for all documents where the fields exactly equal their specified values.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Query</span>
 
-<span class="n">search_documents</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table-name'</span><span class="p">)</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="n">company</span><span class="o">=</span><span class="s1">'Makpar'</span><span class="p">)</span>
-<span class="n">search_documents_kwargs</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table-name'</span><span class="p">)</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="o">**</span><span class="p">{</span> <span class="s1">'company'</span> <span class="p">:</span> <span class="s1">'Makpar'</span><span class="p">,</span> <span class="s1">'department'</span><span class="p">:</span> <span class="s1">'Innovation'</span> <span class="p">})</span>
+<span class="n">search_documents</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">)</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="n">company</span><span class="o">=</span><span class="s1">'Makpar'</span><span class="p">)</span>
+<span class="n">search_documents_kwargs</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">)</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="o">**</span><span class="p">{</span> <span class="s1">'company'</span> <span class="p">:</span> <span class="s1">'Makpar'</span><span class="p">,</span> <span class="s1">'department'</span><span class="p">:</span> <span class="s1">'Innovation'</span> <span class="p">})</span>
+</pre></div>
+</div>
+</section>
+<section id="find-in">
+<h2 id="find-in">Find In<a class="headerlink" href="#find-in" title="Permalink to this headline">¶</a></h2>
+<p>This method will execute a <code class="docutils literal notranslate"><span class="pre">SELECT*</span> <span class="pre">FROM</span> <span class="pre">table</span> <span class="pre">WHERE</span> <span class="pre">a</span> <span class="pre">in</span> <span class="pre">(?,</span> <span class="pre">?</span> <span class="pre">...</span> <span class="pre">?</span> <span class="pre">)</span></code> <strong>PartiQL</strong> query. The <code class="docutils literal notranslate"><span class="pre">find_in</span></code> methods accepts <code class="docutils literal notranslate"><span class="pre">**kwarg</span></code> arguments for any of the fields you want to query by, where the values of each keyword are an array of values to search by. For example,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Query</span>
+
+<span class="n">search_documents</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'table_name'</span><span class="p">)</span><span class="o">.</span><span class="n">find_in</span><span class="p">(</span><span class="n">company</span><span class="o">=</span><span class="p">[</span><span class="s1">'Makpar'</span><span class="p">,</span><span class="s1">'Company'</span><span class="p">],</span> <span class="n">number</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>will execute the following query,</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">table_name</span> <span class="k">WHERE</span> <span class="n">company</span> <span class="k">IN</span> <span class="p">(</span><span class="s1">'Makpar'</span><span class="p">,</span> <span class="s1">'Company'</span><span class="p">)</span> <span class="k">AND</span> <span class="nb">number</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

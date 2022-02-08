@@ -435,12 +435,6 @@
 </dd></dl>
 </dd></dl>
 <dl class="py class">
-<dt class="sig sig-object py" id="innoldb.qldb.Field">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Field</span></span><a class="headerlink" href="#innoldb.qldb.Field" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Simple object to hold nested attributes in <cite>innoldb.qldb.Document</cite></p>
-</dd></dl>
-<dl class="py class">
 <dt class="sig sig-object py" id="innoldb.qldb.Ledger">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Ledger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Ledger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -494,19 +488,38 @@
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
-<blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Example
+<code class="docutils literal notranslate"><span class="pre">`python</span>
 <span class="pre">Query('table').find_in(**{'field':</span> <span class="pre">[12,</span> <span class="pre">13,</span> <span class="pre">14],</span> <span class="pre">'field2':</span> <span class="pre">['cat',</span> <span class="pre">'dog'</span> <span class="pre">]})</span>
 <span class="pre">`</span></code>
 will find all documents with a <cite>field</cite> whose value is in the set <cite>(12, 13, 14)</cite> <em>and</em> a <cite>field2</cite> whose value is in the set <cite>(‘cat’, ‘dog’)</cite></p>
-</div></blockquote>
+</div>
 </dd></dl>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="innoldb.qldb.Strut">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Strut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Strut" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Simple object to parse <cite>**kwargs</cite> into object attributes</p>
+<p>Simple object to parse <cite>innoldb.qldb.Document</cite>. Used to deserialize <strong>QLDB</strong> responses into Python native objects, with attributes accessible through object properties, i.e., the document</p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>json
+{</p>
+<blockquote>
+<div><dl>
+<dt>‘a’: {</dt><dd><dl class="simple">
+<dt>‘b’<span class="classifier">{ </span></dt><dd><p>‘c’ : ‘d’</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+<p>gets parsed into an object, such that</p>
+<p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">object.a.b.c</span> <span class="pre">==</span> <span class="pre">'d'</span>
+<span class="pre">`</span></code></p>
 </dd></dl>
 </section>
 <section id="module-innoldb.settings">

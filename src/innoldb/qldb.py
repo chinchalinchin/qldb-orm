@@ -27,7 +27,6 @@ class Ledger():
 
 class Strut(object):
     """Simple object to parse `innoldb.qldb.Document`. Used to deserialize **QLDB** responses into Python native objects, with attributes accessible through object properties, i.e., the document
-
     ```json
     {
       'a': {
@@ -37,9 +36,7 @@ class Strut(object):
       }
     }
     ```
-
     gets parsed into an object, such that
-
     ```python
     object.a.b.c == 'd'
     ``` 

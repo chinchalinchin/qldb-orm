@@ -11,7 +11,7 @@ If you have the **LEDGER** environment variable set, all that is required is to 
 ```python
 from innoldb.qldb import Document
 
-my_document = Document('table-name')
+my_document = Document('table_name')
 my_document.property_one = 'property 1'
 my_document.property_two = 'property 2'
 my_document.save()
@@ -22,7 +22,7 @@ Then a document will be inserted into the **QLDB** ledger table. If you do not h
 ```python
 from innoldb.qldb import Document
 
-my_document = Document(table='table-name', ledger='ledger-name')
+my_document = Document(table='table_name', ledger='ledger_name')
 my_document.property_one = 'property 1'
 my_document.property_two = 'property 2'
 my_document.save()
@@ -39,7 +39,7 @@ To load a document that exists in the ledger table already, pass in the id of th
 ```python
 from innoldb.qldb import Document
 
-my_document(table='table-name', id='12345')
+my_document(table='table_name', id='12345')
 print(my_document.property_one)
 ```
 
@@ -50,7 +50,7 @@ Updating and saving are different operations, in terms of the **PartiQL** querie
 ```python
 from innoldb.qldb import Document
 
-my_document = Document('table-name')
+my_document = Document('table_name')
 my_document.field = 'test 1'
 my_document.save()
 my_document.field = 'test 2'
@@ -68,7 +68,7 @@ The document fields can be returned as a `dict` through the `fields()` method. T
 ```python
 from innoldb.qldb import Document
 
-my_document = Document(table='table-name', id='test')
+my_document = Document(table='table_name', id='test')
 
 for key, value in my_document.fields().items():
   print(key, '=', value)
@@ -85,7 +85,7 @@ The following script queries the ledger table for all documents and prints a JSO
 ```python
 from innoldb.qldb import Query
 
-all_documents = Query('table-name').all()
+all_documents = Query('table_name').all()
 for document in all_documents:
   print(document.fields())
 ```
@@ -97,6 +97,22 @@ The `find_by()` method accepts `**kwarg` aruments for any of the fields you want
 ```python
 from innoldb.qldb import Query
 
-search_documents = Query('table-name').find_by(company='Makpar')
-search_documents_kwargs = Query('table-name').find_by(**{ 'company' : 'Makpar', 'department': 'Innovation' })
+search_documents = Query('table_name').find_by(company='Makpar')
+search_documents_kwargs = Query('table_name').find_by(**{ 'company' : 'Makpar', 'department': 'Innovation' })
+```
+
+## Find In
+
+This method will execute a `SELECT* FROM table WHERE a in (?, ? ... ? )` **PartiQL** query. The `find_in` methods accepts `**kwarg` arguments for any of the fields you want to query by, where the values of each keyword are an array of values to search by. For example,
+
+```python
+from innoldb.qldb import Query
+
+search_documents = Query('table_name').find_in(company=['Makpar','Company'], number=[1,2,3])
+```
+
+will execute the following query,
+
+```sql
+SELECT * FROM table_name WHERE company IN ('Makpar', 'Company') AND number IN (1, 2, 3)
 ```
