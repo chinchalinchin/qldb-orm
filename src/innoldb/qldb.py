@@ -71,7 +71,7 @@ class Document(Ledger):
         super().__init__(table=table, ledger=ledger)
         if id is None:
             # PartiQL doesn't like dashes.
-            self.id = str(uuid.uuid1()).replace('-','')
+            self.id = str(uuid.uuid1()).replace('-', '')
             if snapshot is not None:
                 self._load(snapshot)
         elif id is not None:
@@ -222,7 +222,8 @@ class Query(Ledger):
         return Driver.query(Driver.driver(self.ledger), query)
 
     def history(self, id):
-        records = [ Driver.down_convert(record) for record in Driver.history(Driver.driver(self.ledger), self.table) ]
+        records = [Driver.down_convert(record) for record in Driver.history(
+            Driver.driver(self.ledger), self.table)]
         return self._to_documents(records)
 
     def get_all(self):
