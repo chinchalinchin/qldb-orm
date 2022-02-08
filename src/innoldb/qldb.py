@@ -249,7 +249,6 @@ class Query(Ledger):
         :type id: id of the document revision history , optional
         :return: a collection of `innoldb.qldb.Document`
         :rtype: list
-
         .. note::
           `id` is *not* the index of the document. It is the `metadata.id` associated with the document across revisions. Query entire history to find a particular `metadata.id`
         """
