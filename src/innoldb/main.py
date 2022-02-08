@@ -106,6 +106,7 @@ def find(table, fields):
     """
     return Query(table).find_by(**fields)
 
+
 def history(table, id):
     """Query revision table history for particular metadata ID
 
@@ -181,7 +182,7 @@ def do_program(cli_args):
             printer.pprint(document.fields())
         else:
             log.warning("No Document ID specified.")
-    
+
     elif args.history:
         results = history(args.table, args.id)
         printer.pprint(results.fields())
