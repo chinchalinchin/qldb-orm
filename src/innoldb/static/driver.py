@@ -54,6 +54,8 @@ class Driver():
         """
         sanitized_statement = Driver().sanitize(statement)
         if len(params) == 0:
+            log.debug(
+            "Executing statement: \n\t\t\t\t\t\t\t %s \n", sanitized_statement)
             return transaction_executor.execute_statement(sanitized_statement)
 
         sanitized_params = tuple(Driver().sanitize(param) for param in params)
