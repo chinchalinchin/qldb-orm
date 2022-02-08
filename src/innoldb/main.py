@@ -77,7 +77,7 @@ def insert(table, document):
     :return: id of the document inserted
     :rtype: str
     """
-  
+
     document = Document(table=table, snapshot=document)
     document.save()
     return document.id
