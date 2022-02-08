@@ -8,7 +8,7 @@ from innoldb.static.driver import Driver
 log = getLogger('innoldb.qldb')
 
 
-class Ledger():
+class QLDB():
     """A class containing meta information associated with QLDB ledger.
     """
 
@@ -50,7 +50,7 @@ class Strut:
         self.__dict__.update(kwargs)
 
 
-class Document(Ledger):
+class Document(QLDB):
     """A `innoldab.qldb.Document` object, representing an entry in an QLDB Ledger Table. Creates an instance of `innoldb.qldb.Document`. This object can be initialized in several states, depending on the parameters passed into the constructor.
 
     1. **Constructor Arguments**: `table`
@@ -212,7 +212,7 @@ class Document(Ledger):
             self._insert(fields)
 
 
-class Query(Ledger):
+class Query(QLDB):
     """Object that represents a **PartiQL** query. Get initialized on a particular `table` and `ledger`. Methods will return results formatted as collections of `innoldb.qldb.Document`.
     """
 
