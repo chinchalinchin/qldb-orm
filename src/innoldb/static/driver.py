@@ -55,7 +55,7 @@ class Driver():
 
     @staticmethod
     def execute(transaction_executor, statement, *params, unsafe=False):
-        r"""Static method for executing transactions with QLDB driver. 
+        r"""Static method for executing transactions with QLDB driver.
 
         :param transaction_executor: Executor is injected into callback function through `pyqldb.driver.qldb_driver.execute_lambda` method.
         :param statement: Parameterized PartialQL query.
