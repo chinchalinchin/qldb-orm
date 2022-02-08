@@ -214,7 +214,7 @@ class Document(QLDB):
 
 class Query(QLDB):
     """Object that represents a **PartiQL** query. Get initialized on a particular `table` and `ledger`. 
-    
+
     Methods will return results formatted as collections of `innoldb.qldb.Document`.
     """
 
@@ -281,7 +281,7 @@ class Query(QLDB):
 
     def find_in(self, **kwargs):
         """Filter `innoldb.qldb.Document` objects by the provided fields. This method accepts `**kwargs` arguments for the field name and values, but the values must be an array. 
-        
+
         The document fields must belong to the array associated with the field in the `**kwargs`. See below for example.
 
         :param kwargs: Fields by which to filter the query.
