@@ -30,7 +30,7 @@ class Driver():
             list_flag = True
             obj = "~~".join(str(param) for param in obj)
 
-        for char in ["\\", "\'", "\"", "\b", "\n", "\r", "\t", "\0"]:            
+        for char in ["\\", "\'", "\"", "\b", "\n", "\r", "\t", "\0"]:
             if not dict_flag or not char == "\"":
                 obj = obj.replace(char, "")
 
@@ -41,7 +41,6 @@ class Driver():
             obj = obj.split("~~")
 
         return obj
-
 
     @staticmethod
     def execute(transaction_executor, statement, *params):
