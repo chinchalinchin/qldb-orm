@@ -202,7 +202,7 @@ class Document(Ledger):
 class Query(Ledger):
     """Object that represents a **PartiQL** query. Get initialized on a particular `table` and `ledger`. Methods will return results formatted as collections of `innoldb.qldb.Document`. 
     """
-    
+
     def __init__(self, table, ledger=settings.LEDGER):
         super().__init__(table=table, ledger=ledger)
 

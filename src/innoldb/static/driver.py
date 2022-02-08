@@ -206,7 +206,7 @@ class Driver():
         """
         column_numbers = {key: len(value) for key, value in fields.items()}
         where_clause = clauses.where_in(**column_numbers)
-        
+
         unpacked_fields = []
         for value in fields.values():
             if isinstance(value, list):
