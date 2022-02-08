@@ -27,6 +27,7 @@ class KeyValue(argparse.Action):
     :type argparse: [type]
     """
     # Constructor calling
+
     def __call__(self, parser, namespace, values, option_string=None):
         setattr(namespace, self.dest, {})
 
@@ -77,7 +78,7 @@ def insert(table, document):
     :return: id of the document inserted
     :rtype: str
     """
-  
+
     document = Document(table=table, snapshot=document)
     document.save()
     return document.id
