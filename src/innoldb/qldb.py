@@ -25,7 +25,7 @@ class Ledger():
         self.index = 'id'
 
 
-class Strut(object):
+class Strut:
     """Simple object to parse `innoldb.qldb.Document`. Used to deserialize **QLDB** responses into Python native objects, with attributes accessible through object properties, i.e., the document
     ```json
     {
