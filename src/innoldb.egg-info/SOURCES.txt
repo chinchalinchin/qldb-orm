@@ -14,6 +14,11 @@ src/innoldb.egg-info/dependency_links.txt
 src/innoldb.egg-info/entry_points.txt
 src/innoldb.egg-info/requires.txt
 src/innoldb.egg-info/top_level.txt
+src/innoldb/examples/__init__.py
+src/innoldb/examples/example_document_crud.py
+src/innoldb/examples/example_queries.py
+src/innoldb/examples/example_ion/__init__.py
+src/innoldb/examples/example_ion/example_ion_loads.py
 src/innoldb/static/__init__.py
 src/innoldb/static/clauses.py
 src/innoldb/static/driver.py

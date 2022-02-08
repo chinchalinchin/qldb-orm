@@ -99,11 +99,11 @@ class Document(Ledger):
         """
         if snapshot is not None:
             for key, value in snapshot.items():
-                print('current self', self.fields())
-                print('insert key', key)
-                print('insert value', value)
-                if nest is not None:
-                    print('nest key', nest)
+                # print('current self', self.fields())
+                # print('insert key', key)
+                # print('insert value', value)
+                # if nest is not None:
+                #     print('nest key', nest)
 
                 if isinstance(value, dict):
                     nested_field = Strut()
@@ -120,7 +120,7 @@ class Document(Ledger):
                     else:
                         setattr(nester, key, value)
 
-                print('self after loop', self.fields())
+                # print('self after loop', self.fields())
 
     def _insert(self, document):
         """Insert a new `innoldab.qldb.Document` into the **QLDB** ledger table.
