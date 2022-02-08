@@ -206,12 +206,12 @@ class Driver():
         """
         column_numbers = {key: len(value) for key, value in fields.items()}
         where_clause = clauses.where_in(**column_numbers)
-        
+
         unpacked_fields = []
         for value in fields.values():
             if isinstance(value, list):
-              for subval in value:
-                unpacked_fields.append(subval)
+                for subval in value:
+                    unpacked_fields.append(subval)
             elif isinstance(value, (int, float, str)):
                 unpacked_fields.append(value)
 
