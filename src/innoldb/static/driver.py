@@ -133,13 +133,33 @@ class Driver():
         return driver.execute_lambda(lambda executor: Driver.execute(executor, statement))
 
     @staticmethod
-    def history(driver, table, index, id):
-        statement = 'SELECT * FROM history({}) WHERE metadata.{} = ?'.format(
-            table, index)
+    def history(driver, table, id):
+        """Query table revision history for a particular document metadata ID.
+
+        :param driver: QLDB Driver
+        :type driver: :class:`pyqldb.driver.qldb_driver.QldbDriver`
+        :param table: table to be updated
+        :type table: str
+        :param id: metadata id of the document revision history
+        :type id: str
+        :return: iterable containing result
+
+        .. note::
+          `id` is *not* the index of the document. It is the `metadata.id` associated with the document across revisions. Query entire history to find a particular `metadata.id`
+        """
+        statement = 'SELECT * FROM history({}) WHERE metadata.id = ?'.format(table)
         return driver.execute_lambda(lambda executor: Driver.execute(executor, statement, id))
 
     @staticmethod
     def history_full(driver, table):
+        """Query entire table revision history.
+
+        :param driver: QLDB Driver
+        :type driver: :class:`pyqldb.driver.qldb_driver.QldbDriver`
+        :param table: table to be updated
+        :type table: str
+        :return: iterable containing result
+        """
         statement = 'SELECT * FROM history({})'.format(table)
         return driver.execute_lambda(lambda executor: Driver.execute(executor, statement))
 

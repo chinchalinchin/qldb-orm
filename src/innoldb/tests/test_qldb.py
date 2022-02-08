@@ -165,14 +165,14 @@ def test_document_snapshot_nested_deserialization_one_layer_complex(mock_create_
 @patch('qldb.Driver.create_table')
 @patch('qldb.Driver.create_index')
 @patch('qldb.Driver.query_by_fields',
-       return_value=itertools.cycle([{'property': 'value'}]))
+       return_value=itertools.cycle([]))
 @patch('qldb.Driver.insert',
        return_value=itertools.cycle([{'property': 'value'}]))
 def test_document_driver_save(mock_insert, mock_query, mock_create_index, mock_create_table, mock_tables, mock_driver):
     document = Document(table='table', ledger='ledger')
     document.test_field = 'test value'
     document.save()
-    assert mock_driver.call_count == 5
+    assert mock_driver.call_count == 4
     assert mock_query.call_count == 1
     assert mock_insert.call_count == 1
 
@@ -188,7 +188,7 @@ def test_document_driver_save(mock_insert, mock_query, mock_create_index, mock_c
 def test_document_driver_load(mock_update, mock_query, mock_create_index, mock_create_table, mock_tables, mock_driver):
     document = Document(table='table', ledger='ledger', id="test")
     document.save()
-    assert mock_driver.call_count == 6
+    assert mock_driver.call_count == 5
     assert mock_query.call_count == 2
     assert mock_update.call_count == 1
 
