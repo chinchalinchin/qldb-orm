@@ -196,7 +196,8 @@ class Document(Ledger):
         log.debug("Saving DOCUMENT(%s = %s)", self.index, fields[self.index])
         if self._exists(fields[self.index]):
             self._update(fields)
-        self._insert(fields)
+        else:
+            self._insert(fields)
 
 
 class Query(Ledger):
@@ -214,6 +215,9 @@ class Query(Ledger):
         :rtype: list
         """
         return [Document(table=self.table, snapshot=dict(result)) for result in results]
+
+    def history(self, id):
+        return self._to_documents(Driver.history(Driver.driver(self.ledger), self.table, self.index, id))
 
     def get_all(self):
         """Return all `innoldb.qldb.Document` objects in the **QLDB** ledger table

@@ -59,9 +59,8 @@ def get_all(table):
 def find(table, fields):
     return Query(table).find_by(**fields)
 
-
-def like(table, fields):
-    return Query(table).find_like(**fields)
+def history(table, id):
+    return Query(table).history(id)
 
 
 def update_prop(document, **props):
@@ -112,6 +111,13 @@ def do_program(cli_args):
             document = load(args.id, args.table)
             document = update_prop(document, **args.update)
             printer.pprint(document.fields())
+        else:
+            log.warning("No Document ID specified.")
+    
+    elif args.history:
+        if args.id:
+            results = history(args.table, args.id)
+            printer.pprint(results.fields())
         else:
             log.warning("No Document ID specified.")
 

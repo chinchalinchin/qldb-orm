@@ -114,6 +114,11 @@ class Driver():
         return driver.execute_lambda(lambda executor: Driver.execute(executor, statement))
 
     @staticmethod
+    def history(driver, table, index, id):
+        statement = 'SELECT * FROM history({}) AS h WHERE h.metadata.{} = ?'.format(table, index)
+        return driver.execute_lambda(lambda executor: Driver.execute(executor, statement, id))
+
+    @staticmethod
     def insert(driver, document, table):
         """Static method for inserting document into table
 
