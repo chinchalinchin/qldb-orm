@@ -19,15 +19,15 @@ if __name__=="__main__":
     for result in query:
       pprint(result.fields())
 
-    print('--------------------------------------------------------------------------------------------')
-    print('SELECT * FROM history(table)')
-    print('--------------------------------------------------------------------------------------------')
-    hist = Query('shell_test').history(result.id)
-    for data in hist:
-      print('------------------------- RECORD')
-      pprint(vars(data))
-      print('------------------------- SNAPSHOT')
-      pprint(vars(data.data))
-      print('------------------------- METADATA')
-      pprint(vars(data.metadata))
+      print('-----------------------------------------------------------')
+      print('SELECT * FROM history(table)')
+      print('-----------------------------------------------------------')
+      hist = Query('shell_test').history(result.id)
+      for data in hist:
+        print('------------------------- RECORD')
+        pprint(vars(data))
+        print('------------------------- SNAPSHOT')
+        pprint(vars(data.data))
+        print('------------------------- METADATA')
+        pprint(vars(data.metadata))
       

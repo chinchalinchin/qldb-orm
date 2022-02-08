@@ -230,11 +230,35 @@ class Query(Ledger):
         return [Document(table=self.table, snapshot=dict(result)) for result in results]
 
     def raw(self, query):
-        return self._to_documents(Driver.query(Driver.driver(self.ledger), query))
+        """Execute a raw query against the **QLDB** ledger.
 
-    def history(self, id):
-        records = [Driver.down_convert(record) for record in Driver.history(
-            Driver.driver(self.ledger), self.table)]
+        :param query: Query to be executed
+        :type query: str
+        :return: a collection of `innoldb.qldb.Document`
+        :rtype: list
+
+        .. warning::
+          Query will not be sanitized for injections.
+        """
+        return self._to_documents(Driver.query(Driver.driver(self.ledger), query, unsafe=True))
+
+    def history(self, id = None):
+        """Returns the revision history. 
+
+        :param id: meta id, defaults to None
+        :type id: id of the document revision history , optional
+        :return: a collection of `innoldb.qldb.Document`
+        :rtype: list
+        .. note::
+          `id` is *not* the index of the document. It is the `metadata.id` associated with the document across revisions. Query entire history to find a particular `metadata.id`
+        """
+        if id is None:
+            records = [ Driver.down_convert(record) 
+                          for record in Driver.history_full(Driver.driver(self.ledger), self.table)]
+        else:
+            records = [ Driver.down_convert(record) 
+                          for record in Driver.history(Driver.driver(self.ledger), self.table, id) ]
+            
         return self._to_documents(records)
 
     def get_all(self):
