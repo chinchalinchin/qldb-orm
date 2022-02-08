@@ -67,7 +67,7 @@ def like(table, fields):
 def update_prop(document, **props):
     for key, value in props.items():
         setattr(document, key, value)
-        document.save()
+    document.save()
     return document
 
 
@@ -122,11 +122,6 @@ def do_program(cli_args):
 
     elif args.find:
         results = find(args.table, args.find)
-        for result in results:
-            printer.pprint(result.fields())
-
-    elif args.like:
-        results = like(args.table, args.like)
         for result in results:
             printer.pprint(result.fields())
 

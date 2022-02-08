@@ -137,7 +137,7 @@ class Document(Ledger):
         first_it, second_it = tee(result)
         if next(first_it, None):
             if snapshot:
-                self._load(dict(next(second_it)))
+                self._load(dict(next(second_it, None)))
             return True
         return False
 

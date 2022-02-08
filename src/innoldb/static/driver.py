@@ -1,4 +1,6 @@
-from json import dumps, loads
+from json import loads, dumps
+from amazon.ion.simple_types import IonPyDict
+from amazon.ion.json_encoder import IonToJSONEncoder
 from pyqldb.driver.qldb_driver import QldbDriver
 from innoldb.static.logger import getLogger
 from innoldb.static import clauses
@@ -20,9 +22,9 @@ class Driver():
         if isinstance(obj, int) or isinstance(obj, float):
             return obj
 
-        elif isinstance(obj, dict):
+        elif isinstance(obj, dict) or isinstance(obj, IonPyDict):
             dict_flag = True
-            obj = dumps(obj)
+            obj = dumps(obj, cls=IonToJSONEncoder)
 
         elif isinstance(obj, list):
             list_flag = True
@@ -55,7 +57,6 @@ class Driver():
             return transaction_executor.execute_statement(sanitized_statement)
 
         sanitized_params = tuple(Driver().sanitize(param) for param in params)
-
         log.debug(
             "Executing statement: \n\t\t\t\t\t\t\t %s \n\t\t\t\t\t\t\t parameters: %s \n", sanitized_statement, sanitized_params)
         return transaction_executor.execute_statement(sanitized_statement, *sanitized_params)
