@@ -9,18 +9,30 @@ A simple [Object-Relation-Mapping](https://en.wikipedia.org/wiki/Object%E2%80%93
 
 ### ORM
 
+The idea behind the *ORM* is to map document fields to native Python object attributes, so that document values can be accessed by traversing the object property tree.
+
 **CRUD OPERATIONS**
 
 ```python
 from innoldb.qldb import Document
 
-document = Document('my-table')
+# Create a document on `my_table` table.
+document = Document('my_table')
 document.field = {
   'nested_data': {
     'array': ['colllection', 'of', 'things']
   }
 }
 document.save()
+```
+
+```python
+from innoldb.qldb import Document
+
+# Load a document from `my_table` table.
+document = Document('my_table', id="123456")
+for val in document.nested_data_array:
+  print(val)
 ```
 
 **Queries**

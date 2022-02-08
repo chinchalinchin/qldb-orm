@@ -6,8 +6,8 @@ IN = "IN"
 def where_equals(*columns):
     """Generates a **PartiQL** `WHERE` clause for an arbitrary number of columns.
 
-    :param *columns: List of columns to include in the where clause.
-    :type *columns: list
+    :param columns: List of columns to include in the where clause.
+    :type columns: list
     :return: `WHERE` clause
     :rtype: str
     """

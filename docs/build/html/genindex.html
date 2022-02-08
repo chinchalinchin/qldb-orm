@@ -179,7 +179,7 @@
     <li class="md-nav__item">
     
     
-      <a href="INTRODUCTION.html" class="md-nav__link">Makpar Innovation Lab</a>
+      <a href="INTRODUCTION.html" class="md-nav__link">makpar-innolab</a>
       
     
     </li>
@@ -341,15 +341,17 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="innoldb.html#innoldb.qldb.Document.fields">fields() (innoldb.qldb.Document method)</a>
+      <li><a href="innoldb.html#innoldb.qldb.Field">Field (class in innoldb.qldb)</a>
 </li>
-      <li><a href="innoldb.html#innoldb.main.find">find() (in module innoldb.main)</a>
+      <li><a href="innoldb.html#innoldb.qldb.Document.fields">fields() (innoldb.qldb.Document method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="innoldb.html#innoldb.main.find">find() (in module innoldb.main)</a>
+</li>
       <li><a href="innoldb.html#innoldb.qldb.Query.find_by">find_by() (innoldb.qldb.Query method)</a>
 </li>
-      <li><a href="innoldb.html#innoldb.qldb.Query.find_like">find_like() (innoldb.qldb.Query method)</a>
+      <li><a href="innoldb.html#innoldb.qldb.Query.find_in">find_in() (innoldb.qldb.Query method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -377,12 +379,49 @@
 </li>
       </ul></li>
       <li>
+    innoldb.examples
+
+      <ul>
+        <li><a href="innoldb.examples.html#module-innoldb.examples">module</a>
+</li>
+      </ul></li>
+      <li>
+    innoldb.examples.example_document_crud
+
+      <ul>
+        <li><a href="innoldb.examples.html#module-innoldb.examples.example_document_crud">module</a>
+</li>
+      </ul></li>
+      <li>
+    innoldb.examples.example_ion
+
+      <ul>
+        <li><a href="innoldb.examples.example_ion.html#module-innoldb.examples.example_ion">module</a>
+</li>
+      </ul></li>
+      <li>
+    innoldb.examples.example_ion.example_ion_loads
+
+      <ul>
+        <li><a href="innoldb.examples.example_ion.html#module-innoldb.examples.example_ion.example_ion_loads">module</a>
+</li>
+      </ul></li>
+      <li>
+    innoldb.examples.example_queries
+
+      <ul>
+        <li><a href="innoldb.examples.html#module-innoldb.examples.example_queries">module</a>
+</li>
+      </ul></li>
+      <li>
     innoldb.main
 
       <ul>
         <li><a href="innoldb.html#module-innoldb.main">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     innoldb.qldb
 
@@ -404,8 +443,6 @@
         <li><a href="innoldb.static.html#module-innoldb.static">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     innoldb.static.clauses
 
@@ -449,8 +486,6 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="innoldb.html#innoldb.qldb.Ledger">Ledger (class in innoldb.qldb)</a>
 </li>
-      <li><a href="innoldb.static.html#innoldb.static.driver.Driver.ledger">ledger() (innoldb.static.driver.Driver static method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="innoldb.html#innoldb.main.like">like() (in module innoldb.main)</a>
@@ -470,6 +505,16 @@
 
       <ul>
         <li><a href="innoldb.html#module-innoldb">innoldb</a>
+</li>
+        <li><a href="innoldb.examples.html#module-innoldb.examples">innoldb.examples</a>
+</li>
+        <li><a href="innoldb.examples.html#module-innoldb.examples.example_document_crud">innoldb.examples.example_document_crud</a>
+</li>
+        <li><a href="innoldb.examples.example_ion.html#module-innoldb.examples.example_ion">innoldb.examples.example_ion</a>
+</li>
+        <li><a href="innoldb.examples.example_ion.html#module-innoldb.examples.example_ion.example_ion_loads">innoldb.examples.example_ion.example_ion_loads</a>
+</li>
+        <li><a href="innoldb.examples.html#module-innoldb.examples.example_queries">innoldb.examples.example_queries</a>
 </li>
         <li><a href="innoldb.html#module-innoldb.main">innoldb.main</a>
 </li>
@@ -500,7 +545,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="innoldb.static.html#innoldb.static.driver.Driver.query_by_fields">query_by_fields() (innoldb.static.driver.Driver static method)</a>
 </li>
-      <li><a href="innoldb.static.html#innoldb.static.driver.Driver.query_like_fields">query_like_fields() (innoldb.static.driver.Driver static method)</a>
+      <li><a href="innoldb.static.html#innoldb.static.driver.Driver.query_in_fields">query_in_fields() (innoldb.static.driver.Driver static method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -510,11 +555,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="innoldb.static.html#innoldb.static.driver.Driver.sanitize">sanitize() (innoldb.static.driver.Driver static method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="innoldb.html#innoldb.qldb.Document.save">save() (innoldb.qldb.Document method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="innoldb.static.html#innoldb.static.clauses.set_statement">set_statement() (in module innoldb.static.clauses)</a>
+</li>
+      <li><a href="innoldb.html#innoldb.qldb.Strut">Strut (class in innoldb.qldb)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -542,7 +589,11 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="innoldb.static.html#innoldb.static.clauses.where">where() (in module innoldb.static.clauses)</a>
+      <li><a href="innoldb.static.html#innoldb.static.clauses.where_equals">where_equals() (in module innoldb.static.clauses)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="innoldb.static.html#innoldb.static.clauses.where_in">where_in() (in module innoldb.static.clauses)</a>
 </li>
   </ul></td>
 </tr></table>

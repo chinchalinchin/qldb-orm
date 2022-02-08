@@ -56,7 +56,7 @@
     <script src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="innoldb.static package" href="innoldb.static.html" />
+    <link rel="next" title="innoldb.examples package" href="innoldb.examples.html" />
     <link rel="prev" title="innoldb" href="modules.html" />
   
    
@@ -183,7 +183,7 @@
     <li class="md-nav__item">
     
     
-      <a href="INTRODUCTION.html" class="md-nav__link">Makpar Innovation Lab</a>
+      <a href="INTRODUCTION.html" class="md-nav__link">makpar-innolab</a>
       
     
     </li>
@@ -329,6 +329,22 @@
 <h2 id="subpackages">Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="innoldb.examples.html">innoldb.examples package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="innoldb.examples.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="innoldb.examples.example_ion.html">innoldb.examples.example_ion package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="innoldb.examples.example_ion.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="innoldb.examples.example_ion.html#module-innoldb.examples.example_ion.example_ion_loads">innoldb.examples.example_ion.example_ion_loads module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="innoldb.examples.example_ion.html#module-innoldb.examples.example_ion">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="innoldb.examples.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="innoldb.examples.html#module-innoldb.examples.example_document_crud">innoldb.examples.example_document_crud module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="innoldb.examples.html#module-innoldb.examples.example_queries">innoldb.examples.example_queries module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="innoldb.examples.html#module-innoldb.examples">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="innoldb.static.html">innoldb.static package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="innoldb.static.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="innoldb.static.html#module-innoldb.static.clauses">innoldb.static.clauses module</a></li>
@@ -391,7 +407,7 @@
 <span id="innoldb-qldb-module"></span><h2 id="module-innoldb.qldb">innoldb.qldb module<a class="headerlink" href="#module-innoldb.qldb" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="innoldb.qldb.Document">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Document</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'innolab'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Document" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Document</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Document" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#innoldb.qldb.Ledger" title="innoldb.qldb.Ledger"><code class="xref py py-class docutils literal notranslate"><span class="pre">innoldb.qldb.Ledger</span></code></a></p>
 <p>A <cite>innoldab.qldb.Document</cite> object, representing an entry in an QLDB Ledger Table.</p>
 <dl class="field-list simple">
@@ -416,24 +432,23 @@
 <dt class="sig sig-object py" id="innoldb.qldb.Document.save">
 <span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Document.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the current value of the <cite>innoldb.qldb.Document</cite> fields to the <strong>QLDB</strong> ledger table.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>[description]</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>[type]</p>
-</dd>
-</dl>
 </dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="innoldb.qldb.Field">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Field</span></span><a class="headerlink" href="#innoldb.qldb.Field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simple object to hold nested attributes in <cite>innoldb.qldb.Document</cite></p>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="innoldb.qldb.Ledger">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Ledger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'innolab'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Ledger" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Ledger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Ledger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class containing meta information associated with QLDB ledger.</p>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="innoldb.qldb.Query">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'innolab'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Query" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#innoldb.qldb.Ledger" title="innoldb.qldb.Ledger"><code class="xref py py-class docutils literal notranslate"><span class="pre">innoldb.qldb.Ledger</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.qldb.Query.all">
@@ -451,7 +466,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.qldb.Query.find_by">
 <span class="sig-name descname"><span class="pre">find_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Query.find_by" title="Permalink to this definition">¶</a></dt>
-<dd><p>Filter <cite>innoldab.qldb.Document</cite> objects by the provided fields. This method accepts <cite>**kwargs</cite> arguments for the field name and values. The document fields must exactly match the fields provided in</p>
+<dd><p>Filter <cite>innoldb.qldb.Document</cite> objects by the provided fields. This method accepts <cite>**kwargs</cite> arguments for the field name and values. The document fields must exactly match the fields provided in the query.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>kwargs</strong> – Fields by which to filter the query.</p>
@@ -465,9 +480,33 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="innoldb.qldb.Query.find_like">
-<span class="sig-name descname"><span class="pre">find_like</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Query.find_like" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="innoldb.qldb.Query.find_in">
+<span class="sig-name descname"><span class="pre">find_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Query.find_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter <cite>innoldb.qldb.Document</cite> objects by the provided fields. This method accepts <cite>**kwargs</cite> arguments for the field name and values, but the values must be an array. The document fields must belong to the array associated with the field in the <cite>**kwargs</cite>. See below for example</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – Fields by which to filter the query.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of <cite>innoldb.qldb.Document</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">Query('table').find_in(**{'field':</span> <span class="pre">[12,</span> <span class="pre">13,</span> <span class="pre">14],</span> <span class="pre">'field2':</span> <span class="pre">['cat',</span> <span class="pre">'dog'</span> <span class="pre">]})</span>
+<span class="pre">`</span></code>
+will find all documents with a <cite>field</cite> whose value is in the set <cite>(12, 13, 14)</cite> <em>and</em> a <cite>field2</cite> whose value is in the set <cite>(‘cat’, ‘dog’)</cite></p>
+</div></blockquote>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="innoldb.qldb.Strut">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Strut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Strut" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simple object to parse <cite>**kwargs</cite> into object attributes</p>
 </dd></dl>
 </section>
 <section id="module-innoldb.settings">
@@ -506,12 +545,12 @@
             </a>
           
           
-            <a href="innoldb.static.html" title="innoldb.static package"
+            <a href="innoldb.examples.html" title="innoldb.examples package"
                class="md-flex md-footer-nav__link md-footer-nav__link--next"
                rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
                 class="md-flex__ellipsis"> <span
-                class="md-footer-nav__direction"> Next </span> innoldb.static package </span>
+                class="md-footer-nav__direction"> Next </span> innoldb.examples package </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink"><i
                 class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>

@@ -25,14 +25,24 @@ class Ledger():
         self.index = 'id'
 
 
-class Field():
-    """Simple object to hold nested attributes in `innoldb.qldb.Document`
-    """
-    pass
-
-
 class Strut(object):
-    """Simple object to parse `**kwargs` into object attributes
+    """Simple object to parse `innoldb.qldb.Document`. Used to deserialize **QLDB** responses into Python native objects, with attributes accessible through object properties, i.e., the document
+
+    ```json
+    {
+      'a': {
+        'b' : { 
+          'c' : 'd' 
+        }
+      }
+    }
+    ```
+
+    gets parsed into an object, such that
+
+    ```python
+    object.a.b.c == 'd'
+    ``` 
     """
 
     def __init__(self, **kwargs):
@@ -78,6 +88,11 @@ class Document(Ledger):
         self._init_fixtures()
 
     def __getattr__(self, attr):
+        """Return values from un-hidden fields. Hidden fields include: `index`, `table`, `ledger`.
+
+        :param attr: attribute key    
+        :type attr: str
+        """
         return self.fields().get(attr, None)
 
     def _init_fixtures(self):
@@ -92,19 +107,17 @@ class Document(Ledger):
                 log.error(e)
 
     def _load(self, snapshot=None, nest=None, nester=None):
-        """Parse the `snapshot` into `innoldab.qldb.Document` attributes.
+        """Parse the `snapshot` into `innoldab.qldb.Document` attributes. If `nest` and `nester` are passed in, the function executes recursively, drilling down through the nodes in the `snapshot` and recursively generating the document structure.
 
-        :param snapshot: Dictionary of attributes to append to self, defaults to None
+        :param snapshot: `dict` of attributes to append to self, defaults to `None`
         :type snapshot: dict, optional
+        :param nest: Key of the nested field in the document attribute path.
+        :type nest: str
+        :param nester: Nested field, defauls to `None`.
+        :type nester: :class:`Strut`, optional
         """
         if snapshot is not None:
             for key, value in snapshot.items():
-                # print('current self', self.fields())
-                # print('insert key', key)
-                # print('insert value', value)
-                # if nest is not None:
-                #     print('nest key', nest)
-
                 if isinstance(value, dict):
                     nested_field = Strut()
                     if nest is None:
@@ -120,14 +133,12 @@ class Document(Ledger):
                     else:
                         setattr(nester, key, value)
 
-                # print('self after loop', self.fields())
-
     def _insert(self, document):
         """Insert a new `innoldab.qldb.Document` into the **QLDB** ledger table.
 
-        :param document: Dictionary containing the fields to be inserted.
+        :param document: `dict` containing the fields to be inserted.
         :type document: dict
-        :return: Dictionary containing `INSERT` response
+        :return: `dict` containing `INSERT` response
         :rtype: dict
         """
         log.debug("Inserting DOCUMENT(%s = %s)",
@@ -226,8 +237,7 @@ class Query(Ledger):
         :return: List of `innoldb.qldb.Document`
         :rtype: list
 
-        Example
-        -------
+        .. note:: Example
             ```python
             Query('table').find_in(**{'field': [12, 13, 14], 'field2': ['cat', 'dog' ]})
             ```

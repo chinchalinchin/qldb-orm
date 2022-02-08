@@ -184,7 +184,7 @@
     <li class="md-nav__item">
     
     
-      <a href="INTRODUCTION.html" class="md-nav__link">Makpar Innovation Lab</a>
+      <a href="INTRODUCTION.html" class="md-nav__link">makpar-innolab</a>
       
     
     </li>
@@ -305,16 +305,13 @@
 <span class="sig-prename descclassname"><span class="pre">innoldb.static.clauses.</span></span><span class="sig-name descname"><span class="pre">set_statement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.clauses.set_statement" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 <dl class="py function">
-<dt class="sig sig-object py" id="innoldb.static.clauses.where">
-<span class="sig-prename descclassname"><span class="pre">innoldb.static.clauses.</span></span><span class="sig-name descname"><span class="pre">where</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">operator</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.clauses.where" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a <strong>PartiQL</strong> <cite>WHERE</cite> clause for an arbitrary number of columns with the specified argument.</p>
+<dt class="sig sig-object py" id="innoldb.static.clauses.where_equals">
+<span class="sig-prename descclassname"><span class="pre">innoldb.static.clauses.</span></span><span class="sig-name descname"><span class="pre">where_equals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.clauses.where_equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a <strong>PartiQL</strong> <cite>WHERE</cite> clause for an arbitrary number of columns.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>operator</strong> – Operator to apply in the <cite>WHERE</cite> clause. Defaults to equality. Verbs are statically accessible through the <cite>clauses.VERBS</cite> dictionary.</p></li>
-<li><p><strong>*columns</strong> – <p>List of columns to include in the where clause.</p>
-</p></li>
-</ul>
+<dd class="field-odd"><p><strong>*columns</strong> – <p>List of columns to include in the where clause.</p>
+</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><cite>WHERE</cite> clause</p>
@@ -324,6 +321,10 @@
 </dd>
 </dl>
 </dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="innoldb.static.clauses.where_in">
+<span class="sig-prename descclassname"><span class="pre">innoldb.static.clauses.</span></span><span class="sig-name descname"><span class="pre">where_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.clauses.where_in" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 </section>
 <section id="module-innoldb.static.driver">
 <span id="innoldb-static-driver-module"></span><h2 id="module-innoldb.static.driver">innoldb.static.driver module<a class="headerlink" href="#module-innoldb.static.driver" title="Permalink to this headline">¶</a></h2>
@@ -412,10 +413,6 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="innoldb.static.driver.Driver.ledger">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ledger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ledger</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.ledger" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-<dl class="py method">
 <dt class="sig sig-object py" id="innoldb.static.driver.Driver.query_all">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.query_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Static method for querying table by field.</p>
@@ -450,13 +447,38 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="innoldb.static.driver.Driver.query_like_fields">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_like_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fields</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.query_like_fields" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="innoldb.static.driver.Driver.query_in_fields">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_in_fields</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fields</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.query_in_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method for querying table where fields match a value in a collection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>driver</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p></li>
+<li><p><strong>table</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>..note::</dt><dd><p><code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">Driver().query_in_fields(driver,</span> <span class="pre">table,</span> <span class="pre">**{</span> <span class="pre">'a':</span> <span class="pre">['b',</span> <span class="pre">'c'</span> <span class="pre">,</span> <span class="pre">'d'],</span> <span class="pre">'1':</span> <span class="pre">[</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4]</span> <span class="pre">})</span>
+<span class="pre">`</span></code>
+will search all documents where a field <cite>a</cite> has a value belonging to the set <cite>(‘b’, ‘c’, ‘d’)</cite> <em>and</em> a field <cite>1</cite> whose value belongs to the set <cite>(2, 3, 4)</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.static.driver.Driver.sanitize">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sanitize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.sanitize" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sanitize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.sanitize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove escape characters from data type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>str</em>) – Statement that needs sanitized</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Sanitized query</p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.static.driver.Driver.tables">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ledger</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.tables" title="Permalink to this definition">¶</a></dt>

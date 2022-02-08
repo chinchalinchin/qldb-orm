@@ -57,7 +57,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Command Line Usage" href="CLI.html" />
-    <link rel="prev" title="Makpar Innovation Lab" href="INTRODUCTION.html" />
+    <link rel="prev" title="makpar-innolab" href="INTRODUCTION.html" />
   
    
 
@@ -182,7 +182,7 @@
     <li class="md-nav__item">
     
     
-      <a href="INTRODUCTION.html" class="md-nav__link">Makpar Innovation Lab</a>
+      <a href="INTRODUCTION.html" class="md-nav__link">makpar-innolab</a>
       
     
     </li>
@@ -367,23 +367,23 @@ python
 </section>
 <section id="boto3-client">
 <h2 id="boto3-client">Boto3 Client<a class="headerlink" href="#boto3-client" title="Permalink to this headline">¶</a></h2>
-<p>The easiest way to create a ledger is through the <code class="docutils literal notranslate"><span class="pre">boto3</span></code> wrapper function in <code class="docutils literal notranslate"><span class="pre">innoldb.qldb.Driver</span></code>,</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Driver</span>
+<p>The easiest way to create a ledger is through a <code class="docutils literal notranslate"><span class="pre">boto3</span></code> client,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">boto3</span> <span class="kn">import</span> <span class="n">client</span>
 
-<span class="n">Driver</span><span class="o">.</span><span class="n">ledger</span><span class="p">(</span><span class="s1">'my-ledger'</span><span class="p">)</span>
+<span class="n">qldb</span> <span class="o">=</span> <span class="n">client</span><span class="p">(</span><span class="s1">'qldb'</span><span class="p">)</span>
+<span class="n">qldb</span><span class="o">.</span><span class="n">create_ledger</span><span class="p">(</span><span class="n">Name</span><span class="o">=</span><span class="s1">'ledger'</span><span class="p">,</span> <span class="n">PermissionsMode</span><span class="o">=</span><span class="s1">'STANDARD'</span><span class="p">,</span> <span class="n">DeletionProtection</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>NOTE</strong>: You must install the <code class="docutils literal notranslate"><span class="pre">innoldb</span></code> package from <a class="reference external" href="https://pypi.org/project/innoldb/">PyPi</a> before creating a ledger this way. See <em>Step 4</em> for more information.</p>
-<p><strong>NOTE</strong>: This will only create the ledger if you have the necessary permissions with QLDB. <a class="reference external" href="https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions">See here for a working example of an appropriate IAM policy</a></p>
+<p><strong>NOTE</strong>: This will only create the ledger if you have your AWS credentials configured and the necessary permissions with QLDB. <a class="reference external" href="https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions">See here for a working example of an appropriate IAM policy</a></p>
 </section>
 <section id="cloudformation">
 <h2 id="cloudformation">CloudFormation<a class="headerlink" href="#cloudformation" title="Permalink to this headline">¶</a></h2>
-<p>A <strong>QLDB</strong> CloudFormation template is also available in the <em>cf</em> directory of this project’s <a class="reference external" href="https://github.com/Makpar-Innovation-Laboratory/innoldb">Github</a>. A script has been provided to post this template to <strong>CloudFormation</strong>, assuming your <a class="reference external" href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html">AWS CLI has been authenticated and configured</a>. Clone the repository and then from the project root, execute the following script and specify the <code class="docutils literal notranslate"><span class="pre">&lt;ledger-name&gt;</span></code> to create a ledger on the <strong>QLDB</strong> service,</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./scripts/cf-stack --ledger &lt;ledger-name&gt;
+<p>A <strong>QLDB</strong> CloudFormation template is also available in the <em>/scripts/cf/</em> directory of this project’s <a class="reference external" href="https://github.com/Makpar-Innovation-Laboratory/innoldb">Github</a>. A script has been provided to post this template to <strong>CloudFormation</strong>, assuming your <a class="reference external" href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html">AWS CLI has been authenticated and configured</a>. Clone the repository and then from the project root, execute the following script and specify the <code class="docutils literal notranslate"><span class="pre">&lt;ledger-name&gt;</span></code> to create a ledger on the <strong>QLDB</strong> service,</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./scripts/cf/stack --ledger &lt;ledger-name&gt;
 </pre></div>
 </div>
 <p>This method has the advantage of provisioning an <strong>IAM</strong> policy and role scoped to the ledger being created. These resources can be used by applications and users to gain access to the <strong>QLDB</strong> ledger instance. Once they are created, log into the AWS console and add the policy to your account.</p>
-<p><strong>NOTE</strong>: The <code class="docutils literal notranslate"><span class="pre">&lt;ledger-name&gt;</span></code> must match the value of the <strong>LEDGER</strong> environment variable. The name of the ledger that is stood up on AWS is passed to the library through this environment variable.</p>
+<p><strong>NOTE</strong>: The <code class="docutils literal notranslate"><span class="pre">&lt;ledger-name&gt;</span></code> must match the value of the <strong>LEDGER</strong> environment variable. The name of the ledger that is stood up on AWS is passed to the library through this environment variable. If the two do not match, then you will need to construct documents with the ledger name passed in to match the actual ledger name, i.e. <code class="docutils literal notranslate"><span class="pre">doc</span> <span class="pre">=</span> <span class="pre">Document(table='table',</span> <span class="pre">ledger='ledger')</span></code>.</p>
 <p><strong>NOTE</strong>: This script has other optional arguments detailed in the comments of the script itself.</p>
 <ol class="simple">
 <li><p>Configure User Permissions</p></li>
@@ -410,7 +410,7 @@ python
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
           
-            <a href="INTRODUCTION.html" title="Makpar Innovation Lab"
+            <a href="INTRODUCTION.html" title="makpar-innolab"
                class="md-flex md-footer-nav__link md-footer-nav__link--prev"
                rel="prev">
               <div class="md-flex__cell md-flex__cell--shrink">
@@ -419,7 +419,7 @@ python
               <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
                 <span class="md-flex__ellipsis">
                   <span
-                      class="md-footer-nav__direction"> Previous </span> Makpar Innovation Lab </span>
+                      class="md-footer-nav__direction"> Previous </span> makpar-innolab </span>
               </div>
             </a>
           
