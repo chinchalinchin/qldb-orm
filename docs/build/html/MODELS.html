@@ -401,7 +401,8 @@
   <section class="tex2jax_ignore mathjax_ignore" id="document-object-model">
 <h1 id="models--page-root">Document Object Model<a class="headerlink" href="#models--page-root" title="Permalink to this headline">¶</a></h1>
 <p>This library abstracts much of the QLDB implementation away from its user. All the user has to do is create a <code class="docutils literal notranslate"><span class="pre">Document</span></code> object, add fields to it and then call <code class="docutils literal notranslate"><span class="pre">save()</span></code>. Under the hood, the library will translate the <code class="docutils literal notranslate"><span class="pre">Document</span></code> fields into <a class="reference external" href="https://partiql.org/docs.html">PartiQL queries</a> and use the <a class="reference external" href="https://amazon-qldb-driver-python.readthedocs.io/en/stable/index.html">pyqldb Driver</a> to post the queries to the <strong>QLDB</strong> instance on AWS.</p>
-<p><strong>NOTE</strong>: All documents are indexed through the key field <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
+<p>.. note::
+All documents are indexed through the key field <code class="docutils literal notranslate"><span class="pre">id</span></code>.</p>
 <section id="saving">
 <h2 id="saving">Saving<a class="headerlink" href="#saving" title="Permalink to this headline">¶</a></h2>
 <p>If you have the <strong>LEDGER</strong> environment variable set, all that is required is to create a <code class="docutils literal notranslate"><span class="pre">Document</span></code> object and pass it the table name from the <strong>QLDB</strong> ledger. If the following lines are feed into an interactive <strong>Python</strong> shell or copied into a script,</p>
@@ -422,7 +423,8 @@
 <span class="n">my_document</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><strong>NOTE</strong>: The <code class="docutils literal notranslate"><span class="pre">Document</span></code> class will auto-generate a UUID for each document inserted into the ledger table.</p>
+<p>.. note::
+The <code class="docutils literal notranslate"><span class="pre">Document</span></code> class will auto-generate a UUID for each document inserted into the ledger table.</p>
 <p>Congratulations! You have saved a document to QLDB!</p>
 </section>
 <section id="loading">

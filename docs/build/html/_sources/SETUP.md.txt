@@ -43,7 +43,8 @@ qldb = client('qldb')
 qldb.create_ledger(Name='ledger', PermissionsMode='STANDARD', DeletionProtection=False)
 ```
 
-**NOTE**: This will only create the ledger if you have your AWS credentials configured and the necessary permissions with QLDB. [See here for a working example of an appropriate IAM policy](https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions)
+.. note::
+  This will only create the ledger if you have your AWS credentials configured and the necessary permissions with QLDB. [See here for a working example of an appropriate IAM policy](https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions)
 
 CloudFormation
 --------------
@@ -56,9 +57,11 @@ A **QLDB** CloudFormation template is also available in the */scripts/cf/* direc
 
 This method has the advantage of provisioning an **IAM** policy and role scoped to the ledger being created. These resources can be used by applications and users to gain access to the **QLDB** ledger instance. Once they are created, log into the AWS console and add the policy to your account.
 
-**NOTE**: The `<ledger-name>` must match the value of the **LEDGER** environment variable. The name of the ledger that is stood up on AWS is passed to the library through this environment variable. If the two do not match, then you will need to construct documents with the ledger name passed in to match the actual ledger name, i.e. `doc = Document(table='table', ledger='ledger')`.
+.. note:: 
+  The `<ledger-name>` must match the value of the **LEDGER** environment variable. The name of the ledger that is stood up on AWS is passed to the library through this environment variable. If the two do not match, then you will need to construct documents with the ledger name passed in to match the actual ledger name, i.e. `doc = Document(table='table', ledger='ledger')`.
 
-**NOTE**: This script has other optional arguments detailed in the comments of the script itself.
+.. note::
+  This script has other optional arguments detailed in the comments of the script itself.
 
 3. Configure User Permissions
 

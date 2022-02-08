@@ -374,7 +374,8 @@ python
 <span class="n">qldb</span><span class="o">.</span><span class="n">create_ledger</span><span class="p">(</span><span class="n">Name</span><span class="o">=</span><span class="s1">'ledger'</span><span class="p">,</span> <span class="n">PermissionsMode</span><span class="o">=</span><span class="s1">'STANDARD'</span><span class="p">,</span> <span class="n">DeletionProtection</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>NOTE</strong>: This will only create the ledger if you have your AWS credentials configured and the necessary permissions with QLDB. <a class="reference external" href="https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions">See here for a working example of an appropriate IAM policy</a></p>
+<p>.. note::
+This will only create the ledger if you have your AWS credentials configured and the necessary permissions with QLDB. <a class="reference external" href="https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions">See here for a working example of an appropriate IAM policy</a></p>
 </section>
 <section id="cloudformation">
 <h2 id="cloudformation">CloudFormation<a class="headerlink" href="#cloudformation" title="Permalink to this headline">¶</a></h2>
@@ -383,8 +384,10 @@ python
 </pre></div>
 </div>
 <p>This method has the advantage of provisioning an <strong>IAM</strong> policy and role scoped to the ledger being created. These resources can be used by applications and users to gain access to the <strong>QLDB</strong> ledger instance. Once they are created, log into the AWS console and add the policy to your account.</p>
-<p><strong>NOTE</strong>: The <code class="docutils literal notranslate"><span class="pre">&lt;ledger-name&gt;</span></code> must match the value of the <strong>LEDGER</strong> environment variable. The name of the ledger that is stood up on AWS is passed to the library through this environment variable. If the two do not match, then you will need to construct documents with the ledger name passed in to match the actual ledger name, i.e. <code class="docutils literal notranslate"><span class="pre">doc</span> <span class="pre">=</span> <span class="pre">Document(table='table',</span> <span class="pre">ledger='ledger')</span></code>.</p>
-<p><strong>NOTE</strong>: This script has other optional arguments detailed in the comments of the script itself.</p>
+<p>.. note::
+The <code class="docutils literal notranslate"><span class="pre">&lt;ledger-name&gt;</span></code> must match the value of the <strong>LEDGER</strong> environment variable. The name of the ledger that is stood up on AWS is passed to the library through this environment variable. If the two do not match, then you will need to construct documents with the ledger name passed in to match the actual ledger name, i.e. <code class="docutils literal notranslate"><span class="pre">doc</span> <span class="pre">=</span> <span class="pre">Document(table='table',</span> <span class="pre">ledger='ledger')</span></code>.</p>
+<p>.. note::
+This script has other optional arguments detailed in the comments of the script itself.</p>
 <ol class="simple">
 <li><p>Configure User Permissions</p></li>
 </ol>
