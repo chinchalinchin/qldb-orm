@@ -19,10 +19,10 @@ class Driver():
         """
         dict_flag, list_flag = False, False
 
-        if isinstance(obj, int) or isinstance(obj, float):
+        if isinstance(obj, (int, float)):
             return obj
 
-        elif isinstance(obj, dict) or isinstance(obj, IonPyDict):
+        elif isinstance(obj, (dict, IonPyDict)):
             dict_flag = True
             obj = dumps(obj, cls=IonToJSONEncoder)
 
