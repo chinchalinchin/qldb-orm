@@ -1,8 +1,9 @@
-from innoldb.qldb import Document
 import os
 
 os.environ['LEDGER'] = 'innolab'
 
+# Import needs to come after environment variable has been set!
+from innoldb.qldb import Document
 
 doc = Document('table_name')
 

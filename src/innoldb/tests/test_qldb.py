@@ -58,25 +58,31 @@ def test_document_snapshot(mock_create_index, mock_create_table, mock_tables, mo
     assert document.test == 'prop'
     assert document.test2 == 'prop2'
 
-@patch('qldb.Driver.driver')
-@patch('qldb.Driver.tables')
-@patch('qldb.Driver.create_table')
-@patch('qldb.Driver.create_index')
-def test_document_snapshot_native_nesting_deserialization(mock_create_index, mock_create_table, mock_tables, mock_driver):
-    document = Document(table='table', ledger='ledger', snapshot={
-                        'test': { 'test2': 'value' }
-                })
-    assert mock_driver.call_count == 2
-    assert isinstance(document.test, Strut)
-    assert document.test.test2 == 'value'
 
 @patch('qldb.Driver.driver')
 @patch('qldb.Driver.tables')
 @patch('qldb.Driver.create_table')
 @patch('qldb.Driver.create_index')
-def test_document_snapshot_native_nesting_deserialization_more(mock_create_index, mock_create_table, mock_tables, mock_driver):
+def test_document_snapshot_nested_deserialization(mock_create_index, mock_create_table, mock_tables, mock_driver):
     document = Document(table='table', ledger='ledger', snapshot={
-                        'test': { 'test2': 'value', 'test3': 'another value', 'test4': 'yet another value' }
+                        'test': { 
+                          'test2': 'value' 
+                        }
+                })
+    assert mock_driver.call_count == 2
+    assert isinstance(document.test, Strut)
+    assert document.test.test2 == 'value'
+
+
+@patch('qldb.Driver.driver')
+@patch('qldb.Driver.tables')
+@patch('qldb.Driver.create_table')
+@patch('qldb.Driver.create_index')
+def test_document_snapshot_nested_deserialization_more(mock_create_index, mock_create_table, mock_tables, mock_driver):
+    document = Document(table='table', ledger='ledger', snapshot={
+                        'test': { 
+                          'test2': 'value', 'test3': 'another value', 'test4': 'yet another value' 
+                        }
                 })
     assert mock_driver.call_count == 2
     assert isinstance(document.test, Strut)
@@ -84,11 +90,12 @@ def test_document_snapshot_native_nesting_deserialization_more(mock_create_index
     assert document.test.test3 == 'another value'
     assert document.test.test4 == 'yet another value'
 
+
 @patch('qldb.Driver.driver')
 @patch('qldb.Driver.tables')
 @patch('qldb.Driver.create_table')
 @patch('qldb.Driver.create_index')
-def test_document_snapshot_native_nesting_one_layer(mock_create_index, mock_create_table, mock_tables, mock_driver):
+def test_document_snapshot_nested_deserialization_one_layer(mock_create_index, mock_create_table, mock_tables, mock_driver):
     document = Document(table='table', ledger='ledger', snapshot={
                         'test_1': { 
                             'test_2': { 
@@ -101,11 +108,12 @@ def test_document_snapshot_native_nesting_one_layer(mock_create_index, mock_crea
     assert isinstance(document.test_1.test_2, Strut)
     assert document.test_1.test_2.test_3 == 45
 
+
 @patch('qldb.Driver.driver')
 @patch('qldb.Driver.tables')
 @patch('qldb.Driver.create_table')
 @patch('qldb.Driver.create_index')
-def test_document_snapshot_native_nesting_one_layer_more(mock_create_index, mock_create_table, mock_tables, mock_driver):
+def test_document_snapshot_nested_deserialization_one_layer_more(mock_create_index, mock_create_table, mock_tables, mock_driver):
     document = Document(table='table', ledger='ledger', snapshot={
                         'test_1': { 
                             'test_2': { 
@@ -122,11 +130,12 @@ def test_document_snapshot_native_nesting_one_layer_more(mock_create_index, mock
     assert document.test_1.test_2.test_4 == 100
     assert document.test_1.test_2.test_5 == 'tester'
 
+
 @patch('qldb.Driver.driver')
 @patch('qldb.Driver.tables')
 @patch('qldb.Driver.create_table')
 @patch('qldb.Driver.create_index')
-def test_document_snapshot_native_nesting_one_layer_complex(mock_create_index, mock_create_table, mock_tables, mock_driver):
+def test_document_snapshot_nested_deserialization_one_layer_complex(mock_create_index, mock_create_table, mock_tables, mock_driver):
     document = Document(table='table', ledger='ledger', snapshot={
                         'test_1': { 
                             'test_2': { 
@@ -149,6 +158,7 @@ def test_document_snapshot_native_nesting_one_layer_complex(mock_create_index, m
     assert document.test_1.test_2.test_5 == 'tester'
     assert document.test_1.test_6.test_7 == 'will it work?'
     assert document.test_1.test_8 == 'last but not least'
+
 
 @patch('qldb.Driver.driver')
 @patch('qldb.Driver.tables')
