@@ -45,32 +45,28 @@ class Strut(object):
     def __init__(self, **kwargs):
         """Pass in `**kwargs` to assign attributes to the object
         """
+        for key, value in kwargs:
+          setattr(self, key, value)
         self.__dict__.update(kwargs)
 
 
 class Document(Ledger):
-    """A `innoldab.qldb.Document` object, representing an entry in an QLDB Ledger Table. 
+    """A `innoldab.qldb.Document` object, representing an entry in an QLDB Ledger Table. Creates an instance of `innoldab.qldb.Document`. This call can be initialized in several states, depending on the parameters passed into the constructor. 
+    1. **Constructor Arguments**: `table`
+    2. **Constructor Arguments**: `table, id`
+    3. **Constructor Arguments**: `table, snapshot`
 
-    :param Ledger: Ledger configuration
-    :type Ledger: :class:`Ledger`
+    :param table: Name of the **QLDB**table
+    :type table: str
+    :param id: Id of the document to load, defaults to None
+    :type id: str, optional
+    :param snapshot: `dict` containing values to map to attributes, defaults to None
+    :type snapshot: dict, optional
+    :param ledger: Name of the **QLDB** ledger, defaults to `innoldb.settings.LEDGER`
+    :type ledger: str, optional
     """
 
     def __init__(self, table, id=None, snapshot=None, ledger=settings.LEDGER):
-        """Creates an instance of `innoldab.qldb.Document`. This call can be initialized in several states, depending on the parameters passed into the constructor. 
-
-        1. **Constructor Arguments**: `table`
-        2. **Constructor Arguments**: `table, id`
-        3. **Constructor Arguments**: `table, snapshot`
-
-        :param table: [description]
-        :type table: [type]
-        :param id: [description], defaults to None
-        :type id: [type], optional
-        :param snapshot: [description], defaults to None
-        :type snapshot: [type], optional
-        :param ledger: [description], defaults to settings.LEDGER
-        :type ledger: [type], optional
-        """
         super().__init__(table=table, ledger=ledger)
         if id is None:
             self.id = str(uuid.uuid1())
@@ -186,7 +182,7 @@ class Document(Ledger):
         return False
 
     def fields(self):
-        """All of the `innoldb.qldb.Document` fields as a key-value dictionary.
+        """All of the `innoldb.qldb.Document` fields as a key-value `dict`. Hides the document attributes `table`, `driver`, `index` and `ledger`, if an object containing only the relevant fields.
 
         :return: `innoldb.qldb.Document` fields
         :rtype: dict
@@ -204,10 +200,19 @@ class Document(Ledger):
 
 
 class Query(Ledger):
+    """Object that represents a **PartiQL** query. Get initialized on a particular `table` and `ledger`. Methods will return results formatted as collections of `innoldb.qldb.Document`. 
+    """
+    
     def __init__(self, table, ledger=settings.LEDGER):
         super().__init__(table=table, ledger=ledger)
 
     def _to_documents(self, results):
+        """Convert query results to a `list` of `innoldb.qldb.Document`
+
+        :param results: Result of `pyqldb` cursor execution
+        :return: collection of documents
+        :rtype: list
+        """
         return [Document(table=self.table, snapshot=dict(result)) for result in results]
 
     def all(self):
