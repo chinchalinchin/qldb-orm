@@ -105,6 +105,55 @@ def test_document_snapshot_native_nesting_one_layer(mock_create_index, mock_crea
 @patch('qldb.Driver.tables')
 @patch('qldb.Driver.create_table')
 @patch('qldb.Driver.create_index')
+def test_document_snapshot_native_nesting_one_layer_more(mock_create_index, mock_create_table, mock_tables, mock_driver):
+    document = Document(table='table', ledger='ledger', snapshot={
+                        'test_1': { 
+                            'test_2': { 
+                                'test_3': 45, 
+                                'test_4': 100,
+                                'test_5': 'tester'
+                            }, 
+                        }
+                })
+    assert mock_driver.call_count == 2
+    assert isinstance(document.test_1, Strut)
+    assert isinstance(document.test_1.test_2, Strut)
+    assert document.test_1.test_2.test_3 == 45
+    assert document.test_1.test_2.test_4 == 100
+    assert document.test_1.test_2.test_5 == 'tester'
+
+@patch('qldb.Driver.driver')
+@patch('qldb.Driver.tables')
+@patch('qldb.Driver.create_table')
+@patch('qldb.Driver.create_index')
+def test_document_snapshot_native_nesting_one_layer_complex(mock_create_index, mock_create_table, mock_tables, mock_driver):
+    document = Document(table='table', ledger='ledger', snapshot={
+                        'test_1': { 
+                            'test_2': { 
+                                'test_3': 45, 
+                                'test_4': 100,
+                                'test_5': 'tester'
+                            }, 
+                            'test_6': {
+                              'test_7': 'will it work?'
+                            },
+                            'test_8': 'last but not least'
+                        }
+                })
+    assert mock_driver.call_count == 2
+    assert isinstance(document.test_1, Strut)
+    assert isinstance(document.test_1.test_2, Strut)
+    assert isinstance(document.test_1.test_6, Strut)
+    assert document.test_1.test_2.test_3 == 45
+    assert document.test_1.test_2.test_4 == 100
+    assert document.test_1.test_2.test_5 == 'tester'
+    assert document.test_1.test_6.test_7 == 'will it work?'
+    assert document.test_1.test_8 == 'last but not least'
+
+@patch('qldb.Driver.driver')
+@patch('qldb.Driver.tables')
+@patch('qldb.Driver.create_table')
+@patch('qldb.Driver.create_index')
 @patch('qldb.Driver.query_by_fields',
        return_value=itertools.cycle([{'property': 'value'}]))
 @patch('qldb.Driver.insert',
