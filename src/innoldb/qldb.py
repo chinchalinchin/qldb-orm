@@ -1,3 +1,4 @@
+import base64
 import uuid
 from botocore.exceptions import ClientError
 from itertools import tee
@@ -69,7 +70,8 @@ class Document(Ledger):
     def __init__(self, table, id=None, snapshot=None, ledger=settings.LEDGER):
         super().__init__(table=table, ledger=ledger)
         if id is None:
-            self.id = str(uuid.uuid1())
+            # PartiQL doesn't like dashes.
+            self.id = str(uuid.uuid1()).replace('-','')
             if snapshot is not None:
                 self._load(snapshot)
         elif id is not None:
@@ -216,8 +218,12 @@ class Query(Ledger):
         """
         return [Document(table=self.table, snapshot=dict(result)) for result in results]
 
+    def raw(self, query):
+        return Driver.query(Driver.driver(self.ledger), query)
+
     def history(self, id):
-        return self._to_documents(Driver.history(Driver.driver(self.ledger), self.table, self.index, id))
+        records = [ Driver.down_convert(record) for record in Driver.history(Driver.driver(self.ledger), self.table) ]
+        return self._to_documents(records)
 
     def get_all(self):
         """Return all `innoldb.qldb.Document` objects in the **QLDB** ledger table

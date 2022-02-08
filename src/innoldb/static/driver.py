@@ -10,6 +10,17 @@ log = getLogger('innoldb.driver')
 
 class Driver():
     @staticmethod
+    def down_convert(ion_obj):
+        """Down nonvert an `amazon.ion` ION object
+
+        :param ion_obj: an `Amazon.ion` object.
+        :type ion_obj: [type]
+        :return: JSON object
+        :rtype: dict
+        """
+        return loads(dumps(ion_obj, cls=IonToJSONEncoder))
+
+    @staticmethod
     def sanitize(obj):
         """Remove escape characters from data type
 
@@ -74,6 +85,10 @@ class Driver():
         return QldbDriver(ledger_name=ledger)
 
     @staticmethod
+    def query(driver, query):
+        return driver.execute_lambda(lambda executor: Driver.execute(executor, query))
+
+    @staticmethod
     def tables(ledger):
         return QldbDriver(ledger_name=ledger).list_tables()
 
@@ -114,9 +129,9 @@ class Driver():
         return driver.execute_lambda(lambda executor: Driver.execute(executor, statement))
 
     @staticmethod
-    def history(driver, table, index, id):
-        statement = 'SELECT * FROM history({}) AS h WHERE h.metadata.{} = ?'.format(table, index)
-        return driver.execute_lambda(lambda executor: Driver.execute(executor, statement, id))
+    def history(driver, table):
+        statement = 'SELECT * FROM history({})'.format(table)
+        return driver.execute_lambda(lambda executor: Driver.execute(executor, statement))
 
     @staticmethod
     def insert(driver, document, table):
