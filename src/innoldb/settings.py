@@ -12,8 +12,7 @@ if os.path.exists(os.path.join(ENV_DIR, '.env')):
 
 try:
     LEDGER = os.getenv('LEDGER')
-
-except Exception as e:
+except NameError as e:
     print(e)
 
 LOG_LEVEL = os.environ.setdefault('LOG_LEVEL', 'NOTSET')
