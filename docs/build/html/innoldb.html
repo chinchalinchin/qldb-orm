@@ -391,19 +391,25 @@
 <span id="innoldb-qldb-module"></span><h2 id="module-innoldb.qldb">innoldb.qldb module<a class="headerlink" href="#module-innoldb.qldb" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="innoldb.qldb.Document">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Document</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'innolab'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Document" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Document</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Document" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#innoldb.qldb.Ledger" title="innoldb.qldb.Ledger"><code class="xref py py-class docutils literal notranslate"><span class="pre">innoldb.qldb.Ledger</span></code></a></p>
-<p>A <cite>innoldab.qldb.Document</cite> object, representing an entry in an QLDB Ledger Table. Creates an instance of <cite>innoldab.qldb.Document</cite>. This call can be initialized in several states, depending on the parameters passed into the constructor. 
-1. <strong>Constructor Arguments</strong>: <cite>table</cite>
-2. <strong>Constructor Arguments</strong>: <cite>table, id</cite>
-3. <strong>Constructor Arguments</strong>: <cite>table, snapshot</cite></p>
+<p>A <cite>innoldab.qldb.Document</cite> object, representing an entry in an QLDB Ledger Table. Creates an instance of <cite>innoldb.qldb.Document</cite>. This object can be initialized in several states, depending on the parameters passed into the constructor.</p>
+<ol class="arabic simple">
+<li><p><strong>Constructor Arguments</strong>: <cite>table</cite></p></li>
+<li><p><strong>Constructor Arguments</strong>: <cite>table, id</cite></p></li>
+<li><p><strong>Constructor Arguments</strong>: <cite>table, snapshot</cite></p></li>
+<li><p><strong>Constructor Arguments</strong>: <cite>table, no_index</cite></p></li>
+<li><p><strong>Constructor Arguments</strong>: <cite>table, no_index, snapshot</cite></p></li>
+</ol>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>table</strong> (<em>str</em>) – Name of the <a href="#id1"><span class="problematic" id="id2">**</span></a>QLDB**table</p></li>
-<li><p><strong>id</strong> (<em>str</em><em>, </em><em>optional</em>) – Id of the document to load, defaults to None</p></li>
-<li><p><strong>snapshot</strong> (<em>dict</em><em>, </em><em>optional</em>) – <cite>dict</cite> containing values to map to attributes, defaults to None</p></li>
+<li><p><strong>id</strong> (<em>str</em><em>, </em><em>optional</em>) – Id of the document to load, defaults to <cite>None</cite></p></li>
+<li><p><strong>snapshot</strong> (<em>dict</em><em>, </em><em>optional</em>) – <cite>dict</cite> containing values to map to attributes, defaults to <cite>None</cite></p></li>
 <li><p><strong>ledger</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the <strong>QLDB</strong> ledger, defaults to <cite>innoldb.settings.LEDGER</cite></p></li>
+<li><p><strong>no_index</strong> – flag to signal document has no index, defaults to <cite>False</cite></p></li>
+<li><p><strong>no_index</strong> – bool, optional</p></li>
 </ul>
 </dd>
 </dl>
@@ -428,13 +434,13 @@
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="innoldb.qldb.Ledger">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Ledger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'innolab'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Ledger" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Ledger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Ledger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>A class containing meta information associated with QLDB ledger.</p>
 </dd></dl>
 <dl class="py class">
 <dt class="sig sig-object py" id="innoldb.qldb.Query">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'innolab'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Query" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">innoldb.qldb.</span></span><span class="sig-name descname"><span class="pre">Query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#innoldb.qldb.Ledger" title="innoldb.qldb.Ledger"><code class="xref py py-class docutils literal notranslate"><span class="pre">innoldb.qldb.Ledger</span></code></a></p>
 <p>Object that represents a <strong>PartiQL</strong> query. Get initialized on a particular <cite>table</cite> and <cite>ledger</cite>. Methods will return results formatted as collections of <cite>innoldb.qldb.Document</cite>.</p>
 <dl class="py method">
@@ -492,7 +498,7 @@ will find all documents with a <cite>field</cite> whose value is in the set <cit
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.qldb.Query.history">
-<span class="sig-name descname"><span class="pre">history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Query.history" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.qldb.Query.history" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.qldb.Query.raw">
