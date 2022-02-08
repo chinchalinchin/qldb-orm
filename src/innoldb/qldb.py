@@ -1,4 +1,3 @@
-import base64
 import uuid
 from botocore.exceptions import ClientError
 from itertools import tee
