@@ -7,7 +7,6 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   innoldb.examples
    innoldb.static
 
 Submodules

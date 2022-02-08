@@ -59,6 +59,7 @@ def get_all(table):
 def find(table, fields):
     return Query(table).find_by(**fields)
 
+
 def history(table, id):
     return Query(table).history(id)
 
@@ -113,13 +114,10 @@ def do_program(cli_args):
             printer.pprint(document.fields())
         else:
             log.warning("No Document ID specified.")
-    
+
     elif args.history:
-        if args.id:
-            results = history(args.table, args.id)
-            printer.pprint(results.fields())
-        else:
-            log.warning("No Document ID specified.")
+        results = history(args.table, args.id)
+        printer.pprint(results.fields())
 
     elif args.insert:
         insert_id = insert(args.table, args.insert)
