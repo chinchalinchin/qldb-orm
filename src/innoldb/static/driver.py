@@ -1,4 +1,4 @@
-import json
+from json import dumps, loads
 from pyqldb.driver.qldb_driver import QldbDriver
 from innoldb.static.logger import getLogger
 from innoldb.static import clauses
@@ -8,33 +8,38 @@ log = getLogger('innoldb.driver')
 
 class Driver():
     @staticmethod
-    def sanitize(query):
-        """Remove escape characters from string
+    def sanitize(obj):
+        """Remove escape characters from data type
 
-        :param query: Query that needs sanitized
+        :param query: Statement that needs sanitized
         :type query: str
         :return: Sanitized query
-        :rtype: str
         """
-        for char in ["\\", "\'", "\"", "\b", "\n", "\r", "\t", "\0"]:
-            list_flag, dict_flag = False, False
+        dict_flag, list_flag = False, False
 
-            if isinstance(query, dict):
-                dict_flag = True
-                query = json.dumps(query)
-            elif isinstance(query, list):
-                list_flag = True
-                query = "__".join(str(param) for param in query)
+        if isinstance(obj, int) or isinstance(obj, float):
+            return obj
 
-            if not isinstance(query, int) and not isinstance(query, float):
-                query = query.replace(char, "")
+        elif isinstance(obj, dict):
+            dict_flag = True
+            obj = dumps(obj)
 
-            if dict_flag:
-                query = json.loads(query)
-            elif list_flag:
-                query = query.split("__")
-                
-        return query
+        elif isinstance(obj, list):
+            list_flag = True
+            obj = "~~".join(str(param) for param in obj)
+
+        for char in ["\\", "\'", "\"", "\b", "\n", "\r", "\t", "\0"]:            
+            if not dict_flag or not char == "\"":
+                obj = obj.replace(char, "")
+
+        if dict_flag:
+            obj = loads(obj)
+
+        elif list_flag:
+            obj = obj.split("~~")
+
+        return obj
+
 
     @staticmethod
     def execute(transaction_executor, statement, *params):
@@ -48,7 +53,9 @@ class Driver():
         sanitized_statement = Driver().sanitize(statement)
         if len(params) == 0:
             return transaction_executor.execute_statement(sanitized_statement)
-        sanitized_params = [Driver().sanitize(param) for param in params]
+
+        sanitized_params = tuple(Driver().sanitize(param) for param in params)
+
         log.debug(
             "Executing statement: \n\t\t\t\t\t\t\t %s \n\t\t\t\t\t\t\t parameters: %s \n", sanitized_statement, sanitized_params)
         return transaction_executor.execute_statement(sanitized_statement, *sanitized_params)
