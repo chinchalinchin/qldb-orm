@@ -206,7 +206,16 @@ class Driver():
         """
         column_numbers = {key: len(value) for key, value in fields.items()}
         where_clause = clauses.where_in(**column_numbers)
+        
+        unpacked_fields = []
+        for value in fields.values():
+            if isinstance(value, list):
+              for subval in value:
+                unpacked_fields.append(subval)
+            elif isinstance(value, (int, float, str)):
+                unpacked_fields.append(value)
+
         statement = 'SELECT * FROM {} {}'.format(table, where_clause)
         return driver.execute_lambda(lambda executor: Driver.execute(
-            executor, statement, *list(fields.values())
+            executor, statement, *unpacked_fields
         ))
