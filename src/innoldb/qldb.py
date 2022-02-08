@@ -215,7 +215,7 @@ class Query(Ledger):
         """
         return [Document(table=self.table, snapshot=dict(result)) for result in results]
 
-    def all(self):
+    def get_all(self):
         """Return all `innoldb.qldb.Document` objects in the **QLDB** ledger table
 
         :return: List of `innoldb.qldb.Document`

@@ -218,7 +218,7 @@ def test_query_init():
 @patch('qldb.Driver.query_all',
        return_value=iter([{'property': 'value'}, {'money': 'moolah'}]))
 def test_query_all(mock_all, mock_create_index, mock_create_table, mock_tables, mock_driver):
-  query = Query('table', 'ledger').all()
+  query = Query('table', 'ledger').get_all()
   assert mock_driver.call_count == 5
   assert mock_create_index.call_count == 2
   assert mock_create_table.call_count == 2

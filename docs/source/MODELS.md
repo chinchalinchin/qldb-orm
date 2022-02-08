@@ -85,7 +85,7 @@ The following script queries the ledger table for all documents and prints a JSO
 ```python
 from innoldb.qldb import Query
 
-all_documents = Query('table_name').all()
+all_documents = Query('table_name').get_all()
 for document in all_documents:
   print(document.fields())
 ```

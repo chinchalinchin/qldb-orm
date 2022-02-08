@@ -14,7 +14,7 @@ import os
 from innoldb.qldb import Query
 
 os.environ['LOG_LEVEL'] = 'DEBUG'
-Query('table-name').all()
+Query('table-name').get_all()
 ```
 
 ## Build From Source

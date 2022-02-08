@@ -16,7 +16,7 @@ os.environ['LOG_LEVEL'] = 'DEBUG'
 
 from innoldb.qldb import Query
 
-Query('table-name').all()
+Query('table-name').get_all()
 ```
 
 **NOTE**: The environment must be set before the `innoldb` import. During the import, `innoldb` will scan the environment and use the value it finds on its initial load. 

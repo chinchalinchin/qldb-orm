@@ -17,7 +17,7 @@ if __name__=="__main__":
     
     print('SELECT * FROM table')
     print('--------------------------------------------------------------------------------------------')
-    the_first_query = Query('lab').all()
+    the_first_query = Query('lab').get_all()
     for result in the_first_query:
         print(f'Document({result.id})')
         print('-----------------------')

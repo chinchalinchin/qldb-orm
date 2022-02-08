@@ -52,8 +52,8 @@ def insert(table, document):
     return document.id
 
 
-def all(table):
-    return Query(table).all()
+def get_all(table):
+    return Query(table).get_all()
 
 
 def find(table, fields):
