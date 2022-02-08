@@ -21,6 +21,11 @@ members = [{'UI/UX': 'Phung'}, {'Solutions': 'Justin'}, {'Capabilities': 'Peter'
 
 
 class KeyValue(argparse.Action):
+    """Action class to map CLI input of the form `key1=val1 key2=val2 ...` to an object's properties.
+
+    :param argparse: [description]
+    :type argparse: [type]
+    """
     # Constructor calling
     def __call__(self, parser, namespace, values, option_string=None):
         setattr(namespace, self.dest, {})
@@ -31,6 +36,13 @@ class KeyValue(argparse.Action):
 
 
 def mock(table):
+    """Insert a mock document into a table
+
+    :param table: Name of table to be queried.
+    :type table: str
+    :return: Document that was mocked
+    :rtype: :class:`innoldb.qldb.Document`
+    """
     document = Document(table)
     document.company = 'Makpar'
     document.department = departments[random.randint(0, len(departments) - 1)]
@@ -43,27 +55,78 @@ def mock(table):
 
 
 def load(id, table):
+    """Load a document from a table.
+
+    :param id: ID of the document to load
+    :type id: str
+    :param table: Name of table to be queried.
+    :type table: str
+    :return: collection of `innoldb.qldb.Document`
+    :rtype: :class:`innoldb.qldb.Document`
+    """
     return Document(table=table, id=id)
 
 
 def insert(table, document):
+    """Insert a document into a table
+
+    :param table: Name of table to be queried.
+    :type table: str
+    :param document: Document to be inserted
+    :type document: :class:`innoldb.qldb.Document`
+    :return: id of the document inserted
+    :rtype: str
+    """
+  
     document = Document(table=table, snapshot=document)
     document.save()
     return document.id
 
 
 def get_all(table):
+    """Find all documents in a table
+
+    :param table: Name of table to be queried.
+    :type table: str
+    :return: collection of `innoldb.qldb.Document`
+    :rtype: list
+    """
     return Query(table).get_all()
 
 
 def find(table, fields):
+    """Find documents by field equality.
+
+    :param table: Name of table to query
+    :type table: str
+    :param fields: key-value pairs of the fields
+    :type fields: `kwargs`
+    :return: collection of `innoldb.qldb.Document`
+    :rtype: list
+    """
     return Query(table).find_by(**fields)
 
 def history(table, id):
+    """Query revision table history for particular metadata ID
+
+    :param table: Table to be queried
+    :type table: str
+    :param id: ID of the metadata revision
+    :type id: str
+    :return: collection of `innoldb.qldb.Document`
+    :rtype: list
+    """
     return Query(table).history(id)
 
 
 def update_prop(document, **props):
+    """Update properties on document and persist to **QLDB**
+
+    :param document: Document to be updated
+    :type document: :class:`innoldb.qldb.Document`
+    :return: Updated document
+    :rtype: :class:`innoldb.qldb.Document`
+    """
     for key, value in props.items():
         setattr(document, key, value)
     document.save()
@@ -71,6 +134,11 @@ def update_prop(document, **props):
 
 
 def do_program(cli_args):
+    """Entrypoint for the application.
+
+    :param cli_args: command line arguments, i.e. `sysv[1:]`
+    :type cli_args: list
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-tb', '--table', help="Name of the table to query", required=True)
