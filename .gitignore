@@ -4,3 +4,4 @@
 /.vscode/
 .coverage
 /.pytest_cache/
+/dist/
