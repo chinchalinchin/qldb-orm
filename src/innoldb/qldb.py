@@ -256,9 +256,8 @@ class Query(Ledger):
             records = [Driver.down_convert(record)
                        for record in Driver.history_full(Driver.driver(self.ledger), self.table)]
         else:
-            records = [ Driver.down_convert(record) 
-                          for record in Driver.history(Driver.driver(self.ledger), self.table, id) ]
-            
+            records = [Driver.down_convert(record)
+                       for record in Driver.history(Driver.driver(self.ledger), self.table, id)]
         return self._to_documents(records)
 
     def get_all(self):
