@@ -71,7 +71,8 @@ class Driver():
         if unsafe:
             sanitized_params = params
         else:
-            sanitized_params = tuple(Driver().sanitize(param) for param in params)
+            sanitized_params = tuple(Driver().sanitize(param)
+                                     for param in params)
         log.debug(
             "Executing statement: \n\t\t\t\t\t\t\t %s \n\t\t\t\t\t\t\t parameters: %s \n", sanitized_statement, sanitized_params)
         return transaction_executor.execute_statement(sanitized_statement, *sanitized_params)
