@@ -242,7 +242,7 @@ class Query(Ledger):
         """
         return self._to_documents(Driver.query(Driver.driver(self.ledger), query, unsafe=True))
 
-    def history(self, id = None):
+    def history(self, id=None):
         """Returns the revision history. 
 
         :param id: meta id, defaults to None
@@ -253,12 +253,12 @@ class Query(Ledger):
           `id` is *not* the index of the document. It is the `metadata.id` associated with the document across revisions. Query entire history to find a particular `metadata.id`
         """
         if id is None:
-            records = [ Driver.down_convert(record) 
-                          for record in Driver.history_full(Driver.driver(self.ledger), self.table)]
+            records = [Driver.down_convert(record)
+                       for record in Driver.history_full(Driver.driver(self.ledger), self.table)]
         else:
-            records = [ Driver.down_convert(record) 
-                          for record in Driver.history(Driver.driver(self.ledger), self.table, id) ]
-            
+            records = [Driver.down_convert(record)
+                       for record in Driver.history(Driver.driver(self.ledger), self.table, id)]
+
         return self._to_documents(records)
 
     def get_all(self):
