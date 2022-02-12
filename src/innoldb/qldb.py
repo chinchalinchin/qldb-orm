@@ -92,7 +92,7 @@ class Document(QLDB):
         self._init_fixtures()
 
         if stranded and self.meta_id is not None:
-          self._init_history()
+            self._init_history()
 
     def __getattr__(self, attr):
         """Return values from un-hidden fields. Hidden fields include: `index`, `table`, `ledger`.
