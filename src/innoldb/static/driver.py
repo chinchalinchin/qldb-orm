@@ -90,10 +90,27 @@ class Driver():
 
     @staticmethod
     def query(driver, query, unsafe=False):
+        """Execute a query against a **QLDB** ledger table.
+
+        :param driver: [description]
+        :type driver: :class:`pyqldb.driver.qldb_driver.QldbDriver`
+        :param query: **PartiQL** query
+        :type query: str
+        :param unsafe: Flag on whether to sanitize input, defaults to `False`
+        :type unsafe: bool, optional
+        :return: Iterable containg result
+        """
         return driver.execute_lambda(lambda executor: Driver.execute(executor, query, unsafe=unsafe))
 
     @staticmethod
     def tables(ledger):
+        """Return a list of tables in the current **QLDB** ledger.
+
+        :param ledger: Name of the ledger
+        :type ledger: str
+        :return: List of tables in ledger
+        :rtype: list
+        """
         return QldbDriver(ledger_name=ledger).list_tables()
 
     @staticmethod

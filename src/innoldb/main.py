@@ -26,7 +26,6 @@ class KeyValue(argparse.Action):
     :param argparse: [description]
     :type argparse: [type]
     """
-    # Constructor calling
 
     def __call__(self, parser, namespace, values, option_string=None):
         setattr(namespace, self.dest, {})
@@ -199,6 +198,8 @@ def do_program(cli_args):
 
 
 def entrypoint():
+    """Entrypoint for build package
+    """
     do_program(sys.argv[1:])
 
 
