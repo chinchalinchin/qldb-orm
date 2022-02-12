@@ -218,7 +218,7 @@ def test_document_snapshot_nested_deserialization_big_mother(mock_create_index, 
 @patch('qldb.Driver.query_by_fields',
        return_value=itertools.cycle([]))
 @patch('qldb.Driver.insert',
-       return_value=itertools.cycle([{'property': 'value'}]))
+       return_value=itertools.cycle([{'documentId': 'test'}]))
 def test_document_driver_save(mock_insert, mock_query, mock_create_index, mock_create_table, mock_tables, mock_driver):
     document = Document(table='table', ledger='ledger')
     document.test_field = 'test value'
@@ -235,7 +235,7 @@ def test_document_driver_save(mock_insert, mock_query, mock_create_index, mock_c
 @patch('qldb.Driver.query_by_fields',
        return_value=itertools.cycle([{'property': 'value'}]))
 @patch('qldb.Driver.update',
-       return_value=itertools.cycle([{'property': 'value'}]))
+       return_value=itertools.cycle([{'documentId': 'test'}]))
 def test_document_driver_load(mock_update, mock_query, mock_create_index, mock_create_table, mock_tables, mock_driver):
     document = Document(table='table', ledger='ledger', id="test")
     document.save()
