@@ -39,3 +39,31 @@ innoldb --table <table-name> --id <id> --update <field>=<value> <field>=<value> 
 ```shell
 innoldb --table <table-name> --insert <field>=<value> <field>=<value> ...
 ```
+
+
+### Full Specification
+
+```shell
+innoldb -h
+usage: innoldb [-h] -tb TABLE [-ind INDEX] [-meta META] [-up [UPDATE ...]] [-in [INSERT ...]] [-fi [FIND ...]] [-lo] [-mo] [-uh] [-hst] [-al]
+
+optional arguments:
+  -h, --help            Show this help message and exit
+  -tb TABLE, --table TABLE
+                        Name of the table to query
+  -ind INDEX, --index INDEX
+                        Index ID of the document
+  -meta META, --meta META
+                        Meta ID of the document
+  -up [UPDATE ...], --update [UPDATE ...]
+                        Requires --id. Update fields with `KEY1=VAL1 KEY2=VAL2 ...`
+  -in [INSERT ...], --insert [INSERT ...]
+                        Create document with fields `KEY1=VAL1 KEY2=VAL2 ...`
+  -fi [FIND ...], --find [FIND ...]
+                        Query by field equality `KEY1=VAL1 KEY2=VAL2...`
+  -lo, --load           Requires --id. Load a document by index.
+  -mo, --mock           Create a new mock document
+  -uh, --unhide         Show hidden document fields
+  -hst, --history       Requires --meta. Retrieve document history by 'meta.id'.
+  -al, --all            Query all documents
+```

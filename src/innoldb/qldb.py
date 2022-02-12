@@ -114,7 +114,10 @@ class Document(QLDB):
                 log.error(e)
 
     def _init_history(self):
-        pass
+        self.strands = []
+        history = Query(self.table).history(self.meta_id)
+        for doc in history:
+            self.strands.append(Document(self.table, id=self.id, snapshot=doc.data))
 
     def _load(self, snapshot=None, nest=None, nester=None):
         """Parse the `snapshot` into `innoldab.qldb.Document` attributes. If `nest` and `nester` are passed in, the function executes recursively, drilling down through the nodes in the `snapshot` and recursively generating the document structure.
@@ -125,8 +128,16 @@ class Document(QLDB):
         :type nest: str
         :param nester: Nested field, defaults to `None`.
         :type nester: :class:`Strut`, optional
+
+        .. note::
+          1. https://realpython.com/python-eval-function/
+          2. https://blog.sqreen.com/preventing-sql-injections-in-python/
+          3. https://nedbatchelder.com/blog/201206/eval_really_is_dangerous.html
         """
         if snapshot is not None:
+            if isinstance(snapshot, Strut):
+              snapshot = snapshot.__dict__
+
             for key, value in snapshot.items():
 
                 if isinstance(value, dict):
@@ -140,9 +151,7 @@ class Document(QLDB):
                     else:
                         path = '.'.join(nest.split('.')[:-1])
                         nest_endpoint = nest.split('.')[-1]
-                        # NOTE: https://realpython.com/python-eval-function/
-                        #       https://blog.sqreen.com/preventing-sql-injections-in-python/
-                        #       https://nedbatchelder.com/blog/201206/eval_really_is_dangerous.html
+                        # NOTE: see links in docstring for comments on the use of `eval()`
                         nested_attribute = getattr(
                             eval(path, {'__builtins__': {}, "self": self}), nest_endpoint)
                         setattr(nested_attribute, key, nested_field)
@@ -229,6 +238,8 @@ class Document(QLDB):
         else:
             result = self._insert(fields)
         self.meta_id = result['documentId']
+        if self.stranded:
+            self._init_history()
 
 
 class Query(QLDB):
