@@ -19,11 +19,13 @@ src/innoldb/examples/__init__.py
 src/innoldb/examples/example_document_crud.py
 src/innoldb/examples/example_histories.py
 src/innoldb/examples/example_queries.py
-src/innoldb/examples/example_scratchpad.py
 src/innoldb/examples/example_strands.py
 src/innoldb/examples/example_ion/__init__.py
 src/innoldb/examples/example_ion/example_ion_loads.py
+src/innoldb/examples/example_schema_vc/__init__.py
+src/innoldb/examples/example_schema_vc/example_load_schemas.py
 src/innoldb/static/__init__.py
 src/innoldb/static/clauses.py
 src/innoldb/static/driver.py
 src/innoldb/static/logger.py
+src/innoldb/static/objects.py

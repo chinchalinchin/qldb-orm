@@ -4,6 +4,7 @@ from amazon.ion.json_encoder import IonToJSONEncoder
 from pyqldb.driver.qldb_driver import QldbDriver
 from innoldb.static.logger import getLogger
 from innoldb.static import clauses
+from innoldb.static.objects import Strut, StrutEncoder
 
 log = getLogger('innoldb.driver')
 
@@ -35,6 +36,7 @@ class Driver():
 
         if isinstance(obj, (dict, IonPyDict)):
             dict_flag = True
+            obj = loads(dumps(obj, cls=StrutEncoder))
             obj = dumps(obj, cls=IonToJSONEncoder)
 
         elif isinstance(obj, list):

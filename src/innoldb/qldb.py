@@ -4,6 +4,7 @@ from itertools import tee
 from innoldb import settings
 from innoldb.static.logger import getLogger
 from innoldb.static.driver import Driver
+from innoldb.static.objects import Strut
 
 log = getLogger('innoldb.qldb')
 
@@ -23,31 +24,6 @@ class QLDB():
         self.table = table
         self.ledger = ledger
         self.index = 'id'
-
-
-class Strut:
-    """Simple object to parse `innoldb.qldb.Document`. Used to deserialize **QLDB** responses into Python native objects, with attributes accessible through object properties, i.e., the document
-    ```json
-    {
-      'a': {
-        'b' : {
-          'c' : 'd'
-        }
-      }
-    }
-    ```
-    gets parsed into an object, such that
-    ```python
-    object.a.b.c == 'd'
-    ```
-    """
-
-    def __init__(self, **kwargs):
-        """Pass in `**kwargs` to assign attributes to the object
-        """
-        for key, value in kwargs.items():
-            setattr(self, key, value)
-        self.__dict__.update(kwargs)
 
 
 class Document(QLDB):
@@ -75,6 +51,8 @@ class Document(QLDB):
 
     def __init__(self, table, id=None, snapshot=None, ledger=settings.LEDGER, stranded=False):
         super().__init__(table=table, ledger=ledger)
+
+        self.meta_id = None
 
         if id is None:
             # PartiQL doesn't like dashes.
@@ -136,12 +114,13 @@ class Document(QLDB):
         """
         if snapshot is not None:
             if isinstance(snapshot, Strut):
-              snapshot = snapshot.__dict__
+              snapshot = vars(snapshot)
 
             for key, value in snapshot.items():
 
                 if isinstance(value, dict):
                     nested_field = Strut()
+
                     if nest is None:
                         setattr(self, key, nested_field)
                         nested_key = f'self.{key}'
@@ -161,6 +140,7 @@ class Document(QLDB):
                 else:
                     if nest is None:
                         setattr(self, key, value)
+
                     else:
                         setattr(nester, key, value)
 

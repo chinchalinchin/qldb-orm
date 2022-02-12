@@ -1,4 +1,3 @@
-import os
 from pprint import pprint
 
 if __name__=="__main__":
@@ -8,7 +7,7 @@ if __name__=="__main__":
 
     # NOTE: Import needs to come after environment variable has been set! The library will scan the environment
     #       on import and set the ledger. 
-    from innoldb.qldb import Query, Document
+    from innoldb.qldb import Query
 
     print('--------------------------------------------------------------------------------------------')
     print('SELECT * FROM table')

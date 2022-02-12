@@ -1,4 +1,5 @@
 import os
+from pprint import pprint
 
 if __name__=="__main__":
   
@@ -9,6 +10,10 @@ if __name__=="__main__":
     from innoldb.qldb import Document
 
     doc = Document('test_table')
+
+    print('--------------------------------------------------------------------------------------------')
+    print('CREATE DOCUMENT')
+    print('--------------------------------------------------------------------------------------------')
 
     doc.nested_field_1 = {
         'title': 'behold',
@@ -35,3 +40,5 @@ if __name__=="__main__":
     }
 
     doc.save()
+
+    pprint(doc.fields())

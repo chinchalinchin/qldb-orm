@@ -172,7 +172,7 @@ def do_program(cli_args):
     if args.load:
         if args.index:
             document = load(args.index, args.table)
-            printer.pprint(document)
+            printer.pprint(view_doc(document, args.unhide))
         else:
             log.warning("No Document Index specified.")
 
