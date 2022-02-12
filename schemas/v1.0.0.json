@@ -1,0 +1,20 @@
+{
+  "schema": {
+      "engine": "postgres",
+      "tables": [
+          {
+              "name": "test_table",
+              "columns": [
+                  {
+                    "name": "primary_key",
+                    "type": "uuid"
+                  },
+                  {
+                    "name": "sample_field",
+                    "type": "str"
+                  }
+              ]
+          }
+      ]
+    }
+}

@@ -303,14 +303,26 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="innoldb.static.clauses.set_statement">
 <span class="sig-prename descclassname"><span class="pre">innoldb.static.clauses.</span></span><span class="sig-name descname"><span class="pre">set_statement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.clauses.set_statement" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Generates a <strong>PartiQL</strong> <cite>SET col = ?</cite> clause for an arbitrary number of columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>columns</strong> (<em>list</em>) – List of columns to include in the <cite>SET</cite> clause.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>SET</cite> clause</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="innoldb.static.clauses.where_equals">
 <span class="sig-prename descclassname"><span class="pre">innoldb.static.clauses.</span></span><span class="sig-name descname"><span class="pre">where_equals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.clauses.where_equals" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates a <strong>PartiQL</strong> <cite>WHERE</cite> clause for an arbitrary number of columns.</p>
+<dd><p>Generates a <strong>PartiQL</strong> <cite>WHERE column = ?</cite> clause for an arbitrary number of columns.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>columns</strong> (<em>list</em>) – List of columns to include in the where clause.</p>
+<dd class="field-odd"><p><strong>columns</strong> (<em>list</em>) – List of columns to include in the <cite>WHERE</cite> clause.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><cite>WHERE</cite> clause</p>
@@ -323,7 +335,19 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="innoldb.static.clauses.where_in">
 <span class="sig-prename descclassname"><span class="pre">innoldb.static.clauses.</span></span><span class="sig-name descname"><span class="pre">where_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">columns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.clauses.where_in" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Generates a <strong>PartiQL</strong> <cite>WHERE column IN (?, ? .. , ?)</cite> clause for an arbitrary number of columns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>columns</strong> (<em>dict</em>) – Dictionary with keys of columns to include in the <cite>WHERE</cite> clause with values of arrays to parameterize the <cite>IN</cite>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>WHERE</cite> clause</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
 </section>
 <section id="module-innoldb.static.driver">
 <span id="innoldb-static-driver-module"></span><h2 id="module-innoldb.static.driver">innoldb.static.driver module<a class="headerlink" href="#module-innoldb.static.driver" title="Permalink to this headline">¶</a></h2>
@@ -412,12 +436,41 @@
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.static.driver.Driver.history">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.history" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query table revision history for a particular document metadata ID.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>driver</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pyqldb.driver.qldb_driver.QldbDriver</span></code>) – QLDB Driver</p></li>
+<li><p><strong>table</strong> (<em>str</em>) – table to be updated</p></li>
+<li><p><strong>id</strong> (<em>str</em>) – metadata id of the document revision history</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>iterable containing result</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><cite>id</cite> is <em>not</em> the index of the document. It is the <cite>metadata.id</cite> associated with the document across revisions. Query entire history to find a particular <cite>metadata.id</cite></p>
+</div>
+</dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.static.driver.Driver.history_full">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">history_full</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.history_full" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Query entire table revision history.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>driver</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pyqldb.driver.qldb_driver.QldbDriver</span></code>) – QLDB Driver</p></li>
+<li><p><strong>table</strong> (<em>str</em>) – table to be updated</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>iterable containing result</p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.static.driver.Driver.insert">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.insert" title="Permalink to this definition">¶</a></dt>
@@ -438,7 +491,20 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.static.driver.Driver.query">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unsafe</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.query" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Execute a query against a <strong>QLDB</strong> ledger table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>driver</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">pyqldb.driver.qldb_driver.QldbDriver</span></code>) – [description]</p></li>
+<li><p><strong>query</strong> (<em>str</em>) – <strong>PartiQL</strong> query</p></li>
+<li><p><strong>unsafe</strong> (<em>bool</em><em>, </em><em>optional</em>) – Flag on whether to sanitize input, defaults to <cite>False</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Iterable containg result</p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.static.driver.Driver.query_all">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.query_all" title="Permalink to this definition">¶</a></dt>
@@ -509,7 +575,19 @@ will search all documents where a field <cite>a</cite> has a value belonging to 
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.static.driver.Driver.tables">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ledger</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.tables" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return a list of tables in the current <strong>QLDB</strong> ledger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ledger</strong> (<em>str</em>) – Name of the ledger</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of tables in ledger</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="innoldb.static.driver.Driver.update">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">driver</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#innoldb.static.driver.Driver.update" title="Permalink to this definition">¶</a></dt>

@@ -90,10 +90,27 @@ class Driver():
 
     @staticmethod
     def query(driver, query, unsafe=False):
+        """Execute a query against a **QLDB** ledger table.
+
+        :param driver: [description]
+        :type driver: :class:`pyqldb.driver.qldb_driver.QldbDriver`
+        :param query: **PartiQL** query
+        :type query: str
+        :param unsafe: Flag on whether to sanitize input, defaults to `False`
+        :type unsafe: bool, optional
+        :return: Iterable containg result
+        """
         return driver.execute_lambda(lambda executor: Driver.execute(executor, query, unsafe=unsafe))
 
     @staticmethod
     def tables(ledger):
+        """Return a list of tables in the current **QLDB** ledger.
+
+        :param ledger: Name of the ledger
+        :type ledger: str
+        :return: List of tables in ledger
+        :rtype: list
+        """
         return QldbDriver(ledger_name=ledger).list_tables()
 
     @staticmethod
@@ -216,7 +233,7 @@ class Driver():
         :type table: str
         :return: iterable containing result
         """
-        statement = 'SELECT * FROM {}'.format(table)
+        statement = 'SELECT * FROM {} BY meta_id'.format(table)
         return driver.execute_lambda(lambda executor: Driver.execute(
             executor, statement
         ))
@@ -234,7 +251,7 @@ class Driver():
         """
         columns, values = list(fields.keys()), list(fields.values())
         where_clause = clauses.where_equals(*columns)
-        statement = 'SELECT * FROM {} {}'.format(table, where_clause)
+        statement = 'SELECT * FROM {} BY meta_id {}'.format(table, where_clause)
         return driver.execute_lambda(lambda executor: Driver.execute(
             executor, statement, *values
         ))
@@ -265,7 +282,7 @@ class Driver():
             elif isinstance(value, (int, float, str)):
                 unpacked_fields.append(value)
 
-        statement = 'SELECT * FROM {} {}'.format(table, where_clause)
+        statement = 'SELECT * FROM {} BY meta_id {}'.format(table, where_clause)
         return driver.execute_lambda(lambda executor: Driver.execute(
             executor, statement, *unpacked_fields
         ))
