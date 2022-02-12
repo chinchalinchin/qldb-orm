@@ -34,8 +34,10 @@ class KeyValue(argparse.Action):
             key, value = value.split('=')
             getattr(namespace, self.dest)[key] = value
 
+
 def print_line(n):
-  print('-'*n)
+    print('-'*n)
+
 
 def mock(table):
     """Insert a mock document into a table
@@ -134,10 +136,12 @@ def update_prop(document, **props):
     document.save()
     return document
 
+
 def view_doc(document, unhide):
-  if unhide:
-    return vars(document)
-  return document.fields()
+    if unhide:
+        return vars(document)
+    return document.fields()
+
 
 def do_program(cli_args):
     """Entrypoint for the application.
@@ -146,7 +150,7 @@ def do_program(cli_args):
     :type cli_args: list
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('-tb', '--table', 
+    parser.add_argument('-tb', '--table',
                         help="Name of the table to query", required=True)
     parser.add_argument('-ind', '--index', help="Index ID of the document")
     parser.add_argument('-meta', '--meta', help="Meta ID of the document")
@@ -196,12 +200,12 @@ def do_program(cli_args):
 
     elif args.history:
         if args.meta:
-          results = history(args.table, args.meta)
-          for result in results:
-              print_line(30)
-              printer.pprint(vars(result.data))
-              print_line(20)
-              printer.pprint(vars(result.metadata))
+            results = history(args.table, args.meta)
+            for result in results:
+                print_line(30)
+                printer.pprint(vars(result.data))
+                print_line(20)
+                printer.pprint(vars(result.metadata))
         else:
             log.warning("No Document ID specified.")
 
