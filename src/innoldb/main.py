@@ -170,7 +170,7 @@ def do_program(cli_args):
         printer.pprint(document.fields())
 
     elif args.all:
-        results = all(args.table)
+        results = get_all(args.table)
         for result in results:
             printer.pprint(result.fields())
 

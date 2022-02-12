@@ -211,7 +211,7 @@ class Document(QLDB):
         :return: `innoldb.qldb.Document` fields
         :rtype: dict
         """
-        return {key: value for key, value in vars(self).items() if key not in ['table', 'driver', 'index', 'ledger']}
+        return {key: value for key, value in vars(self).items() if key not in ['table', 'driver', 'index', 'ledger', 'meta_id']}
 
     def save(self):
         """Save the current value of the `innoldb.qldb.Document` fields to the **QLDB** ledger table.
@@ -219,9 +219,10 @@ class Document(QLDB):
         fields = self.fields()
         log.debug("Saving DOCUMENT(%s = %s)", self.index, fields[self.index])
         if self._exists(fields[self.index]):
-            self._update(fields)
+            result = self._update(fields)
         else:
-            self._insert(fields)
+            result = self._insert(fields)
+        self.meta_id = result['documentId']
 
 
 class Query(QLDB):

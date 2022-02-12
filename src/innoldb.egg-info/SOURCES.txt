@@ -14,6 +14,7 @@ src/innoldb.egg-info/dependency_links.txt
 src/innoldb.egg-info/entry_points.txt
 src/innoldb.egg-info/requires.txt
 src/innoldb.egg-info/top_level.txt
+src/innoldb/derivers/__init__.py
 src/innoldb/examples/__init__.py
 src/innoldb/examples/example_document_crud.py
 src/innoldb/examples/example_histories.py
