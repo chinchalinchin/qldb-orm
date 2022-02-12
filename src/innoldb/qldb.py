@@ -138,7 +138,8 @@ class Document(QLDB):
                         # NOTE: https://realpython.com/python-eval-function/
                         #       https://blog.sqreen.com/preventing-sql-injections-in-python/
                         #       https://nedbatchelder.com/blog/201206/eval_really_is_dangerous.html
-                        nested_attribute = getattr(eval(path, {'__builtins__': {}, "self": self}), nest_endpoint)
+                        nested_attribute = getattr(
+                            eval(path, {'__builtins__': {}, "self": self}), nest_endpoint)
                         setattr(nested_attribute, key, nested_field)
                         nested_key = f'{nest}.{key}'
                         self._load(snapshot=value, nest=nested_key,
