@@ -135,7 +135,7 @@ class Document(QLDB):
                     else:
                         path = '.'.join(nest.split('.')[:-1])
                         nest_endpoint = nest.split('.')[-1]
-                        nested_attribute = getattr(eval(path), nest_endpoint)
+                        nested_attribute = getattr(eval(path, {'__builtins__':{}, "self": self}), nest_endpoint)
                         setattr(nested_attribute, key, nested_field)
                         nested_key = f'{nest}.{key}'
                         self._load(snapshot=value, nest=nested_key,
