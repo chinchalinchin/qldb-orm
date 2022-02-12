@@ -92,6 +92,8 @@ class Document(QLDB):
                 log.error(e)
 
     def _init_history(self):
+        """Initializes the `innoldb.qldb.Document` revision history. After this method is invoked, the `self.strands` attribute will be populated with an array of `innoldb.qldb.Document` ordered over the revision history from earliest to latest.
+        """
         self.strands = []
         history = Query(self.table).history(self.meta_id)
         for doc in history:
@@ -99,7 +101,7 @@ class Document(QLDB):
                 Document(self.table, id=self.id, snapshot=doc.data))
 
     def _load(self, snapshot=None, nest=None, nester=None):
-        """Parse the `snapshot` into `innoldab.qldb.Document` attributes. If `nest` and `nester` are passed in, the function executes recursively, drilling down through the nodes in the `snapshot` and recursively generating the document structure.
+        """Parse the `snapshot` into `innoldb.qldb.Document` attributes. If `nest` and `nester` are passed in, the function executes recursively, drilling down through the nodes in the `snapshot` and recursively generating the document structure.
 
         :param snapshot: `dict` of attributes to append to self, defaults to `None`
         :type snapshot: dict, optional
@@ -116,7 +118,7 @@ class Document(QLDB):
         if snapshot is not None:
             if isinstance(snapshot, Strut):
               snapshot = vars(snapshot)
-              
+
             for key, value in snapshot.items():
 
                 if isinstance(value, dict):
