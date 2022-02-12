@@ -215,7 +215,11 @@
         </li>
         <li class="md-nav__item"><a href="#update-field-in-document" class="md-nav__link">Update Field in Document</a>
         </li>
-        <li class="md-nav__item"><a href="#insert-document" class="md-nav__link">Insert Document</a>
+        <li class="md-nav__item"><a href="#insert-document" class="md-nav__link">Insert Document</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#full-specification" class="md-nav__link">Full Specification</a>
+        </li></ul>
+            </nav>
         </li></ul>
             </nav>
         </li>
@@ -328,7 +332,11 @@
         </li>
         <li class="md-nav__item"><a href="#update-field-in-document" class="md-nav__link">Update Field in Document</a>
         </li>
-        <li class="md-nav__item"><a href="#insert-document" class="md-nav__link">Insert Document</a>
+        <li class="md-nav__item"><a href="#insert-document" class="md-nav__link">Insert Document</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#full-specification" class="md-nav__link">Full Specification</a>
+        </li></ul>
+            </nav>
         </li></ul>
             </nav>
         </li>
@@ -383,6 +391,33 @@
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>innoldb --table &lt;table-name&gt; --insert &lt;field&gt;<span class="o">=</span>&lt;value&gt; &lt;field&gt;<span class="o">=</span>&lt;value&gt; ...
 </pre></div>
 </div>
+<section id="full-specification">
+<h3 id="full-specification">Full Specification<a class="headerlink" href="#full-specification" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>innoldb -h
+usage: innoldb <span class="o">[</span>-h<span class="o">]</span> -tb TABLE <span class="o">[</span>-ind INDEX<span class="o">]</span> <span class="o">[</span>-meta META<span class="o">]</span> <span class="o">[</span>-up <span class="o">[</span>UPDATE ...<span class="o">]]</span> <span class="o">[</span>-in <span class="o">[</span>INSERT ...<span class="o">]]</span> <span class="o">[</span>-fi <span class="o">[</span>FIND ...<span class="o">]]</span> <span class="o">[</span>-lo<span class="o">]</span> <span class="o">[</span>-mo<span class="o">]</span> <span class="o">[</span>-uh<span class="o">]</span> <span class="o">[</span>-hst<span class="o">]</span> <span class="o">[</span>-al<span class="o">]</span>
+
+optional arguments:
+  -h, --help            Show this <span class="nb">help</span> message and <span class="nb">exit</span>
+  -tb TABLE, --table TABLE
+                        Name of the table to query
+  -ind INDEX, --index INDEX
+                        Index ID of the document
+  -meta META, --meta META
+                        Meta ID of the document
+  -up <span class="o">[</span>UPDATE ...<span class="o">]</span>, --update <span class="o">[</span>UPDATE ...<span class="o">]</span>
+                        Requires --id. Update fields with <span class="sb">`</span><span class="nv">KEY1</span><span class="o">=</span>VAL1 <span class="nv">KEY2</span><span class="o">=</span>VAL2 ...<span class="sb">`</span>
+  -in <span class="o">[</span>INSERT ...<span class="o">]</span>, --insert <span class="o">[</span>INSERT ...<span class="o">]</span>
+                        Create document with fields <span class="sb">`</span><span class="nv">KEY1</span><span class="o">=</span>VAL1 <span class="nv">KEY2</span><span class="o">=</span>VAL2 ...<span class="sb">`</span>
+  -fi <span class="o">[</span>FIND ...<span class="o">]</span>, --find <span class="o">[</span>FIND ...<span class="o">]</span>
+                        Query by field equality <span class="sb">`</span><span class="nv">KEY1</span><span class="o">=</span>VAL1 <span class="nv">KEY2</span><span class="o">=</span>VAL2...<span class="sb">`</span>
+  -lo, --load           Requires --id. Load a document by index.
+  -mo, --mock           Create a new mock document
+  -uh, --unhide         Show hidden document fields
+  -hst, --history       Requires --meta. Retrieve document <span class="nb">history</span> by <span class="s1">'meta.id'</span>.
+  -al, --all            Query all documents
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
