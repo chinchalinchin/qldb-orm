@@ -98,6 +98,23 @@ is deserialized into nestable attributes on the `Document` object, i.e.
 assert document.prop_1.prop_2.prop_3.prop_4 == 5
 ```
 
+## Document Strands
+
+**QLDB** is an **immutable** ledger, meaning it stores the entire history of transactions. This feature can be used to construct snapshots of a document across time. If you want to initialized a document with its full history, use the `stranded` argument when constructing a new object or loading an existing document into an object. Each strand will be accessible as a nested `Document` on the current `Document`
+
+```python
+from innoldb.qldb import Document
+
+doc = Document('test_table', id='12345', stranded=True)
+
+# strands are accessible through ordered array `doc.strands`
+for i, strand in enumerate(doc.strands):
+    print('Strand #', i)
+    # prints `true`
+    print(isinstance(strand, Document))
+    print(strand.fields())
+```
+
 # Query Object Model
 
 Queries are represented as an object, `Query`. Each `Query` must be initialized with a `table` that it will run **PartialQL** queries against. All queries return a `list` of `Document` objects. 

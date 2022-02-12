@@ -20,6 +20,7 @@ src/innoldb/examples/example_document_crud.py
 src/innoldb/examples/example_histories.py
 src/innoldb/examples/example_queries.py
 src/innoldb/examples/example_scratchpad.py
+src/innoldb/examples/example_strands.py
 src/innoldb/examples/example_ion/__init__.py
 src/innoldb/examples/example_ion/example_ion_loads.py
 src/innoldb/static/__init__.py

@@ -34,6 +34,8 @@ class KeyValue(argparse.Action):
             key, value = value.split('=')
             getattr(namespace, self.dest)[key] = value
 
+def print_line(n):
+  print('-'*n)
 
 def mock(table):
     """Insert a mock document into a table
@@ -132,6 +134,10 @@ def update_prop(document, **props):
     document.save()
     return document
 
+def view_doc(document, unhide):
+  if unhide:
+    return vars(document)
+  return document.fields()
 
 def do_program(cli_args):
     """Entrypoint for the application.
@@ -140,61 +146,74 @@ def do_program(cli_args):
     :type cli_args: list
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '-tb', '--table', help="Name of the table to query", required=True)
-    parser.add_argument('-id', '--id', help="ID of the document")
-    parser.add_argument('-up', '--update', nargs='*',
-                        help="Requires --id.\n Update fields with `KEY1=VAL1 KEY2=VAL2 ...`", action=KeyValue)
-    parser.add_argument('-in', '--insert', nargs='*',
-                        help="Create document with fields `KEY1=VAL1 KEY2=VAL2 ...`", action=KeyValue)
-    parser.add_argument('-fi', '--find', nargs='*',
-                        help="Query by field equality `KEY1=VAL1 KEY2=VAL2...`", action=KeyValue)
-    parser.add_argument('-lo', '--load', action='store_true',
-                        help="Requires --id.\n Load a document.",)
-    parser.add_argument('-mo', '--mock', action='store_true',
-                        help="Create a new mock document")
+    parser.add_argument('-tb', '--table', 
+                        help="Name of the table to query", required=True)
+    parser.add_argument('-ind', '--index', help="Index ID of the document")
+    parser.add_argument('-meta', '--meta', help="Meta ID of the document")
+    parser.add_argument('-hst', '--history', action='store_true',
+                        help="Requires --meta. Retrieve document history by 'meta.id'.")
     parser.add_argument('-al', '--all', action='store_true',
                         help='Query all documents')
+    parser.add_argument('-up', '--update', nargs='*', action=KeyValue,
+                        help="Requires --id.\n Update fields with `KEY1=VAL1 KEY2=VAL2 ...`")
+    parser.add_argument('-in', '--insert', nargs='*', action=KeyValue,
+                        help="Create document with fields `KEY1=VAL1 KEY2=VAL2 ...`")
+    parser.add_argument('-fi', '--find', nargs='*', action=KeyValue,
+                        help="Query by field equality `KEY1=VAL1 KEY2=VAL2...`")
+    parser.add_argument('-lo', '--load', action='store_true',
+                        help="Requires --id.\n Load a document by index.",)
+    parser.add_argument('-mo', '--mock', action='store_true',
+                        help="Create a new mock document")
+    parser.add_argument('-uh', '--unhide', action='store_true',
+                        help="Show hidden document fields")
 
     args = parser.parse_args(cli_args)
 
     if args.load:
-        if args.id:
-            document = load(args.id, args.table)
-            printer.pprint(document.fields())
+        if args.index:
+            document = load(args.index, args.table)
+            printer.pprint(document)
         else:
-            log.warning("No Document ID specified.")
+            log.warning("No Document Index specified.")
 
     elif args.mock:
         document = mock(args.table)
-        printer.pprint(document.fields())
+        printer.pprint(view_doc(document, args.unhide))
 
     elif args.all:
         results = get_all(args.table)
         for result in results:
-            printer.pprint(result.fields())
+            print_line(30)
+            printer.pprint(view_doc(result, args.unhide))
 
     elif args.update:
-        if args.id:
-            document = load(args.id, args.table)
+        if args.index:
+            document = load(args.index, args.table)
             document = update_prop(document, **args.update)
-            printer.pprint(document.fields())
+            printer.pprint(view_doc(document, args.unhide))
         else:
-            log.warning("No Document ID specified.")
+            log.warning("No Document Index specified.")
 
     elif args.history:
-        results = history(args.table, args.id)
-        printer.pprint(results.fields())
+        if args.meta:
+          results = history(args.table, args.meta)
+          for result in results:
+              print_line(30)
+              printer.pprint(vars(result.data))
+              print_line(20)
+              printer.pprint(vars(result.metadata))
+        else:
+            log.warning("No Document ID specified.")
 
     elif args.insert:
         insert_id = insert(args.table, args.insert)
         document = load(insert_id, args.table)
-        printer.pprint(document.fields())
+        printer.pprint(view_doc(document, args.unhide))
 
     elif args.find:
         results = find(args.table, args.find)
         for result in results:
-            printer.pprint(result.fields())
+            printer.pprint(view_doc(result.fields(), args.unhide))
 
 
 def entrypoint():
