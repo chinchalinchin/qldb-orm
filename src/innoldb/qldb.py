@@ -122,9 +122,10 @@ class Document(QLDB):
         :type nester: :class:`Strut`, optional
         """
         if nest is None:
-          print('Executing Top Level Snapshot Load')
+            print('Executing Top Level Snapshot Load')
         else:
-          print('Executing Nested Snapshot Load ({}, {})'.format(nest, vars(nester)))
+            print('Executing Nested Snapshot Load ({}, {})'.format(
+                nest, vars(nester)))
 
         if snapshot is not None:
             for key, value in snapshot.items():
@@ -136,7 +137,8 @@ class Document(QLDB):
                     if nest is None:
                         setattr(self, key, nested_field)
                         nested_key = f'self.{key}'
-                        self._load(snapshot=value, nest=nested_key, nester=nested_field)
+                        self._load(snapshot=value, nest=nested_key,
+                                   nester=nested_field)
 
                     else:
                         path = '.'.join(nest.split('.')[:-1])
@@ -147,7 +149,8 @@ class Document(QLDB):
                         setattr(nested_attribute, key, nested_field)
 
                         nested_key = f'{nest}.{key}'
-                        self._load(snapshot=value, nest=nested_key, nester=nested_field)
+                        self._load(snapshot=value, nest=nested_key,
+                                   nester=nested_field)
 
                 else:
                     if nest is None:
