@@ -8,7 +8,7 @@ TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 APP_DIR = os.path.dirname(TEST_DIR)
 sys.path.append(APP_DIR)
 
-from qldb import Document, Strut, Ledger, Query
+from qldb import Document, Strut, QLDB, Query
 
 @pytest.mark.parametrize('kwargs,keys,values', [
     ({'a': 'b'}, ['a'], ['b']),
@@ -27,7 +27,7 @@ def test_strut(kwargs, keys, values):
     ('say what', 'again')
 ])
 def test_ledger(table, ledger):
-    assert Ledger(table, ledger).table == table and Ledger(
+    assert QLDB(table, ledger).table == table and QLDB(
         table, ledger).ledger == ledger
 
 
@@ -158,6 +158,46 @@ def test_document_snapshot_nested_deserialization_one_layer_complex(mock_create_
     assert document.test_1.test_2.test_5 == 'tester'
     assert document.test_1.test_6.test_7 == 'will it work?'
     assert document.test_1.test_8 == 'last but not least'
+
+
+@patch('qldb.Driver.driver')
+@patch('qldb.Driver.tables')
+@patch('qldb.Driver.create_table')
+@patch('qldb.Driver.create_index')
+def test_document_snapshot_nested_deserialization_big_mother(mock_create_index, mock_create_table, mock_tables, mock_driver):
+    document = Document(table='table', ledger='ledger', snapshot={
+                        'test_1': { 
+                            'test_2': { 
+                                'test_3': 45, 
+                                'test_4': [ 'a', 'b', 'c'],
+                                'test_5': {
+                                  'test_6': {
+                                    'test_7': 'succeeded'
+                                  }
+                                }
+                            }, 
+                        }, 
+                        'test_a':{
+                          'test_b':{
+                            'test_c':{
+                              'test_d': 6
+                            }
+                          }
+                        }
+                })
+    assert mock_driver.call_count == 2
+    assert isinstance(document.test_1, Strut)
+    assert isinstance(document.test_1.test_2, Strut)
+    assert isinstance(document.test_1.test_2.test_5, Strut)
+    assert isinstance(document.test_1.test_2.test_5.test_6, Strut)
+    assert isinstance(document.test_a, Strut)
+    assert isinstance(document.test_a.test_b, Strut)
+    assert isinstance(document.test_a.test_b.test_c, Strut)
+    assert document.test_a.test_b.test_c.test_d == 6
+    assert document.test_1.test_2.test_3 == 45
+    assert document.test_1.test_2.test_4 == [ 'a', 'b', 'c']
+    assert document.test_1.test_2.test_5.test_6.test_7 == 'succeeded'
+
 
 
 @patch('qldb.Driver.driver')

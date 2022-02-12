@@ -47,5 +47,6 @@ if __name__=="__main__":
     another_query = Query('lab').find_in(team=['InnoLab', 'Inno Lab'])
     for result in another_query:
         print(f'Document({result.id})')
+        print('-----------------------')
         pprint(result.fields())
         print('\n')

@@ -118,19 +118,36 @@ class Document(QLDB):
         :type snapshot: dict, optional
         :param nest: Key of the nested field in the document attribute path.
         :type nest: str
-        :param nester: Nested field, defauls to `None`.
+        :param nester: Nested field, defaults to `None`.
         :type nester: :class:`Strut`, optional
         """
+        if nest is None:
+          print('Executing Top Level Snapshot Load')
+        else:
+          print('Executing Nested Snapshot Load ({}, {})'.format(nest, vars(nester)))
+
         if snapshot is not None:
             for key, value in snapshot.items():
+                print('Parsing Snapshot {} = {}'.format(key, value))
+
                 if isinstance(value, dict):
+                    print('{} is dict'.format(key))
                     nested_field = Strut()
                     if nest is None:
                         setattr(self, key, nested_field)
+                        nested_key = f'self.{key}'
+                        self._load(snapshot=value, nest=nested_key, nester=nested_field)
+
                     else:
-                        nested_attribute = getattr(self, nest)
+                        path = '.'.join(nest.split('.')[:-1])
+                        nest_endpoint = nest.split('.')[-1]
+                        print(path)
+                        print(nest_endpoint)
+                        nested_attribute = getattr(eval(path), nest_endpoint)
                         setattr(nested_attribute, key, nested_field)
-                    self._load(snapshot=value, nest=key, nester=nested_field)
+
+                        nested_key = f'{nest}.{key}'
+                        self._load(snapshot=value, nest=nested_key, nester=nested_field)
 
                 else:
                     if nest is None:

@@ -32,7 +32,7 @@ from innoldb.qldb import Document
 
 # Load a document from `my_table` table.
 document = Document('my_table', id="123456")
-for val in document.nested_data.array:
+for val in document.field.nested_data.array:
   print(val)
 ```
 

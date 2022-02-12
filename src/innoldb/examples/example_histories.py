@@ -10,24 +10,25 @@ if __name__=="__main__":
     #       on import and set the ledger. 
     from innoldb.qldb import Query, Document
 
-    print('--------------------------------------------------------------------------------------------')
-    print('SELECT * FROM table')
-    print('--------------------------------------------------------------------------------------------')
+    # print('--------------------------------------------------------------------------------------------')
+    # print('SELECT * FROM table')
+    # print('--------------------------------------------------------------------------------------------')
 
-    query = Query('shell_test').get_all()
+    query = Query('a_new_test').history()()
 
     for result in query:
-      pprint(result.fields())
+      pprint(result.data)
+      pprint(result.metadata)
 
       print('-----------------------------------------------------------')
-      print('SELECT * FROM history(table)')
-      print('-----------------------------------------------------------')
-      hist = Query('shell_test').history(result.id)
-      for data in hist:
-        print('------------------------- RECORD')
-        pprint(vars(data))
-        print('------------------------- SNAPSHOT')
-        pprint(vars(data.data))
-        print('------------------------- METADATA')
-        pprint(vars(data.metadata))
+      # print('SELECT * FROM history(table)')
+      # print('-----------------------------------------------------------')
+      # hist = Query('lab').history(result.id)
+      # for data in hist:
+      #   print('------------------------- RECORD')
+      #   pprint(vars(data))
+      #   print('------------------------- SNAPSHOT')
+      #   pprint(vars(data.data))
+      #   print('------------------------- METADATA')
+      #   pprint(vars(data.metadata))
       
