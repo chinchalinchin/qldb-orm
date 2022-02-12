@@ -129,7 +129,8 @@ class Document(QLDB):
                     if nest is None:
                         setattr(self, key, nested_field)
                         nested_key = f'self.{key}'
-                        self._load(snapshot=value, nest=nested_key, nester=nested_field)
+                        self._load(snapshot=value, nest=nested_key,
+                                   nester=nested_field)
 
                     else:
                         path = '.'.join(nest.split('.')[:-1])
@@ -137,7 +138,8 @@ class Document(QLDB):
                         nested_attribute = getattr(eval(path), nest_endpoint)
                         setattr(nested_attribute, key, nested_field)
                         nested_key = f'{nest}.{key}'
-                        self._load(snapshot=value, nest=nested_key, nester=nested_field)
+                        self._load(snapshot=value, nest=nested_key,
+                                   nester=nested_field)
 
                 else:
                     if nest is None:
