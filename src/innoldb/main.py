@@ -132,6 +132,10 @@ def update_prop(document, **props):
     document.save()
     return document
 
+def view(document, unhide):
+  if unhide:
+    return vars(document)
+  return document.fields()
 
 def do_program(cli_args):
     """Entrypoint for the application.
@@ -143,6 +147,7 @@ def do_program(cli_args):
     parser.add_argument(
         '-tb', '--table', help="Name of the table to query", required=True)
     parser.add_argument('-id', '--id', help="ID of the document")
+    parser.add_argument('-meta', '--meta', help="Meta ID of the document")
     parser.add_argument('-up', '--update', nargs='*',
                         help="Requires --id.\n Update fields with `KEY1=VAL1 KEY2=VAL2 ...`", action=KeyValue)
     parser.add_argument('-in', '--insert', nargs='*',
@@ -153,6 +158,8 @@ def do_program(cli_args):
                         help="Requires --id.\n Load a document.",)
     parser.add_argument('-mo', '--mock', action='store_true',
                         help="Create a new mock document")
+    parser.add_argument('-uh', '--unhide', action='store_true',
+                        help="Show hidden document fields")
     parser.add_argument('-al', '--all', action='store_true',
                         help='Query all documents')
 
@@ -161,40 +168,43 @@ def do_program(cli_args):
     if args.load:
         if args.id:
             document = load(args.id, args.table)
-            printer.pprint(document.fields())
+            printer.pprint(document)
         else:
-            log.warning("No Document ID specified.")
+            log.warning("No Document Index specified.")
 
     elif args.mock:
         document = mock(args.table)
-        printer.pprint(document.fields())
+        printer.pprint(view(document, args.unhide))
 
     elif args.all:
         results = get_all(args.table)
         for result in results:
-            printer.pprint(result.fields())
+            printer.pprint(view(result, args.unhide))
 
     elif args.update:
         if args.id:
             document = load(args.id, args.table)
             document = update_prop(document, **args.update)
-            printer.pprint(document.fields())
+            printer.pprint(view(document, args.unhide))
         else:
-            log.warning("No Document ID specified.")
+            log.warning("No Document Index specified.")
 
     elif args.history:
-        results = history(args.table, args.id)
-        printer.pprint(results.fields())
+        if args.meta_id:
+          results = history(args.table, args.meta_id)
+          printer.pprint(view(results, args.unhide))
+        else:
+            log.warning("No Document ID specified.")
 
     elif args.insert:
         insert_id = insert(args.table, args.insert)
         document = load(insert_id, args.table)
-        printer.pprint(document.fields())
+        printer.pprint(view(document, args.unhide))
 
     elif args.find:
         results = find(args.table, args.find)
         for result in results:
-            printer.pprint(result.fields())
+            printer.pprint(view(result.fields(), args.unhide))
 
 
 def entrypoint():
