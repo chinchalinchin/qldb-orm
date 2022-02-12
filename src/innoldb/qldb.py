@@ -209,7 +209,7 @@ class Document(QLDB):
         :return: `innoldb.qldb.Document` fields
         :rtype: dict
         """
-        return {key: value for key, value in vars(self).items() if key not in ['table', 'driver', 'index', 'ledger', 'meta_id']}
+        return {key: value for key, value in vars(self).items() if key not in ['table', 'driver', 'index', 'ledger', 'meta_id', 'strands']}
 
     def save(self):
         """Save the current value of the `innoldb.qldb.Document` fields to the **QLDB** ledger table.
