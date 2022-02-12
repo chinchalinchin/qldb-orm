@@ -10,7 +10,7 @@ def getLogger(name: str) -> logging.Logger:
     :type name: str
 
     :return: Instance of Logger.
-    :rtype: :class:`logging.Logger` 
+    :rtype: :class:`logging.Logger`
     """
     logFormatter = logging.Formatter(
         "%(asctime)s [%(levelname)-5.5s] [{}] %(message)s".format(name))

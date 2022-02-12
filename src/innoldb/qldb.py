@@ -30,8 +30,8 @@ class Strut:
     ```json
     {
       'a': {
-        'b' : { 
-          'c' : 'd' 
+        'b' : {
+          'c' : 'd'
         }
       }
     }
@@ -39,7 +39,7 @@ class Strut:
     gets parsed into an object, such that
     ```python
     object.a.b.c == 'd'
-    ``` 
+    ```
     """
 
     def __init__(self, **kwargs):
@@ -135,7 +135,10 @@ class Document(QLDB):
                     else:
                         path = '.'.join(nest.split('.')[:-1])
                         nest_endpoint = nest.split('.')[-1]
-                        nested_attribute = getattr(eval(path, {'__builtins__':{}, "self": self}), nest_endpoint)
+                        # NOTE: https://realpython.com/python-eval-function/
+                        #       https://blog.sqreen.com/preventing-sql-injections-in-python/
+                        #       https://nedbatchelder.com/blog/201206/eval_really_is_dangerous.html
+                        nested_attribute = getattr(eval(path, {'__builtins__': {}, "self": self}), nest_endpoint)
                         setattr(nested_attribute, key, nested_field)
                         nested_key = f'{nest}.{key}'
                         self._load(snapshot=value, nest=nested_key,
@@ -222,7 +225,7 @@ class Document(QLDB):
 
 
 class Query(QLDB):
-    """Object that represents a **PartiQL** query. Get initialized on a particular `table` and `ledger`. 
+    """Object that represents a **PartiQL** query. Get initialized on a particular `table` and `ledger`.
 
     Methods will return results formatted as collections of `innoldb.qldb.Document`.
     """
