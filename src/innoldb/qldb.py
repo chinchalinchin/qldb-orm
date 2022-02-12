@@ -117,7 +117,8 @@ class Document(QLDB):
         self.strands = []
         history = Query(self.table).history(self.meta_id)
         for doc in history:
-            self.strands.append(Document(self.table, id=self.id, snapshot=doc.data))
+            self.strands.append(
+                Document(self.table, id=self.id, snapshot=doc.data))
 
     def _load(self, snapshot=None, nest=None, nester=None):
         """Parse the `snapshot` into `innoldab.qldb.Document` attributes. If `nest` and `nester` are passed in, the function executes recursively, drilling down through the nodes in the `snapshot` and recursively generating the document structure.
@@ -136,7 +137,7 @@ class Document(QLDB):
         """
         if snapshot is not None:
             if isinstance(snapshot, Strut):
-              snapshot = snapshot.__dict__
+                snapshot = snapshot.__dict__
 
             for key, value in snapshot.items():
 
