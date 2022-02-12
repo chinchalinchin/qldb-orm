@@ -70,7 +70,7 @@ class Document(QLDB):
         self._init_fixtures()
 
         if stranded and self.meta_id is not None:
-          self._init_history()
+            self._init_history()
 
     def __getattr__(self, attr):
         """Return values from un-hidden fields. Hidden fields include: `index`, `table`, `ledger`.
@@ -95,7 +95,8 @@ class Document(QLDB):
         self.strands = []
         history = Query(self.table).history(self.meta_id)
         for doc in history:
-            self.strands.append(Document(self.table, id=self.id, snapshot=doc.data))
+            self.strands.append(
+                Document(self.table, id=self.id, snapshot=doc.data))
 
     def _load(self, snapshot=None, nest=None, nester=None):
         """Parse the `snapshot` into `innoldab.qldb.Document` attributes. If `nest` and `nester` are passed in, the function executes recursively, drilling down through the nodes in the `snapshot` and recursively generating the document structure.
@@ -115,7 +116,7 @@ class Document(QLDB):
         if snapshot is not None:
             if isinstance(snapshot, Strut):
               snapshot = vars(snapshot)
-
+              
             for key, value in snapshot.items():
 
                 if isinstance(value, dict):
@@ -131,7 +132,8 @@ class Document(QLDB):
                         path = '.'.join(nest.split('.')[:-1])
                         nest_endpoint = nest.split('.')[-1]
                         # NOTE: see links in docstring for comments on the use of `eval()`
-                        nested_attribute = getattr(eval(path, {'__builtins__': {}, "self": self}), nest_endpoint)
+                        nested_attribute = getattr(
+                            eval(path, {'__builtins__': {}, "self": self}), nest_endpoint)
                         setattr(nested_attribute, key, nested_field)
                         nested_key = f'{nest}.{key}'
                         self._load(snapshot=value, nest=nested_key,
