@@ -177,10 +177,16 @@ def test_document_snapshot_nested_deserialization_big_mother(mock_create_index, 
                                 }
                             }, 
                         }, 
-                        'test_a':{
-                          'test_b':{
-                            'test_c':{
-                              'test_d': 6
+                        'test_a': {
+                          'test_b': {
+                            'test_c': {
+                              'test_d': 6, 
+                              'test_e': {
+                                'test_f': [ 'array', 'things'],
+                                'test_g': {
+                                    'test_h': 'the_bottom'
+                                }
+                              }
                             }
                           }
                         }
@@ -193,10 +199,16 @@ def test_document_snapshot_nested_deserialization_big_mother(mock_create_index, 
     assert isinstance(document.test_a, Strut)
     assert isinstance(document.test_a.test_b, Strut)
     assert isinstance(document.test_a.test_b.test_c, Strut)
+    assert isinstance(document.test_a.test_b.test_c.test_e, Strut)
+    assert isinstance(document.test_a.test_b.test_c.test_e.test_g, Strut)
     assert document.test_a.test_b.test_c.test_d == 6
     assert document.test_1.test_2.test_3 == 45
     assert document.test_1.test_2.test_4 == [ 'a', 'b', 'c']
     assert document.test_1.test_2.test_5.test_6.test_7 == 'succeeded'
+    assert document.test_a.test_b.test_c.test_d == 6
+    assert document.test_a.test_b.test_c.test_e.test_f == ['array', 'things'] 
+    assert document.test_a.test_b.test_c.test_e.test_g.test_h == 'the_bottom'
+
 
 
 @patch('qldb.Driver.driver')
