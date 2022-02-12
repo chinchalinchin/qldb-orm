@@ -199,7 +199,6 @@ def test_document_snapshot_nested_deserialization_big_mother(mock_create_index, 
     assert document.test_1.test_2.test_5.test_6.test_7 == 'succeeded'
 
 
-
 @patch('qldb.Driver.driver')
 @patch('qldb.Driver.tables')
 @patch('qldb.Driver.create_table')
