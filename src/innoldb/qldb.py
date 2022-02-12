@@ -56,8 +56,8 @@ class Document(QLDB):
     1. **Constructor Arguments**: `table`
     2. **Constructor Arguments**: `table, id`
     3. **Constructor Arguments**: `table, snapshot`
-    4. **Constructor Arguments**: `table, no_index`
-    5. **Constructor Arguments**: `table, no_index, snapshot`
+
+    In each case, an optional argument for `ledger` and `stranded` can be passed in. 
 
     :param table: Name of the **QLDB**table
     :type table: str
@@ -67,17 +67,16 @@ class Document(QLDB):
     :type snapshot: dict, optional
     :param ledger: Name of the **QLDB** ledger, defaults to `innoldb.settings.LEDGER`
     :type ledger: str, optional
-    :param no_index: flag to signal document has no index, defaults to `False`
-    :param no_index: bool, optional
+    :param stranded: Flag to signal the document should initialized its history from the **QLDB** ledger
+
+    .. note::
+      If `stranded==True`, then the document history can be accessed through `self.strands`
     """
 
-    def __init__(self, table, id=None, snapshot=None, ledger=settings.LEDGER, no_index=False):
+    def __init__(self, table, id=None, snapshot=None, ledger=settings.LEDGER, stranded=False):
         super().__init__(table=table, ledger=ledger)
-        if no_index:
-            if snapshot is not None:
-                self._load(snapshot)
 
-        elif id is None:
+        if id is None:
             # PartiQL doesn't like dashes.
             self.id = str(uuid.uuid1()).replace('-', '')
             if snapshot is not None:
@@ -91,6 +90,9 @@ class Document(QLDB):
                 self._load(snapshot)
 
         self._init_fixtures()
+
+        if stranded and self.meta_id is not None:
+          self._init_history()
 
     def __getattr__(self, attr):
         """Return values from un-hidden fields. Hidden fields include: `index`, `table`, `ledger`.
@@ -111,6 +113,9 @@ class Document(QLDB):
             except ClientError as e:
                 log.error(e)
 
+    def _init_history(self):
+        pass
+      
     def _load(self, snapshot=None, nest=None, nester=None):
         """Parse the `snapshot` into `innoldab.qldb.Document` attributes. If `nest` and `nester` are passed in, the function executes recursively, drilling down through the nodes in the `snapshot` and recursively generating the document structure.
 
