@@ -92,7 +92,7 @@ class Document(QLDB):
         self._init_fixtures()
 
         if stranded and self.meta_id is not None:
-          self._init_history()
+            self._init_history()
 
     def __getattr__(self, attr):
         """Return values from un-hidden fields. Hidden fields include: `index`, `table`, `ledger`.
@@ -115,7 +115,7 @@ class Document(QLDB):
 
     def _init_history(self):
         pass
-      
+
     def _load(self, snapshot=None, nest=None, nester=None):
         """Parse the `snapshot` into `innoldab.qldb.Document` attributes. If `nest` and `nester` are passed in, the function executes recursively, drilling down through the nodes in the `snapshot` and recursively generating the document structure.
 
@@ -143,7 +143,8 @@ class Document(QLDB):
                         # NOTE: https://realpython.com/python-eval-function/
                         #       https://blog.sqreen.com/preventing-sql-injections-in-python/
                         #       https://nedbatchelder.com/blog/201206/eval_really_is_dangerous.html
-                        nested_attribute = getattr(eval(path, {'__builtins__': {}, "self": self}), nest_endpoint)
+                        nested_attribute = getattr(
+                            eval(path, {'__builtins__': {}, "self": self}), nest_endpoint)
                         setattr(nested_attribute, key, nested_field)
                         nested_key = f'{nest}.{key}'
                         self._load(snapshot=value, nest=nested_key,
