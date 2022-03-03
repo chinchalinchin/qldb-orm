@@ -3,19 +3,19 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 SCRIPT_NAME="install"
 SCRIPT_DES=$'Build and install the \e[3mqldb-orm\e[om from source.'
-PROJECT_DIR=$SCRIPT_DIR/..
-source $PROJECT_DIR/env/.env
+PROJECT_DIR="$SCRIPT_DIR/.."
+source "$PROJECT_DIR/env/.env"
 
-if [ -d $PROJECT_DIR/dist ]
+if [ -d "$PROJECT_DIR/dist" ]
 then
-  rm -r $PROJECT_DIR/dist
+  rm -r "$PROJECT_DIR/dist"
 fi
 
 python -m build
 
-VERSION=$(cat $PROJECT_DIR/version.txt)
+VERSION=$(cat "$PROJECT_DIR/version.txt")
 
-cd $PROJECT_DIR/dist
+cd "$PROJECT_DIR/dist"
 
 pip uninstall -y qldb-orm
 

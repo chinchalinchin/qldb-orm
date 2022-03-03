@@ -1,0 +1,2 @@
+[console_scripts]
+qldb-orm = qldb_orm.main:entrypoint
