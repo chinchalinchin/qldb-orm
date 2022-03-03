@@ -1,5 +1,5 @@
 import logging
-from innoldb import settings
+from qldb-orm import settings
 
 
 def getLogger(name: str) -> logging.Logger:

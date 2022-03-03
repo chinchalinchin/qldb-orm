@@ -3,11 +3,11 @@ from pprint import pprint
 
 if __name__=="__main__":
   
-    # NOTE: Point `innoldb` to the Ledger from which you are reading/writing through the environment
+    # NOTE: Point `qldb-orm` to the Ledger from which you are reading/writing through the environment
     # os.environ['LEDGER'] = 'innolab'
 
     # NOTE: Import needs to come after environment variable has been set!
-    from innoldb.qldb import Document
+    from qldb-orm.qldb import Document
 
     doc = Document('test_table')
 

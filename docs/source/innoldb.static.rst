@@ -1,29 +1,29 @@
-innoldb.static package
+qldb-orm.static package
 ======================
 
 Submodules
 ----------
 
-innoldb.static.clauses module
+qldb-orm.static.clauses module
 -----------------------------
 
-.. automodule:: innoldb.static.clauses
+.. automodule:: qldb-orm.static.clauses
    :members:
    :undoc-members:
    :show-inheritance:
 
-innoldb.static.driver module
+qldb-orm.static.driver module
 ----------------------------
 
-.. automodule:: innoldb.static.driver
+.. automodule:: qldb-orm.static.driver
    :members:
    :undoc-members:
    :show-inheritance:
 
-innoldb.static.logger module
+qldb-orm.static.logger module
 ----------------------------
 
-.. automodule:: innoldb.static.logger
+.. automodule:: qldb-orm.static.logger
    :members:
    :undoc-members:
    :show-inheritance:
@@ -31,7 +31,7 @@ innoldb.static.logger module
 Module contents
 ---------------
 
-.. automodule:: innoldb.static
+.. automodule:: qldb-orm.static
    :members:
    :undoc-members:
    :show-inheritance:

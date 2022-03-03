@@ -2,10 +2,10 @@ import argparse
 import pprint
 import random
 import sys
-from innoldb.qldb import Document, Query
-from innoldb.static.logger import getLogger
+from qldb-orm.qldb import Document, Query
+from qldb-orm.static.logger import getLogger
 
-log = getLogger('main')
+log = getLogger('qldb-orm.main')
 printer = pprint.PrettyPrinter(indent=4)
 
 departments = ['Business Development',
@@ -45,7 +45,7 @@ def mock(table):
     :param table: Name of table to be queried.
     :type table: str
     :return: Document that was mocked
-    :rtype: :class:`innoldb.qldb.Document`
+    :rtype: :class:`qldb-orm.qldb.Document`
     """
     document = Document(table)
     document.company = 'Makpar'
@@ -65,8 +65,8 @@ def load(id, table):
     :type id: str
     :param table: Name of table to be queried.
     :type table: str
-    :return: collection of `innoldb.qldb.Document`
-    :rtype: :class:`innoldb.qldb.Document`
+    :return: collection of `qldb-orm.qldb.Document`
+    :rtype: :class:`qldb-orm.qldb.Document`
     """
     return Document(table=table, id=id)
 
@@ -77,7 +77,7 @@ def insert(table, document):
     :param table: Name of table to be queried.
     :type table: str
     :param document: Document to be inserted
-    :type document: :class:`innoldb.qldb.Document`
+    :type document: :class:`qldb-orm.qldb.Document`
     :return: id of the document inserted
     :rtype: str
     """
@@ -91,7 +91,7 @@ def get_all(table):
 
     :param table: Name of table to be queried.
     :type table: str
-    :return: collection of `innoldb.qldb.Document`
+    :return: collection of `qldb-orm.qldb.Document`
     :rtype: list
     """
     return Query(table).get_all()
@@ -104,7 +104,7 @@ def find(table, fields):
     :type table: str
     :param fields: key-value pairs of the fields
     :type fields: `kwargs`
-    :return: collection of `innoldb.qldb.Document`
+    :return: collection of `qldb-orm.qldb.Document`
     :rtype: list
     """
     return Query(table).find_by(**fields)
@@ -117,7 +117,7 @@ def history(table, id):
     :type table: str
     :param id: ID of the metadata revision
     :type id: str
-    :return: collection of `innoldb.qldb.Document`
+    :return: collection of `qldb-orm.qldb.Document`
     :rtype: list
     """
     return Query(table).history(id)
@@ -127,9 +127,9 @@ def update_prop(document, **props):
     """Update properties on document and persist to **QLDB**
 
     :param document: Document to be updated
-    :type document: :class:`innoldb.qldb.Document`
+    :type document: :class:`qldb-orm.qldb.Document`
     :return: Updated document
-    :rtype: :class:`innoldb.qldb.Document`
+    :rtype: :class:`qldb-orm.qldb.Document`
     """
     for key, value in props.items():
         setattr(document, key, value)

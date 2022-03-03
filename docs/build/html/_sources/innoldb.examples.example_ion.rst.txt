@@ -1,13 +1,13 @@
-innoldb.examples.example\_ion package
+qldb-orm.examples.example\_ion package
 =====================================
 
 Submodules
 ----------
 
-innoldb.examples.example\_ion.example\_ion\_loads module
+qldb-orm.examples.example\_ion.example\_ion\_loads module
 --------------------------------------------------------
 
-.. automodule:: innoldb.examples.example_ion.example_ion_loads
+.. automodule:: qldb-orm.examples.example_ion.example_ion_loads
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ innoldb.examples.example\_ion.example\_ion\_loads module
 Module contents
 ---------------
 
-.. automodule:: innoldb.examples.example_ion
+.. automodule:: qldb-orm.examples.example_ion
    :members:
    :undoc-members:
    :show-inheritance:

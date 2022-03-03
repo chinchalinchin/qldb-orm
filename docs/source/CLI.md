@@ -1,6 +1,6 @@
 # Command Line Usage
 
-Installing the `innoldb` package puts a command line utility on your path. This tool allows you to query the QLDB ledger directly from the command line. 
+Installing the `qldb-orm` package puts a command line utility on your path. This tool allows you to query the QLDB ledger directly from the command line. 
 
 The `--table` argument is required. Queries can be constructed against this table by passing in other arguments. See below for examples of the different queries.
 
@@ -13,39 +13,39 @@ export LEDGER='ledger-name'
 ## Find Document By ID
 
 ```shell
-innoldb --table <table-name> --id <id>
+qldb-orm --table <table-name> --id <id>
 ```
 
 ## Find All Documents
 
 ```shell
-innoldb --table <table-name> --all
+qldb-orm --table <table-name> --all
 ```
 
 ## Generate New Mock Document
 
 ```shell
-innoldb --table <table-name> --mock
+qldb-orm --table <table-name> --mock
 ```
 
 ## Update Field in Document
 
 ```shell
-innoldb --table <table-name> --id <id> --update <field>=<value> <field>=<value> ...
+qldb-orm --table <table-name> --id <id> --update <field>=<value> <field>=<value> ...
 ```
 
 ## Insert Document
 
 ```shell
-innoldb --table <table-name> --insert <field>=<value> <field>=<value> ...
+qldb-orm --table <table-name> --insert <field>=<value> <field>=<value> ...
 ```
 
 
 ### Full Specification
 
 ```shell
-innoldb -h
-usage: innoldb [-h] -tb TABLE [-ind INDEX] [-meta META] [-up [UPDATE ...]] [-in [INSERT ...]] [-fi [FIND ...]] [-lo] [-mo] [-uh] [-hst] [-al]
+qldb-orm -h
+usage: qldb-orm [-h] -tb TABLE [-ind INDEX] [-meta META] [-up [UPDATE ...]] [-in [INSERT ...]] [-fi [FIND ...]] [-lo] [-mo] [-uh] [-hst] [-al]
 
 optional arguments:
   -h, --help            Show this help message and exit

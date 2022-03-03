@@ -7,7 +7,7 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 SCRIPT_NAME="install"
-SCRIPT_DES=$'Build and install the \e[3minnoldb\e[om from source.'
+SCRIPT_DES=$'Build and install the \e[3mqldb-orm\e[om from source.'
 PROJECT_DIR=$SCRIPT_DIR/..
 source $PROJECT_DIR/env/.env
 

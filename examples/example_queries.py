@@ -3,15 +3,15 @@ from pprint import pprint
 
 if __name__=="__main__":
 
-    # NOTE: Point `innoldb` to the Ledger from which you are reading/writing through the environment
+    # NOTE: Point `qldb-orm` to the Ledger from which you are reading/writing through the environment
     # os.environ['LEDGER'] = 'innolab'
 
     # NOTE: Import needs to come after environment variable has been set! The library will scan the environment
     #       on import and set the ledger. 
-    from innoldb.qldb import Query
+    from qldb-orm.qldb import Query
 
     ### EXAMPLE QUERIES
-    # NOTE: `innoldb.qldb.Document` has extra attributes for meta data: `(index, table, ledger)`. To hide them, call `fields()`
+    # NOTE: `qldb-orm.qldb.Document` has extra attributes for meta data: `(index, table, ledger)`. To hide them, call `fields()`
 
     ### SELECT * FROM TABLE
     
@@ -39,7 +39,7 @@ if __name__=="__main__":
         print('\n')
 
     ### SELECT * FROM TABLE WHERE IN
-    #     `innoldb.qldb.Query.find_in` accepts **kwargs arguments where each keyword is a list of values to compare the field against.
+    #     `qldb-orm.qldb.Query.find_in` accepts **kwargs arguments where each keyword is a list of values to compare the field against.
 
     print('--------------------------------------------------------------------------------------------')
     print('SELECT * FROM table WHERE col IN (?, ?)')

@@ -47,7 +47,7 @@
   
   
   
-    <title>Command Line Usage &#8212; innoldb v1.0.10 documentation</title>
+    <title>Command Line Usage &#8212; qldb-orm v1.0.10 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/material.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="index.html" title="innoldb v1.0.10 documentation"
+        <a href="index.html" title="qldb-orm v1.0.10 documentation"
            class="md-header-nav__button md-logo">
           
             <i class="md-icon">&#xe5c3</i>
@@ -150,7 +150,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">innoldb v1.0.10 documentation</a></li>
+          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">qldb-orm v1.0.10 documentation</a></li>
       </ul>
     </div>
   </nav>
@@ -162,13 +162,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="index.html" title="innoldb v1.0.10 documentation" class="md-nav__button md-logo">
+    <a href="index.html" title="qldb-orm v1.0.10 documentation" class="md-nav__button md-logo">
       
         <i class="md-icon">&#xe5c3</i>
       
     </a>
     <a href="index.html"
-       title="innoldb v1.0.10 documentation">Innovation Lab</a>
+       title="qldb-orm v1.0.10 documentation">Innovation Lab</a>
   </label>
   
 
@@ -356,7 +356,7 @@
             
   <section class="tex2jax_ignore mathjax_ignore" id="command-line-usage">
 <h1 id="cli--page-root">Command Line Usage<a class="headerlink" href="#cli--page-root" title="Permalink to this headline">¶</a></h1>
-<p>Installing the <code class="docutils literal notranslate"><span class="pre">innoldb</span></code> package puts a command line utility on your path. This tool allows you to query the QLDB ledger directly from the command line.</p>
+<p>Installing the <code class="docutils literal notranslate"><span class="pre">qldb-orm</span></code> package puts a command line utility on your path. This tool allows you to query the QLDB ledger directly from the command line.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">--table</span></code> argument is required. Queries can be constructed against this table by passing in other arguments. See below for examples of the different queries.</p>
 <p>Be sure to export the <strong>LEDGER</strong> environment variable before executing any of these commands,</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">LEDGER</span><span class="o">=</span><span class="s1">'ledger-name'</span>
@@ -364,37 +364,37 @@
 </div>
 <section id="find-document-by-id">
 <h2 id="find-document-by-id">Find Document By ID<a class="headerlink" href="#find-document-by-id" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>innoldb --table &lt;table-name&gt; --id &lt;id&gt;
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qldb-orm --table &lt;table-name&gt; --id &lt;id&gt;
 </pre></div>
 </div>
 </section>
 <section id="find-all-documents">
 <h2 id="find-all-documents">Find All Documents<a class="headerlink" href="#find-all-documents" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>innoldb --table &lt;table-name&gt; --all
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qldb-orm --table &lt;table-name&gt; --all
 </pre></div>
 </div>
 </section>
 <section id="generate-new-mock-document">
 <h2 id="generate-new-mock-document">Generate New Mock Document<a class="headerlink" href="#generate-new-mock-document" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>innoldb --table &lt;table-name&gt; --mock
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qldb-orm --table &lt;table-name&gt; --mock
 </pre></div>
 </div>
 </section>
 <section id="update-field-in-document">
 <h2 id="update-field-in-document">Update Field in Document<a class="headerlink" href="#update-field-in-document" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>innoldb --table &lt;table-name&gt; --id &lt;id&gt; --update &lt;field&gt;<span class="o">=</span>&lt;value&gt; &lt;field&gt;<span class="o">=</span>&lt;value&gt; ...
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qldb-orm --table &lt;table-name&gt; --id &lt;id&gt; --update &lt;field&gt;<span class="o">=</span>&lt;value&gt; &lt;field&gt;<span class="o">=</span>&lt;value&gt; ...
 </pre></div>
 </div>
 </section>
 <section id="insert-document">
 <h2 id="insert-document">Insert Document<a class="headerlink" href="#insert-document" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>innoldb --table &lt;table-name&gt; --insert &lt;field&gt;<span class="o">=</span>&lt;value&gt; &lt;field&gt;<span class="o">=</span>&lt;value&gt; ...
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qldb-orm --table &lt;table-name&gt; --insert &lt;field&gt;<span class="o">=</span>&lt;value&gt; &lt;field&gt;<span class="o">=</span>&lt;value&gt; ...
 </pre></div>
 </div>
 <section id="full-specification">
 <h3 id="full-specification">Full Specification<a class="headerlink" href="#full-specification" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>innoldb -h
-usage: innoldb <span class="o">[</span>-h<span class="o">]</span> -tb TABLE <span class="o">[</span>-ind INDEX<span class="o">]</span> <span class="o">[</span>-meta META<span class="o">]</span> <span class="o">[</span>-up <span class="o">[</span>UPDATE ...<span class="o">]]</span> <span class="o">[</span>-in <span class="o">[</span>INSERT ...<span class="o">]]</span> <span class="o">[</span>-fi <span class="o">[</span>FIND ...<span class="o">]]</span> <span class="o">[</span>-lo<span class="o">]</span> <span class="o">[</span>-mo<span class="o">]</span> <span class="o">[</span>-uh<span class="o">]</span> <span class="o">[</span>-hst<span class="o">]</span> <span class="o">[</span>-al<span class="o">]</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qldb-orm -h
+usage: qldb-orm <span class="o">[</span>-h<span class="o">]</span> -tb TABLE <span class="o">[</span>-ind INDEX<span class="o">]</span> <span class="o">[</span>-meta META<span class="o">]</span> <span class="o">[</span>-up <span class="o">[</span>UPDATE ...<span class="o">]]</span> <span class="o">[</span>-in <span class="o">[</span>INSERT ...<span class="o">]]</span> <span class="o">[</span>-fi <span class="o">[</span>FIND ...<span class="o">]]</span> <span class="o">[</span>-lo<span class="o">]</span> <span class="o">[</span>-mo<span class="o">]</span> <span class="o">[</span>-uh<span class="o">]</span> <span class="o">[</span>-hst<span class="o">]</span> <span class="o">[</span>-al<span class="o">]</span>
 
 optional arguments:
   -h, --help            Show this <span class="nb">help</span> message and <span class="nb">exit</span>

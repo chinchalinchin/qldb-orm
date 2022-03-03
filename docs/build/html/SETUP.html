@@ -47,7 +47,7 @@
   
   
   
-    <title>Setup &#8212; innoldb v1.0.10 documentation</title>
+    <title>Setup &#8212; qldb-orm v1.0.10 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/material.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="index.html" title="innoldb v1.0.10 documentation"
+        <a href="index.html" title="qldb-orm v1.0.10 documentation"
            class="md-header-nav__button md-logo">
           
             <i class="md-icon">&#xe5c3</i>
@@ -150,7 +150,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">innoldb v1.0.10 documentation</a></li>
+          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">qldb-orm v1.0.10 documentation</a></li>
       </ul>
     </div>
   </nav>
@@ -162,13 +162,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="index.html" title="innoldb v1.0.10 documentation" class="md-nav__button md-logo">
+    <a href="index.html" title="qldb-orm v1.0.10 documentation" class="md-nav__button md-logo">
       
         <i class="md-icon">&#xe5c3</i>
       
     </a>
     <a href="index.html"
-       title="innoldb v1.0.10 documentation">Innovation Lab</a>
+       title="qldb-orm v1.0.10 documentation">Innovation Lab</a>
   </label>
   
 
@@ -379,7 +379,7 @@ This will only create the ledger if you have your AWS credentials configured and
 </section>
 <section id="cloudformation">
 <h2 id="cloudformation">CloudFormation<a class="headerlink" href="#cloudformation" title="Permalink to this headline">¶</a></h2>
-<p>A <strong>QLDB</strong> CloudFormation template is also available in the <em>/scripts/cf/</em> directory of this project’s <a class="reference external" href="https://github.com/Makpar-Innovation-Laboratory/innoldb">Github</a>. A script has been provided to post this template to <strong>CloudFormation</strong>, assuming your <a class="reference external" href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html">AWS CLI has been authenticated and configured</a>. Clone the repository and then from the project root, execute the following script and specify the <code class="docutils literal notranslate"><span class="pre">&lt;ledger-name&gt;</span></code> to create a ledger on the <strong>QLDB</strong> service,</p>
+<p>A <strong>QLDB</strong> CloudFormation template is also available in the <em>/scripts/cf/</em> directory of this project’s <a class="reference external" href="https://github.com/Makpar-Innovation-Laboratory/qldb-orm">Github</a>. A script has been provided to post this template to <strong>CloudFormation</strong>, assuming your <a class="reference external" href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html">AWS CLI has been authenticated and configured</a>. Clone the repository and then from the project root, execute the following script and specify the <code class="docutils literal notranslate"><span class="pre">&lt;ledger-name&gt;</span></code> to create a ledger on the <strong>QLDB</strong> service,</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>./scripts/cf/stack --ledger &lt;ledger-name&gt;
 </pre></div>
 </div>
@@ -395,9 +395,9 @@ This script has other optional arguments detailed in the comments of the script 
 <p>If you are configuring an application role to use this library for a particular ledger and table, you will need to scope the permissions using <a class="reference external" href="https://docs.aws.amazon.com/qldb/latest/developerguide/getting-started-standard-mode.html">this reference</a>.</p>
 <p>See <a class="reference external" href="https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions">here</a> for a full working example of an appropriate <strong>IAM</strong> policy.</p>
 <ol class="simple">
-<li><p>Install <code class="docutils literal notranslate"><span class="pre">innoldb</span></code></p></li>
+<li><p>Install <code class="docutils literal notranslate"><span class="pre">qldb-orm</span></code></p></li>
 </ol>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install innoldb
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip install qldb-orm
 </pre></div>
 </div>
 </section>

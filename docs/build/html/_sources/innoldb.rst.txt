@@ -1,4 +1,4 @@
-innoldb package
+qldb-orm package
 ===============
 
 Subpackages
@@ -7,31 +7,31 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   innoldb.static
+   qldb-orm.static
 
 Submodules
 ----------
 
-innoldb.main module
+qldb-orm.main module
 -------------------
 
-.. automodule:: innoldb.main
+.. automodule:: qldb-orm.main
    :members:
    :undoc-members:
    :show-inheritance:
 
-innoldb.qldb module
+qldb-orm.qldb module
 -------------------
 
-.. automodule:: innoldb.qldb
+.. automodule:: qldb-orm.qldb
    :members:
    :undoc-members:
    :show-inheritance:
 
-innoldb.settings module
+qldb-orm.settings module
 -----------------------
 
-.. automodule:: innoldb.settings
+.. automodule:: qldb-orm.settings
    :members:
    :undoc-members:
    :show-inheritance:
@@ -39,7 +39,7 @@ innoldb.settings module
 Module contents
 ---------------
 
-.. automodule:: innoldb
+.. automodule:: qldb-orm
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,12 +1,12 @@
 import uuid
 from botocore.exceptions import ClientError
 from itertools import tee
-from innoldb import settings
-from innoldb.static.logger import getLogger
-from innoldb.static.driver import Driver
-from innoldb.static.objects import Strut
+from qldb-orm import settings
+from qldb-orm.static.logger import getLogger
+from qldb-orm.static.driver import Driver
+from qldb-orm.static.objects import Strut
 
-log = getLogger('innoldb.qldb')
+log = getLogger('qldb-orm.qldb')
 
 
 class QLDB():
@@ -14,11 +14,11 @@ class QLDB():
     """
 
     def __init__(self, table, ledger=settings.LEDGER):
-        """Creates an instance of `innoldb.qldb.Ledger`. This class representation some basic configuration properties of the QLDB ledger.
+        """Creates an instance of `qldb-orm.qldb.QLDB`. This class representation some basic configuration properties of the **QLDB** ledger.
 
         :param table: Name of the table onto which transactions will read and write.
         :type table: str
-        :param ledger: Name of the ledger where tables are stored, defaults to `innoldb.settings.LEDGER`
+        :param ledger: Name of the ledger where tables are stored, defaults to `qldb-orm.settings.LEDGER`
         :type ledger: str, optional
         """
         self.table = table
@@ -27,7 +27,7 @@ class QLDB():
 
 
 class Document(QLDB):
-    """A `innoldab.qldb.Document` object, representing an entry in an QLDB Ledger Table. Creates an instance of `innoldb.qldb.Document`. This object can be initialized in several states, depending on the parameters passed into the constructor.
+    """A `qldb-orm.qldb.Document` object, representing an entry in an QLDB Ledger Table. Creates an instance of `qldb-orm.qldb.Document`. This object can be initialized in several states, depending on the parameters passed into the constructor.
 
     1. **Constructor Arguments**: `table`
     2. **Constructor Arguments**: `table, id`
@@ -41,7 +41,7 @@ class Document(QLDB):
     :type id: str, optional
     :param snapshot: `dict` containing values to map to attributes, defaults to `None`
     :type snapshot: dict, optional
-    :param ledger: Name of the **QLDB** ledger, defaults to `innoldb.settings.LEDGER`
+    :param ledger: Name of the **QLDB** ledger, defaults to `qldb-orm.settings.LEDGER`
     :type ledger: str, optional
     :param stranded: Flag to signal the document should initialized its history from the **QLDB** ledger
 
@@ -92,7 +92,7 @@ class Document(QLDB):
                 log.error(e)
 
     def _init_history(self):
-        """Initializes the `innoldb.qldb.Document` revision history. After this method is invoked, the `self.strands` attribute will be populated with an array of `innoldb.qldb.Document` ordered over the revision history from earliest to latest.
+        """Initializes the `qldb-orm.qldb.Document` revision history. After this method is invoked, the `self.strands` attribute will be populated with an array of `qldb-orm.qldb.Document` ordered over the revision history from earliest to latest.
         """
         self.strands = []
         history = Query(self.table).history(self.meta_id)
@@ -101,7 +101,7 @@ class Document(QLDB):
                 Document(self.table, id=self.id, snapshot=doc.data))
 
     def _load(self, snapshot=None, nest=None, nester=None):
-        """Parse the `snapshot` into `innoldb.qldb.Document` attributes. If `nest` and `nester` are passed in, the function executes recursively, drilling down through the nodes in the `snapshot` and recursively generating the document structure.
+        """Parse the `snapshot` into `qldb-orm.qldb.Document` attributes. If `nest` and `nester` are passed in, the function executes recursively, drilling down through the nodes in the `snapshot` and recursively generating the document structure.
 
         :param snapshot: `dict` of attributes to append to self, defaults to `None`
         :type snapshot: dict, optional
@@ -184,9 +184,9 @@ class Document(QLDB):
         return dict(next(Driver.query_by_fields(Driver.driver(self.ledger), self.table, **{self.index: id}), None))
 
     def _exists(self, id, snapshot=False):
-        """Check if a `innoldb.qldb.Document` exists in the **QLDB** ledger table.
+        """Check if a `qldb-orm.qldb.Document` exists in the **QLDB** ledger table.
 
-        :param id: ID of the `innoldb.qldb.Document` whose existence is in question.
+        :param id: ID of the `qldb-orm.qldb.Document` whose existence is in question.
         :type id: str
         :param snapshot: Flag to persist values retrieved from existence query to object, defaults to False.
         :type snapshot: bool
@@ -204,15 +204,15 @@ class Document(QLDB):
         return False
 
     def fields(self):
-        """All of the `innoldb.qldb.Document` fields as a key-value `dict`. Hides the document attributes `table`, `driver`, `index` and `ledger`, if an object containing only the relevant fields.
+        """All of the `qldb-orm.qldb.Document` fields as a key-value `dict`. Hides the document attributes `table`, `driver`, `index` and `ledger`, if an object containing only the relevant fields.
 
-        :return: `innoldb.qldb.Document` fields
+        :return: `qldb-orm.qldb.Document` fields
         :rtype: dict
         """
         return {key: value for key, value in vars(self).items() if key not in ['table', 'driver', 'index', 'ledger', 'meta_id', 'strands']}
 
     def save(self):
-        """Save the current value of the `innoldb.qldb.Document` fields to the **QLDB** ledger table.
+        """Save the current value of the `qldb-orm.qldb.Document` fields to the **QLDB** ledger table.
         """
         fields = self.fields()
         log.debug("Saving DOCUMENT(%s = %s)", self.index, fields[self.index])
@@ -228,14 +228,14 @@ class Document(QLDB):
 class Query(QLDB):
     """Object that represents a **PartiQL** query. Get initialized on a particular `table` and `ledger`.
 
-    Methods will return results formatted as collections of `innoldb.qldb.Document`.
+    Methods will return results formatted as collections of `qldb-orm.qldb.Document`.
     """
 
     def __init__(self, table, ledger=settings.LEDGER):
         super().__init__(table=table, ledger=ledger)
 
     def _to_documents(self, results):
-        """Convert query results to a `list` of `innoldb.qldb.Document`
+        """Convert query results to a `list` of `qldb-orm.qldb.Document`
 
         :param results: Result of `pyqldb` cursor execution
         :return: collection of documents
@@ -248,7 +248,7 @@ class Query(QLDB):
 
         :param query: Query to be executed
         :type query: str
-        :return: a collection of `innoldb.qldb.Document`
+        :return: a collection of `qldb-orm.qldb.Document`
         :rtype: list
 
         .. warning::
@@ -261,7 +261,7 @@ class Query(QLDB):
 
         :param id: meta id, defaults to None
         :type id: id of the document revision history , optional
-        :return: a collection of `innoldb.qldb.Document`
+        :return: a collection of `qldb-orm.qldb.Document`
         :rtype: list
         .. note::
           `id` is *not* the index of the document. It is the `metadata.id` associated with the document across revisions. Query entire history to find a particular `metadata.id`
@@ -276,29 +276,29 @@ class Query(QLDB):
         return self._to_documents(records)
 
     def get_all(self):
-        """Return all `innoldb.qldb.Document` objects in the **QLDB** ledger table
+        """Return all `qldb-orm.qldb.Document` objects in the **QLDB** ledger table
 
-        :return: List of `innoldb.qldb.Document`
+        :return: List of `qldb-orm.qldb.Document`
         :rtype: list
         """
         return self._to_documents(Driver.query_all(Driver.driver(self.ledger), self.table))
 
     def find_by(self, **kwargs):
-        """Filter `innoldb.qldb.Document` objects by the provided fields. This method accepts `**kwargs` arguments for the field name and values. The document fields must exactly match the fields provided in the query.
+        """Filter `qldb-orm.qldb.Document` objects by the provided fields. This method accepts `**kwargs` arguments for the field name and values. The document fields must exactly match the fields provided in the query.
 
         :param kwargs: Fields by which to filter the query.
-        :return: List of `innoldb.qldb.Document`
+        :return: List of `qldb-orm.qldb.Document`
         :rtype: list
         """
         return self._to_documents(Driver.query_by_fields(Driver.driver(self.ledger), self.table, **kwargs))
 
     def find_in(self, **kwargs):
-        """Filter `innoldb.qldb.Document` objects by the provided fields. This method accepts `**kwargs` arguments for the field name and values, but the values must be an array. 
+        """Filter `qldb-orm.qldb.Document` objects by the provided fields. This method accepts `**kwargs` arguments for the field name and values, but the values must be an array. 
 
         The document fields must belong to the array associated with the field in the `**kwargs`. See below for example.
 
         :param kwargs: Fields by which to filter the query.
-        :return: List of `innoldb.qldb.Document`
+        :return: List of `qldb-orm.qldb.Document`
         :rtype: list
 
         .. note:: Example

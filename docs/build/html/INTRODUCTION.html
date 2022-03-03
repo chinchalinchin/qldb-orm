@@ -47,7 +47,7 @@
   
   
   
-    <title>makpar-innolab &#8212; innoldb v1.0.10 documentation</title>
+    <title>makpar-innolab &#8212; qldb-orm v1.0.10 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/material.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
@@ -57,7 +57,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Setup" href="SETUP.html" />
-    <link rel="prev" title="Welcome to innoldb’s documentation!" href="index.html" />
+    <link rel="prev" title="Welcome to qldb-orm’s documentation!" href="index.html" />
   
    
 
@@ -81,7 +81,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex navheader">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="index.html" title="innoldb v1.0.10 documentation"
+        <a href="index.html" title="qldb-orm v1.0.10 documentation"
            class="md-header-nav__button md-logo">
           
             <i class="md-icon">&#xe5c3</i>
@@ -150,7 +150,7 @@
   <nav class="md-tabs" data-md-component="tabs">
     <div class="md-tabs__inner md-grid">
       <ul class="md-tabs__list">
-          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">innoldb v1.0.10 documentation</a></li>
+          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">qldb-orm v1.0.10 documentation</a></li>
       </ul>
     </div>
   </nav>
@@ -162,13 +162,13 @@
               <div class="md-sidebar__inner">
                 <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="index.html" title="innoldb v1.0.10 documentation" class="md-nav__button md-logo">
+    <a href="index.html" title="qldb-orm v1.0.10 documentation" class="md-nav__button md-logo">
       
         <i class="md-icon">&#xe5c3</i>
       
     </a>
     <a href="index.html"
-       title="innoldb v1.0.10 documentation">Innovation Lab</a>
+       title="qldb-orm v1.0.10 documentation">Innovation Lab</a>
   </label>
   
 
@@ -193,7 +193,7 @@
   <ul class="md-nav__list" data-md-scrollfix="">
         <li class="md-nav__item"><a href="#introduction--page-root" class="md-nav__link">makpar-innolab</a><nav class="md-nav">
               <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#innoldb" class="md-nav__link">innoldb</a><nav class="md-nav">
+        <li class="md-nav__item"><a href="#qldb-orm" class="md-nav__link">qldb-orm</a><nav class="md-nav">
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#orm" class="md-nav__link">ORM</a>
         </li>
@@ -214,7 +214,7 @@
     <li class="md-nav__item">
     
     
-      <a href="#innoldb" class="md-nav__link">innoldb</a>
+      <a href="#qldb-orm" class="md-nav__link">qldb-orm</a>
       
     
     </li></ul>
@@ -292,7 +292,7 @@
   <ul class="md-nav__list" data-md-scrollfix="">
         <li class="md-nav__item"><a href="#introduction--page-root" class="md-nav__link">makpar-innolab</a><nav class="md-nav">
               <ul class="md-nav__list">
-        <li class="md-nav__item"><a href="#innoldb" class="md-nav__link">innoldb</a><nav class="md-nav">
+        <li class="md-nav__item"><a href="#qldb-orm" class="md-nav__link">qldb-orm</a><nav class="md-nav">
               <ul class="md-nav__list">
         <li class="md-nav__item"><a href="#orm" class="md-nav__link">ORM</a>
         </li>
@@ -320,8 +320,8 @@
             
   <section class="tex2jax_ignore mathjax_ignore" id="makpar-innolab">
 <h1 id="introduction--page-root">makpar-innolab<a class="headerlink" href="#introduction--page-root" title="Permalink to this headline">¶</a></h1>
-<section id="innoldb">
-<h2 id="innoldb">innoldb<a class="headerlink" href="#innoldb" title="Permalink to this headline">¶</a></h2>
+<section id="qldb-orm">
+<h2 id="qldb-orm">qldb-orm<a class="headerlink" href="#qldb-orm" title="Permalink to this headline">¶</a></h2>
 <p>A simple <a class="reference external" href="https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping">Object-Relation-Mapping</a> for a serverless <a class="reference external" href="https://docs.aws.amazon.com/qldb/latest/developerguide/what-is.html">AWS Quantum Ledger Database</a> backend, and a command line utility for querying tables on those ledgers.</p>
 <p>.. note::
 The user or process using this library must have an <a class="reference external" href="https://docs.aws.amazon.com/qldb/latest/developerguide/security-iam.html">IAM policy that allows access to QLDB</a>.</p>
@@ -329,7 +329,7 @@ The user or process using this library must have an <a class="reference external
 <h3 id="orm">ORM<a class="headerlink" href="#orm" title="Permalink to this headline">¶</a></h3>
 <p>The idea behind the <em>ORM</em> is to map document fields to native Python object attributes, so that document values can be accessed by traversing the object property tree.</p>
 <p><strong>CRUD OPERATIONS</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Document</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qldb-orm.qldb</span> <span class="kn">import</span> <span class="n">Document</span>
 
 <span class="c1"># Create a document on `my_table` table.</span>
 <span class="n">document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s1">'my_table'</span><span class="p">)</span>
@@ -341,7 +341,7 @@ The user or process using this library must have an <a class="reference external
 <span class="n">document</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Document</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qldb-orm.qldb</span> <span class="kn">import</span> <span class="n">Document</span>
 
 <span class="c1"># Load a document from `my_table` table.</span>
 <span class="n">document</span> <span class="o">=</span> <span class="n">Document</span><span class="p">(</span><span class="s1">'my_table'</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s2">"123456"</span><span class="p">)</span>
@@ -350,7 +350,7 @@ The user or process using this library must have an <a class="reference external
 </pre></div>
 </div>
 <p><strong>Queries</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">innoldb.qldb</span> <span class="kn">import</span> <span class="n">Query</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">qldb-orm.qldb</span> <span class="kn">import</span> <span class="n">Query</span>
 
 <span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">'my-table'</span><span class="p">)</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s1">'field value'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">document</span> <span class="ow">in</span> <span class="n">query</span><span class="p">:</span>
@@ -361,20 +361,20 @@ The user or process using this library must have an <a class="reference external
 <section id="cli">
 <h3 id="cli">CLI<a class="headerlink" href="#cli" title="Permalink to this headline">¶</a></h3>
 <p><strong>CRUD Operations</strong></p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>innoldb --table your-table --insert <span class="nv">col1</span><span class="o">=</span>val1 <span class="nv">col2</span><span class="o">=</span>val2 ...
-innoldb --table your-table --id <span class="m">123</span> --update <span class="nv">col1</span><span class="o">=</span>newval1 <span class="nv">col2</span><span class="o">=</span>newval2
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qldb-orm --table your-table --insert <span class="nv">col1</span><span class="o">=</span>val1 <span class="nv">col2</span><span class="o">=</span>val2 ...
+qldb-orm --table your-table --id <span class="m">123</span> --update <span class="nv">col1</span><span class="o">=</span>newval1 <span class="nv">col2</span><span class="o">=</span>newval2
 </pre></div>
 </div>
 <p><strong>Queries</strong></p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>innoldb --table your-table --find <span class="nv">column</span><span class="o">=</span>this
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qldb-orm --table your-table --find <span class="nv">column</span><span class="o">=</span>this
 </pre></div>
 </div>
 </section>
 <section id="code-quality">
 <h3 id="code-quality">Code Quality<a class="headerlink" href="#code-quality" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><p><a class="reference external" href="https://deepsource.io/gh/Makpar-Innovation-Laboratory/innoldb/?ref=repository-badge"><img alt="DeepSource" src="https://deepsource.io/gh/Makpar-Innovation-Laboratory/innoldb.svg/?label=active+issues&amp;show_trend=true&amp;token=0yUpU0SKBmqEg7qNHU2C65C6"/></a></p></li>
-<li><p><a class="reference external" href="https://deepsource.io/gh/Makpar-Innovation-Laboratory/innoldb/?ref=repository-badge"><img alt="DeepSource" src="https://deepsource.io/gh/Makpar-Innovation-Laboratory/innoldb.svg/?label=resolved+issues&amp;show_trend=true&amp;token=0yUpU0SKBmqEg7qNHU2C65C6"/></a></p></li>
+<li><p><a class="reference external" href="https://deepsource.io/gh/Makpar-Innovation-Laboratory/qldb-orm/?ref=repository-badge"><img alt="DeepSource" src="https://deepsource.io/gh/Makpar-Innovation-Laboratory/qldb-orm.svg/?label=active+issues&amp;show_trend=true&amp;token=0yUpU0SKBmqEg7qNHU2C65C6"/></a></p></li>
+<li><p><a class="reference external" href="https://deepsource.io/gh/Makpar-Innovation-Laboratory/qldb-orm/?ref=repository-badge"><img alt="DeepSource" src="https://deepsource.io/gh/Makpar-Innovation-Laboratory/qldb-orm.svg/?label=resolved+issues&amp;show_trend=true&amp;token=0yUpU0SKBmqEg7qNHU2C65C6"/></a></p></li>
 </ul>
 </section>
 </section>
@@ -390,7 +390,7 @@ innoldb --table your-table --id <span class="m">123</span> --update <span class=
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
           
-            <a href="index.html" title="Welcome to innoldb’s documentation!"
+            <a href="index.html" title="Welcome to qldb-orm’s documentation!"
                class="md-flex md-footer-nav__link md-footer-nav__link--prev"
                rel="prev">
               <div class="md-flex__cell md-flex__cell--shrink">
@@ -399,7 +399,7 @@ innoldb --table your-table --id <span class="m">123</span> --update <span class=
               <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
                 <span class="md-flex__ellipsis">
                   <span
-                      class="md-footer-nav__direction"> Previous </span> Welcome to innoldb’s documentation! </span>
+                      class="md-footer-nav__direction"> Previous </span> Welcome to qldb-orm’s documentation! </span>
               </div>
             </a>
           

@@ -49,7 +49,7 @@ qldb.create_ledger(Name='ledger', PermissionsMode='STANDARD', DeletionProtection
 CloudFormation
 --------------
 
-A **QLDB** CloudFormation template is also available in the */scripts/cf/* directory of this project's [Github](https://github.com/Makpar-Innovation-Laboratory/innoldb). A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). Clone the repository and then from the project root, execute the following script and specify the `<ledger-name>` to create a ledger on the **QLDB** service,
+A **QLDB** CloudFormation template is also available in the */scripts/cf/* directory of this project's [Github](https://github.com/Makpar-Innovation-Laboratory/qldb-orm). A script has been provided to post this template to **CloudFormation**, assuming your [AWS CLI has been authenticated and configured](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html). Clone the repository and then from the project root, execute the following script and specify the `<ledger-name>` to create a ledger on the **QLDB** service,
 
 ```shell
 ./scripts/cf/stack --ledger <ledger-name>
@@ -71,8 +71,8 @@ If you are configuring an application role to use this library for a particular 
 
 See [here](https://docs.aws.amazon.com/qldb/latest/developerguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-data-transactions) for a full working example of an appropriate **IAM** policy.
 
-4. Install `innoldb`
+4. Install `qldb-orm`
 
 ```shell
-pip install innoldb
+pip install qldb-orm
 ```

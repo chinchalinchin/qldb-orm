@@ -10,7 +10,7 @@ This library abstracts much of the QLDB implementation away from its user. All t
 If you have the **LEDGER** environment variable set, all that is required is to create a `Document` object and pass it the table name from the **QLDB** ledger. If the following lines are feed into an interactive **Python** shell or copied into a script,
 
 ```python
-from innoldb.qldb import Document
+from qldb-orm.qldb import Document
 
 my_document = Document('table_name')
 my_document.property_one = 'property 1'
@@ -21,7 +21,7 @@ my_document.save()
 Then a document will be inserted into the **QLDB** ledger table. If you do not have the **LEDGER** environment variable set, you must pass in the ledger name along with the table name through named arguments,
 
 ```python
-from innoldb.qldb import Document
+from qldb-orm.qldb import Document
 
 my_document = Document(table='table_name', ledger='ledger_name')
 my_document.property_one = 'property 1'
@@ -39,7 +39,7 @@ Congratulations! You have saved a document to QLDB!
 To load a document that exists in the ledger table already, pass in the id of the `Document` when creating a new instance,
 
 ```python
-from innoldb.qldb import Document
+from qldb-orm.qldb import Document
 
 my_document(table='table_name', id='12345')
 print(my_document.property_one)
@@ -50,7 +50,7 @@ print(my_document.property_one)
 Updating and saving are different operations, in terms of the **PartiQL** queries that implement these operations, but from the `Document`'s perspective, they are the same operation; the same method is called in either case. The following script will save a value of `test 1` to `field` and then overwrite it with a value of `test 2`,
 
 ```python
-from innoldb.qldb import Document
+from qldb-orm.qldb import Document
 
 my_document = Document('table_name')
 my_document.field = 'test 1'
@@ -68,7 +68,7 @@ Behind the scenes, whenever the `save()` method is called, a query is run to che
 The document fields can be returned as a `dict` through the `fields()` method. The following script will loop through the fields on an existing document with `id=test` and print their corresponding values,
 
 ```python
-from innoldb.qldb import Document
+from qldb-orm.qldb import Document
 
 my_document = Document(table='table_name', id='test')
 
@@ -103,7 +103,7 @@ assert document.prop_1.prop_2.prop_3.prop_4 == 5
 **QLDB** is an **immutable** ledger, meaning it stores the entire history of transactions. This feature can be used to construct snapshots of a document across time. If you want to initialized a document with its full history, use the `stranded` argument when constructing a new object or loading an existing document into an object. Each strand will be accessible as a nested `Document` on the current `Document`
 
 ```python
-from innoldb.qldb import Document
+from qldb-orm.qldb import Document
 
 doc = Document('test_table', id='12345', stranded=True)
 
@@ -124,7 +124,7 @@ Queries are represented as an object, `Query`. Each `Query` must be initialized 
 The following script queries the ledger table for all documents and prints a JSON representation of each document to screen,
 
 ```python
-from innoldb.qldb import Query
+from qldb-orm.qldb import Query
 
 all_documents = Query('table_name').get_all()
 for document in all_documents:
@@ -136,7 +136,7 @@ for document in all_documents:
 One of the unique features of **QLDB** is its *immutability*; as a result of its implementation, **QLDB** keeps a log of all transactions that have occured on a table. This features is accessible in **PartiQL** through the `history()` function in the query `SELECT * FROM history(table)`. The `Query` class provides a wrapper around this query that parses it into a collection of `Documents`, i.e. the transaction history is traversible in the same way a document model is,
 
 ```python
-from innoldb.qldb import Query
+from qldb-orm.qldb import Query
 
 transaction = Query('table_name').history()
 
@@ -150,7 +150,7 @@ for result in results:
 The `find_by()` method accepts `**kwarg` aruments for any of the fields you want to query by; Note, the query is filtering on equality, i.e. it searches for all documents where the fields exactly equal their specified values.
 
 ```python
-from innoldb.qldb import Query
+from qldb-orm.qldb import Query
 
 search_documents = Query('table_name').find_by(company='Makpar')
 search_documents_kwargs = Query('table_name').find_by(**{ 'company' : 'Makpar', 'department': 'Innovation' })
@@ -161,7 +161,7 @@ search_documents_kwargs = Query('table_name').find_by(**{ 'company' : 'Makpar', 
 This method will execute a `SELECT* FROM table WHERE a in (?, ? ... ? )` **PartiQL** query. The `find_in` methods accepts `**kwarg` arguments for any of the fields you want to query by, where the values of each keyword are an array of values to search by. For example,
 
 ```python
-from innoldb.qldb import Query
+from qldb-orm.qldb import Query
 
 search_documents = Query('table_name').find_in(company=['Makpar','Company'], number=[1,2,3])
 ```

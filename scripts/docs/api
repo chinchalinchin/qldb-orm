@@ -7,4 +7,4 @@ PROJECT_DIR=$SCRIPT_DIR/../..
 ENV_DIR=$PROJECT_DIR/env
 source $ENV_DIR/.env
 
-sphinx-apidoc -o $PROJECT_DIR/docs/source $PROJECT_DIR/src/innoldb
+sphinx-apidoc -o $PROJECT_DIR/docs/source $PROJECT_DIR/src/qldb-orm

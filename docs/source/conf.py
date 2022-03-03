@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'innoldb'
+project = 'qldb-orm'
 copyright = '2022, Makpar Innovation Lab'
 author = 'Makpar Innovation Lab'
 

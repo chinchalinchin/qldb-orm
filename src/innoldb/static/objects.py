@@ -1,7 +1,7 @@
 import json
 
 class Strut:
-    """Simple object to parse `innoldb.qldb.Document`. Used to deserialize **QLDB** responses into Python native objects, with attributes accessible through object properties, i.e., the document
+    """Simple object to parse `qldb-orm.qldb.Document`. Used to deserialize **QLDB** responses into Python native objects, with attributes accessible through object properties, i.e., the document
     ```json
     {
       'a': {
@@ -24,12 +24,15 @@ class Strut:
             setattr(self, key, value)
         self.__dict__.update(kwargs)
 
+    def to_json(self):
+      return json.loads(json.dumps(self, cls=StrutEncoder))
+
 class StrutEncoder(json.JSONEncoder):
-    """Encoder object to deserialize `innoldb.static.objects.Strut` into string.
+    """Encoder object to deserialize `qldb-orm.static.objects.Strut` into string.
 
     """
     def default(self, obj):
-        """Method to convert `innoldb.static.objects.Strut` into deserializable object. Overrides `json.default` and adds a check for `Strut` objects. 
+        """Method to convert `qldb-orm.static.objects.Strut` into deserializable object. Overrides `json.default` and adds a check for `Strut` objects. 
         """
         if isinstance(obj, Strut):
             return vars(obj)
