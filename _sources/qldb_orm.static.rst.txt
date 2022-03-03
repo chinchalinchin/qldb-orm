@@ -1,0 +1,45 @@
+qldb\_orm.static package
+========================
+
+Submodules
+----------
+
+qldb\_orm.static.clauses module
+-------------------------------
+
+.. automodule:: qldb_orm.static.clauses
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+qldb\_orm.static.driver module
+------------------------------
+
+.. automodule:: qldb_orm.static.driver
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+qldb\_orm.static.logger module
+------------------------------
+
+.. automodule:: qldb_orm.static.logger
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+qldb\_orm.static.objects module
+-------------------------------
+
+.. automodule:: qldb_orm.static.objects
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: qldb_orm.static
+   :members:
+   :undoc-members:
+   :show-inheritance:

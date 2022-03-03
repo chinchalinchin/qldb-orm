@@ -1,0 +1,746 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="_static/javascripts/modernizr.js"></script>
+  
+  
+  
+    <title>qldb_orm package &#8212; qldb-orm v1.0.10 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/material.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="qldb_orm.derivers package" href="qldb_orm.derivers.html" />
+    <link rel="prev" title="qldb_orm" href="modules.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=blue data-md-color-accent=light-blue>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#qldb_orm" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="index.html" title="qldb-orm v1.0.10 documentation"
+           class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">&#xe5c3</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">Innovation Lab</span>
+          <span class="md-header-nav__topic"> qldb_orm package </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder="Search"
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+      
+  
+  <script src="_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = ""versions.json"",
+        target_loc = "../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">qldb-orm v1.0.10 documentation</a></li>
+          <li class="md-tabs__item"><a href="modules.html" class="md-tabs__link">qldb_orm</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="index.html" title="qldb-orm v1.0.10 documentation" class="md-nav__button md-logo">
+      
+        <i class="md-icon">&#xe5c3</i>
+      
+    </a>
+    <a href="index.html"
+       title="qldb-orm v1.0.10 documentation">Innovation Lab</a>
+  </label>
+  
+
+  
+  <ul class="md-nav__list">
+    <li class="md-nav__item">
+    
+      <span class="md-nav__link caption"><span class="caption-text">Contents:</span></span>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="INTRODUCTION.html" class="md-nav__link">makpar-innolab</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="SETUP.html" class="md-nav__link">Setup</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="CLI.html" class="md-nav__link">Command Line Usage</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="MODELS.html" class="md-nav__link">Document Object Model</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="MODELS.html#query-object-model" class="md-nav__link">Query Object Model</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="CONFIGURATION.html" class="md-nav__link">Configuration</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="REFERENCES.html" class="md-nav__link">References</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="modules.html" class="md-nav__link">qldb_orm</a>
+      <ul class="md-nav__list"> 
+    <li class="md-nav__item">
+    
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    <label class="md-nav__link md-nav__link--active" for="__toc"> qldb_orm package </label>
+    
+      <a href="#" class="md-nav__link md-nav__link--active">qldb_orm package</a>
+      
+        
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">Contents</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#qldb-orm--page-root" class="md-nav__link">qldb_orm package</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#subpackages" class="md-nav__link">Subpackages</a>
+        </li>
+        <li class="md-nav__item"><a href="#submodules" class="md-nav__link">Submodules</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-qldb_orm.main" class="md-nav__link">qldb_orm.main module</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-qldb_orm.qldb" class="md-nav__link">qldb_orm.qldb module</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-qldb_orm.settings" class="md-nav__link">qldb_orm.settings module</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-qldb_orm" class="md-nav__link">Module contents</a>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="_sources/qldb_orm.rst.txt">Show Source</a> </li>
+
+  </ul>
+</nav>
+      
+    
+    </li></ul>
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="TODOS.html" class="md-nav__link">Todos</a>
+      
+    
+    </li>
+  </ul>
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">Contents</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#qldb-orm--page-root" class="md-nav__link">qldb_orm package</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#subpackages" class="md-nav__link">Subpackages</a>
+        </li>
+        <li class="md-nav__item"><a href="#submodules" class="md-nav__link">Submodules</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-qldb_orm.main" class="md-nav__link">qldb_orm.main module</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-qldb_orm.qldb" class="md-nav__link">qldb_orm.qldb module</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-qldb_orm.settings" class="md-nav__link">qldb_orm.settings module</a>
+        </li>
+        <li class="md-nav__item"><a href="#module-qldb_orm" class="md-nav__link">Module contents</a>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="_sources/qldb_orm.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <section id="qldb-orm-package">
+<h1 id="qldb-orm--page-root">qldb_orm package<a class="headerlink" href="#qldb-orm--page-root" title="Permalink to this headline">¶</a></h1>
+<section id="subpackages">
+<h2 id="subpackages">Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="qldb_orm.derivers.html">qldb_orm.derivers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="qldb_orm.derivers.html#module-qldb_orm.derivers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="qldb_orm.static.html">qldb_orm.static package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="qldb_orm.static.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qldb_orm.static.html#module-qldb_orm.static.clauses">qldb_orm.static.clauses module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qldb_orm.static.html#module-qldb_orm.static.driver">qldb_orm.static.driver module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qldb_orm.static.html#module-qldb_orm.static.logger">qldb_orm.static.logger module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qldb_orm.static.html#module-qldb_orm.static.objects">qldb_orm.static.objects module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qldb_orm.static.html#module-qldb_orm.static">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2 id="submodules">Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-qldb_orm.main">
+<span id="qldb-orm-main-module"></span><h2 id="module-qldb_orm.main">qldb_orm.main module<a class="headerlink" href="#module-qldb_orm.main" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qldb_orm.main.KeyValue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qldb_orm.main.</span></span><span class="sig-name descname"><span class="pre">KeyValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option_strings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">const</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">help</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metavar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.main.KeyValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">argparse.Action</span></code></p>
+<p>Action class to map CLI input of the form <cite>key1=val1 key2=val2 …</cite> to an object’s properties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argparse</strong> (<em>[</em><em>type</em><em>]</em>) – [description]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="qldb_orm.main.do_program">
+<span class="sig-prename descclassname"><span class="pre">qldb_orm.main.</span></span><span class="sig-name descname"><span class="pre">do_program</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cli_args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.main.do_program" title="Permalink to this definition">¶</a></dt>
+<dd><p>Entrypoint for the application.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cli_args</strong> (<em>list</em>) – command line arguments, i.e. <cite>sysv[1:]</cite></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="qldb_orm.main.entrypoint">
+<span class="sig-prename descclassname"><span class="pre">qldb_orm.main.</span></span><span class="sig-name descname"><span class="pre">entrypoint</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.main.entrypoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Entrypoint for build package</p>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="qldb_orm.main.find">
+<span class="sig-prename descclassname"><span class="pre">qldb_orm.main.</span></span><span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.main.find" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find documents by field equality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> (<em>str</em>) – Name of table to query</p></li>
+<li><p><strong>fields</strong> (<cite>kwargs</cite>) – key-value pairs of the fields</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>collection of <cite>qldb_orm.qldb.Document</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="qldb_orm.main.get_all">
+<span class="sig-prename descclassname"><span class="pre">qldb_orm.main.</span></span><span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.main.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all documents in a table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>table</strong> (<em>str</em>) – Name of table to be queried.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>collection of <cite>qldb_orm.qldb.Document</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="qldb_orm.main.history">
+<span class="sig-prename descclassname"><span class="pre">qldb_orm.main.</span></span><span class="sig-name descname"><span class="pre">history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.main.history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query revision table history for particular metadata ID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> (<em>str</em>) – Table to be queried</p></li>
+<li><p><strong>id</strong> (<em>str</em>) – ID of the metadata revision</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>collection of <cite>qldb_orm.qldb.Document</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="qldb_orm.main.insert">
+<span class="sig-prename descclassname"><span class="pre">qldb_orm.main.</span></span><span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.main.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert a document into a table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> (<em>str</em>) – Name of table to be queried.</p></li>
+<li><p><strong>document</strong> (<a class="reference internal" href="#qldb_orm.qldb.Document" title="qldb_orm.qldb.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">qldb_orm.qldb.Document</span></code></a>) – Document to be inserted</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>id of the document inserted</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="qldb_orm.main.load">
+<span class="sig-prename descclassname"><span class="pre">qldb_orm.main.</span></span><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.main.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a document from a table.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<em>str</em>) – ID of the document to load</p></li>
+<li><p><strong>table</strong> (<em>str</em>) – Name of table to be queried.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>collection of <cite>qldb_orm.qldb.Document</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qldb_orm.qldb.Document" title="qldb_orm.qldb.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">qldb_orm.qldb.Document</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="qldb_orm.main.mock">
+<span class="sig-prename descclassname"><span class="pre">qldb_orm.main.</span></span><span class="sig-name descname"><span class="pre">mock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.main.mock" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert a mock document into a table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>table</strong> (<em>str</em>) – Name of table to be queried.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Document that was mocked</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qldb_orm.qldb.Document" title="qldb_orm.qldb.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">qldb_orm.qldb.Document</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="qldb_orm.main.print_line">
+<span class="sig-prename descclassname"><span class="pre">qldb_orm.main.</span></span><span class="sig-name descname"><span class="pre">print_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.main.print_line" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="qldb_orm.main.update_prop">
+<span class="sig-prename descclassname"><span class="pre">qldb_orm.main.</span></span><span class="sig-name descname"><span class="pre">update_prop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">props</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.main.update_prop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update properties on document and persist to <strong>QLDB</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>document</strong> (<a class="reference internal" href="#qldb_orm.qldb.Document" title="qldb_orm.qldb.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">qldb_orm.qldb.Document</span></code></a>) – Document to be updated</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Updated document</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#qldb_orm.qldb.Document" title="qldb_orm.qldb.Document"><code class="xref py py-class docutils literal notranslate"><span class="pre">qldb_orm.qldb.Document</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="qldb_orm.main.view_doc">
+<span class="sig-prename descclassname"><span class="pre">qldb_orm.main.</span></span><span class="sig-name descname"><span class="pre">view_doc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unhide</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.main.view_doc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+</section>
+<section id="module-qldb_orm.qldb">
+<span id="qldb-orm-qldb-module"></span><h2 id="module-qldb_orm.qldb">qldb_orm.qldb module<a class="headerlink" href="#module-qldb_orm.qldb" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="qldb_orm.qldb.Document">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qldb_orm.qldb.</span></span><span class="sig-name descname"><span class="pre">Document</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snapshot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stranded</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.qldb.Document" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#qldb_orm.qldb.QLDB" title="qldb_orm.qldb.QLDB"><code class="xref py py-class docutils literal notranslate"><span class="pre">qldb_orm.qldb.QLDB</span></code></a></p>
+<p>A <cite>qldb_orm.qldb.Document</cite> object, representing an entry in an QLDB Ledger Table. Creates an instance of <cite>qldb_orm.qldb.Document</cite>. This object can be initialized in several states, depending on the parameters passed into the constructor.</p>
+<ol class="arabic simple">
+<li><p><strong>Constructor Arguments</strong>: <cite>table</cite></p></li>
+<li><p><strong>Constructor Arguments</strong>: <cite>table, id</cite></p></li>
+<li><p><strong>Constructor Arguments</strong>: <cite>table, snapshot</cite></p></li>
+</ol>
+<p>In each case, an optional argument for <cite>ledger</cite> and <cite>stranded</cite> can be passed in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>table</strong> (<em>str</em>) – Name of the <a href="#id1"><span class="problematic" id="id2">**</span></a>QLDB**table</p></li>
+<li><p><strong>id</strong> (<em>str</em><em>, </em><em>optional</em>) – Id of the document to load, defaults to <cite>None</cite></p></li>
+<li><p><strong>snapshot</strong> (<em>dict</em><em>, </em><em>optional</em>) – <cite>dict</cite> containing values to map to attributes, defaults to <cite>None</cite></p></li>
+<li><p><strong>ledger</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the <strong>QLDB</strong> ledger, defaults to <cite>qldb_orm.settings.LEDGER</cite></p></li>
+<li><p><strong>stranded</strong> – Flag to signal the document should initialized its history from the <strong>QLDB</strong> ledger</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <cite>stranded==True</cite>, then the document history can be accessed through <cite>self.strands</cite></p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="qldb_orm.qldb.Document.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.qldb.Document.fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>All of the <cite>qldb_orm.qldb.Document</cite> fields as a key-value <cite>dict</cite>. Hides the document attributes <cite>table</cite>, <cite>driver</cite>, <cite>index</cite> and <cite>ledger</cite>, if an object containing only the relevant fields.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><cite>qldb_orm.qldb.Document</cite> fields</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="qldb_orm.qldb.Document.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.qldb.Document.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the current value of the <cite>qldb_orm.qldb.Document</cite> fields to the <strong>QLDB</strong> ledger table.</p>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="qldb_orm.qldb.QLDB">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qldb_orm.qldb.</span></span><span class="sig-name descname"><span class="pre">QLDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.qldb.QLDB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class containing meta information associated with QLDB ledger.</p>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="qldb_orm.qldb.Query">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qldb_orm.qldb.</span></span><span class="sig-name descname"><span class="pre">Query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ledger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.qldb.Query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#qldb_orm.qldb.QLDB" title="qldb_orm.qldb.QLDB"><code class="xref py py-class docutils literal notranslate"><span class="pre">qldb_orm.qldb.QLDB</span></code></a></p>
+<p>Object that represents a <strong>PartiQL</strong> query. Get initialized on a particular <cite>table</cite> and <cite>ledger</cite>.</p>
+<p>Methods will return results formatted as collections of <cite>qldb_orm.qldb.Document</cite>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qldb_orm.qldb.Query.find_by">
+<span class="sig-name descname"><span class="pre">find_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.qldb.Query.find_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter <cite>qldb_orm.qldb.Document</cite> objects by the provided fields. This method accepts <cite>**kwargs</cite> arguments for the field name and values. The document fields must exactly match the fields provided in the query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – Fields by which to filter the query.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of <cite>qldb_orm.qldb.Document</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="qldb_orm.qldb.Query.find_in">
+<span class="sig-name descname"><span class="pre">find_in</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.qldb.Query.find_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter <cite>qldb_orm.qldb.Document</cite> objects by the provided fields. This method accepts <cite>**kwargs</cite> arguments for the field name and values, but the values must be an array.</p>
+<p>The document fields must belong to the array associated with the field in the <cite>**kwargs</cite>. See below for example.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>kwargs</strong> – Fields by which to filter the query.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of <cite>qldb_orm.qldb.Document</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Example
+<code class="docutils literal notranslate"><span class="pre">`python</span>
+<span class="pre">Query('table').find_in(**{'field':</span> <span class="pre">[12,</span> <span class="pre">13,</span> <span class="pre">14],</span> <span class="pre">'field2':</span> <span class="pre">['cat',</span> <span class="pre">'dog'</span> <span class="pre">]})</span>
+<span class="pre">`</span></code>
+will find all documents with a <cite>field</cite> whose value is in the set <cite>(12, 13, 14)</cite> <em>and</em> a <cite>field2</cite> whose value is in the set <cite>(‘cat’, ‘dog’)</cite></p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="qldb_orm.qldb.Query.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.qldb.Query.get_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all <cite>qldb_orm.qldb.Document</cite> objects in the <strong>QLDB</strong> ledger table</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of <cite>qldb_orm.qldb.Document</cite></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="qldb_orm.qldb.Query.history">
+<span class="sig-name descname"><span class="pre">history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.qldb.Query.history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the revision history.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>id of the document revision history</em><em> , </em><em>optional</em>) – meta id, defaults to None</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a collection of <cite>qldb_orm.qldb.Document</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><cite>id</cite> is <em>not</em> the index of the document. It is the <cite>metadata.id</cite> associated with the document across revisions. Query entire history to find a particular <cite>metadata.id</cite></p>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="qldb_orm.qldb.Query.raw">
+<span class="sig-name descname"><span class="pre">raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.qldb.Query.raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a raw query against the <strong>QLDB</strong> ledger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>query</strong> (<em>str</em>) – Query to be executed</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a collection of <cite>qldb_orm.qldb.Document</cite></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Query will not be sanitized for injections.</p>
+</div>
+</dd></dl>
+</dd></dl>
+</section>
+<section id="module-qldb_orm.settings">
+<span id="qldb-orm-settings-module"></span><h2 id="module-qldb_orm.settings">qldb_orm.settings module<a class="headerlink" href="#module-qldb_orm.settings" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="qldb_orm.settings.get_log_level">
+<span class="sig-prename descclassname"><span class="pre">qldb_orm.settings.</span></span><span class="sig-name descname"><span class="pre">get_log_level</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qldb_orm.settings.get_log_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current <strong>LOG_LEVEL</strong> in the settings as a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The log level</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+</section>
+<section id="module-qldb_orm">
+<span id="module-contents"></span><h2 id="module-qldb_orm">Module contents<a class="headerlink" href="#module-qldb_orm" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+            <a href="modules.html" title="qldb_orm"
+               class="md-flex md-footer-nav__link md-footer-nav__link--prev"
+               rel="prev">
+              <div class="md-flex__cell md-flex__cell--shrink">
+                <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+              </div>
+              <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+                <span class="md-flex__ellipsis">
+                  <span
+                      class="md-footer-nav__direction"> Previous </span> qldb_orm </span>
+              </div>
+            </a>
+          
+          
+            <a href="qldb_orm.derivers.html" title="qldb_orm.derivers package"
+               class="md-flex md-footer-nav__link md-footer-nav__link--next"
+               rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
+                class="md-flex__ellipsis"> <span
+                class="md-footer-nav__direction"> Next </span> qldb_orm.derivers package </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink"><i
+                class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2022, Makpar Innovation Lab.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>
