@@ -1,20 +1,20 @@
 import os
 from pprint import pprint
 
-if __name__=="__main__":
+if __name__ == "__main__":
 
     # NOTE: Point `qldb-orm` to the Ledger from which you are reading/writing through the environment
     # os.environ['LEDGER'] = 'innolab'
 
     # NOTE: Import needs to come after environment variable has been set! The library will scan the environment
-    #       on import and set the ledger. 
+    #       on import and set the ledger.
     from qldb-orm.qldb import Query
 
-    ### EXAMPLE QUERIES
+    # EXAMPLE QUERIES
     # NOTE: `qldb-orm.qldb.Document` has extra attributes for meta data: `(index, table, ledger)`. To hide them, call `fields()`
 
-    ### SELECT * FROM TABLE
-    
+    # SELECT * FROM TABLE
+
     print('--------------------------------------------------------------------------------------------')
     print('SELECT * FROM table')
     print('--------------------------------------------------------------------------------------------')
@@ -22,10 +22,10 @@ if __name__=="__main__":
     for result in the_first_query:
         print(f'Document({result.id})')
         print('-----------------------')
-        pprint(result.fields(),indent=5)
+        pprint(result.fields(), indent=5)
         print('\n')
 
-    ### SELECT * FROM TABLE WHERE EQUALITY
+    # SELECT * FROM TABLE WHERE EQUALITY
     # # `innolab.qldb.Query. find_by` accepts **kwargs arguments, so you can pass any field you want to query by directly into the method.
 
     print('--------------------------------------------------------------------------------------------')
@@ -38,7 +38,7 @@ if __name__=="__main__":
         pprint(result.fields(), indent=5)
         print('\n')
 
-    ### SELECT * FROM TABLE WHERE IN
+    # SELECT * FROM TABLE WHERE IN
     #     `qldb-orm.qldb.Query.find_in` accepts **kwargs arguments where each keyword is a list of values to compare the field against.
 
     print('--------------------------------------------------------------------------------------------')

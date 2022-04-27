@@ -1,8 +1,8 @@
 import os
 from pprint import pprint
 
-if __name__=="__main__":
-  
+if __name__ == "__main__":
+
     # NOTE: Point `qldb-orm` to the Ledger from which you are reading/writing through the environment
     # os.environ['LEDGER'] = 'innolab'
 

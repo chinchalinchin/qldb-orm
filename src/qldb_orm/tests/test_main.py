@@ -1,3 +1,4 @@
+from main import KeyValue
 import pytest
 import os
 import sys
@@ -7,7 +8,6 @@ TEST_DIR = os.path.dirname(os.path.abspath(__file__))
 APP_DIR = os.path.dirname(TEST_DIR)
 sys.path.append(APP_DIR)
 
-from main import KeyValue
 
 @pytest.mark.parametrize('args,expected_keys,expected_props', [
     ('--test a=b c=d', ['a', 'c'], ['b', 'd']),
