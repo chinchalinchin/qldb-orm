@@ -1,15 +1,6 @@
 version = 1
 
-test_patterns = ["**/test_*.py", "**/example_*.py"]
-exclude_patterns = ["**/test_*.py", "**/__init__.py", "**/example_*.py"]
-
-[[analyzers]]
-name = "test-coverage"
-enabled = true
-
-[[analyzers]]
-name = "shell"
-enabled = true
+test_patterns = ["**/test_*.py"]
 
 [[analyzers]]
 name = "python"
